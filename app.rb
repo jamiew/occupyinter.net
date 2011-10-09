@@ -9,6 +9,7 @@ configure do |config|
   %w(haml sinatra/respond_to configatron json dm-core dm-types dm-timestamps dm-aggregates dm-ar-finders dm-validations).each{|lib| require lib}
   %w(lib/helpers lib/actions models/site models/visit).each{|lib| require "#{ROOT}/#{lib}"}
 
+  Rack::MethodOverride # FOR PUT METHOD
   Sinatra::Application.register Sinatra::RespondTo
 
   configatron.configure_from_yaml("#{ROOT}/settings.yml", :hash => Sinatra::Application.environment.to_s)

@@ -10,8 +10,6 @@ put "/count" do
     @site.save
   end
 
-  puts @site.inspect
-
   respond_to do |format|
     format.json { make_json({:site => @site.domain, :visits => @site.visits_count, :created_at => @site.created_at, :updated_at => @site.updated_at}) }
     format.html { haml :'api/site' }
@@ -21,8 +19,6 @@ end
 
 get "/site" do
   @site = get_site(params[:url])
-
-  puts @site.inspect
 
   respond_to do |format|
     format.json { make_json({:site => @site.domain, :visits => @site.visits_count, :created_at => @site.created_at, :updated_at => @site.updated_at}) }
