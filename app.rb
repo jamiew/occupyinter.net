@@ -7,7 +7,7 @@ configure do |config|
   ROOT = File.expand_path(File.dirname(__FILE__))
 
   %w(haml sinatra/respond_to configatron json dm-core dm-types dm-timestamps dm-aggregates dm-ar-finders dm-validations).each{|lib| require lib}
-  %w(lib/helpers lib/controllers models/site models/visit).each{|lib| require "#{ROOT}/#{lib}"}
+  %w(lib/helpers lib/actions models/site models/visit).each{|lib| require "#{ROOT}/#{lib}"}
 
   Sinatra::Application.register Sinatra::RespondTo
 

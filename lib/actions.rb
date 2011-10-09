@@ -1,4 +1,4 @@
-get "/api/count" do
+put "/count" do
 
   return make_error("Missing UUID") if params[:uuid].blank?
   @site = get_site(params[:url])
@@ -10,6 +10,8 @@ get "/api/count" do
     @site.save
   end
 
+  puts @site.inspect
+
   respond_to do |format|
     format.json { make_json({:site => @site.domain, :visits => @site.visits_count, :created_at => @site.created_at, :updated_at => @site.updated_at}) }
     format.html { haml :'api/site' }
@@ -17,8 +19,10 @@ get "/api/count" do
 end
 
 
-get "/api/site" do
+get "/site" do
   @site = get_site(params[:url])
+
+  puts @site.inspect
 
   respond_to do |format|
     format.json { make_json({:site => @site.domain, :visits => @site.visits_count, :created_at => @site.created_at, :updated_at => @site.updated_at}) }
@@ -29,20 +33,11 @@ end
 
 # ----
 
-get "/download" do
-  respond_to do |format|
-    format.html { haml :download }
-  end
+get "/tools/update/:browser" do
+  redirect "http://addons.gleuch.com/occupyinterenet/updates/#{params[:browser]}"
 end
 
-get "/about" do
-  respond_to do |format|
-    format.html { haml :about }
-  end
-end
 
 get "/" do
-  respond_to do |format|
-    format.html { haml :index }
-  end
+  redirect "http://occupyinter.net"
 end
