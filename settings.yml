@@ -1,0 +1,17 @@
+development: &local
+  db_type:          mysql
+  db_connection:    mysql://root@localhost/occupyinternet_dev
+
+
+production:
+  <<: *local
+
+  db_type:          mysql
+  db_connection:    mysql://root:*****@localhost/occupyinternet_prod
+
+
+test:
+  <<: *local
+
+  db_type:        sqlite
+  db_connection:  sqlite3:///ROOT/occupyinternet_test.db
