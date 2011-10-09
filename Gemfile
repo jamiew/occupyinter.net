@@ -2,10 +2,12 @@ source :rubygems
 
 gem "sinatra",              "1.2.6"
 gem "configatron",          "2.8.0"
-
+gem "haml",                 "3.1.2"
 gem "json",                 "1.4.6"
 gem "sinatra-respond_to",   "0.7.0"
 
+gem "data_objects",         "0.10.2"
+gem "do_mysql",             "0.10.2"
 gem "dm-core",              "0.10.2"
 gem "dm-aggregates",        "0.10.2"
 gem "dm-ar-finders",        "0.10.2"
