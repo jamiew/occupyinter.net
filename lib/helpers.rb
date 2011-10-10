@@ -16,6 +16,7 @@ helpers do
 
   def request_uuid
     puts "request_uuid=#{@request_uuid}"
+    @request_uuid ||= params[:uuid] unless params[:uuid].blank? # Play nice w/ extensions...
     @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
   end
 
