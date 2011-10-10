@@ -6,7 +6,7 @@ helpers do
 
   def get_site(url)
     url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
-    return make_error("Invalid site URL") if url.blank? || url.match(/\//)
+    return make_error("Invalid site URL") if url.blank?
 
     site = Site.find_by_domain(url) rescue nil
     site ||= Site.create(:domain => url)
