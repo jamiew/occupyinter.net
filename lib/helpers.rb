@@ -4,19 +4,15 @@ helpers do
     Sinatra::Application.environment.to_s != 'production'
   end
 
-  def get_site(url)
-    url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
-    url = url.gsub(/^http\:\/\//,'') if url =~ /^http\:\/\//
-    url = url.gsub(/^www\./,'') if url =~ /^www\./
-    return make_error("Invalid site URL") if url.blank?
-
-    site = Site.find_by_domain(url) rescue nil
-    site ||= Site.create(:domain => url)
-    return site
+  def request_uuid
+    @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
   end
 
-  def request_uuid
-    @uuid ||= request.cookies['uuid'] || generate_and_set_uuid
+  def request_avatar
+    puts "request_avatar=#{request.cookies['avatar'].inspect}"
+    @request_avatar ||= request.cookies['avatar'] || generate_and_set_avatar
+    puts "...@request_avatar=#{@request_avatar.inspect}"
+    @request_avatar
   end
 
   def generate_uuid
@@ -30,11 +26,41 @@ helpers do
     value
   end
 
-  def set_uuid_cookie(value)
+  def set_cookie(key, value, opts={})
+    puts "Setting cookie: #{key} => #{value}"
     domain = request.host
     expires = Time.now + (60 * 60 * 24 * 30 * 365 * 50) # 50 years
-    response.set_cookie("uuid", {:value => value, :path => '/', :domain => domain, :expires => expires} )
+    # FIXME not working?
+    # response.set_cookie(key, {:value => value.to_s, :path => '/', :domain => domain, :expires => expires}.merge(opts))
+    response.set_cookie(key, value)
   end
+
+  def set_uuid_cookie(value)
+    set_cookie("uuid", value, :http => true)
+  end
+
+  def generate_and_set_avatar
+    value = "1" # TODO randomize based on uuid
+    set_avatar_cookie(value)
+    value
+  end
+
+  def set_avatar_cookie(value)
+    set_cookie("avatar", value, :http => true)
+  end
+
+
+  def get_site(url)
+    url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
+    url = url.gsub(/^http\:\/\//,'') if url =~ /^http\:\/\//
+    url = url.gsub(/^www\./,'') if url =~ /^www\./
+    return make_error("Invalid site URL") if url.blank?
+
+    site = Site.find_by_domain(url) rescue nil
+    site ||= Site.create(:domain => url)
+    return site
+  end
+
 
   def make_error(err=nil)
     err ||= 'Unknown Error'

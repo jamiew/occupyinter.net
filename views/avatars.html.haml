@@ -1,0 +1,19 @@
+%h1 Avatar Selector
+
+:css
+  .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; }
+  .avatar, .avatar a, .avatar img { width: 128px; height: 128px; }
+  .avatar a { display: block; border: 5px solid transparent; }
+  .avatar a:hover { border-color: #f0f; }
+  .avatar a.selected { border-color: #ff0; }
+
+%h2== request_avatar=#{request_avatar.inspect}
+%h2== cookies=#{request.cookies.inspect}
+
+- avatars = (1..4)
+
+- avatars.each do |i|
+  - avatar = "/avatars/#{i}.gif"
+  .avatar
+    %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
+      %img{:src => avatar}
