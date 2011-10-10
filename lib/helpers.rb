@@ -29,4 +29,14 @@ helpers do
     return str
   end
 
+  def respond_with_stats(site)
+    output = {:site => site.domain, :visits => site.visits_count, :created_at => site.created_at, :updated_at => site.updated_at}
+
+    respond_to do |format|
+      format.json { make_json(output) }
+      format.html { haml :'api/site' }
+    end
+  end
+
+
 end
