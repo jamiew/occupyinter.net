@@ -27,3 +27,7 @@ group :test do
   gem "rspec",              "2.6.0"
   gem "rack-test",          "0.6.0"
 end
+
+group :production do
+  gem "do_postgres"
+end
