@@ -1,0 +1,28 @@
+<html>
+<body>
+
+
+
+<h1 id="occupy-uuid">Loading...</h1>
+<img id="occupy-avatar" src="http://www.loremipsum.net/pixelgif/pics/pixel.gif" />
+
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+  console.log("document ready");
+  // TODO execute jsonp callback
+});
+
+function load_protest(data){
+  document.getElementById('occupy-avatar').src = "http://occupyinternet.heroku.com/avatars/" + data.avatar + ".gif";
+  document.getElementById('occupy-uuid').innerHTML = data.uuid.slice(0,8);
+};
+</script>
+
+
+<script type="text/javascript" src="http://occupyinternet.heroku.com/site.json?url=fffff.at&callback=load_protest"></script>
+
+</body>
+</html>
