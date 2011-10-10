@@ -6,6 +6,8 @@ helpers do
 
   def get_site(url)
     url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
+    url = url.gsub(/^http\:\/\//,'') if url =~ /^http\:\/\//
+    url = url.gsub(/^www\./,'') if url =~ /^www\./
     return make_error("Invalid site URL") if url.blank?
 
     site = Site.find_by_domain(url) rescue nil
