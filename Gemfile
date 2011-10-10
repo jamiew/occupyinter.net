@@ -15,7 +15,9 @@ gem "dm-timestamps",        "0.10.2"
 gem "dm-types",             "0.10.2"
 gem "dm-validations",       "0.10.2"
 
-
+group :development, :test do
+  gem "do_sqlite3"
+end
 
 group :test do
   gem "rspec",              "2.6.0"
