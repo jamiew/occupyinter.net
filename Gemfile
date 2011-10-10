@@ -15,6 +15,10 @@ gem "dm-timestamps",        "0.10.2"
 gem "dm-types",             "0.10.2"
 gem "dm-validations",       "0.10.2"
 
+group :development do
+  gem "shotgun"
+end
+
 group :development, :test do
   gem "do_sqlite3"
 end
