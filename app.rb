@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'digest/sha1'
 
 configure do |config|
   set :sessions, true
