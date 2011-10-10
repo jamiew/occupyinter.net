@@ -3,4 +3,6 @@
 .bundle
 .gems
 config.ru
+log/*.log
 settings.yml
+
