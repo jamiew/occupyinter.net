@@ -9,10 +9,7 @@ helpers do
   end
 
   def request_avatar
-    puts "request_avatar=#{request.cookies['avatar'].inspect}"
     @request_avatar ||= request.cookies['avatar'] || generate_and_set_avatar
-    puts "...@request_avatar=#{@request_avatar.inspect}"
-    @request_avatar
   end
 
   def generate_uuid
@@ -81,6 +78,7 @@ helpers do
   def respond_with_stats(site)
     output = {
       :uuid => request_uuid,
+      :avatar => request_avatar,
       :site => site.domain,
       :visits => site.visits_count,
       :uniques => site.unique_visits_count,
