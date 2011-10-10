@@ -4,7 +4,18 @@ helpers do
     Sinatra::Application.environment.to_s != 'production'
   end
 
+  def set_cookie(key, value, opts={})
+    puts "Setting cookie: #{key} => #{value}"
+    # TODO need to ensure setting HttpOnly
+    # FIXME with headers not working?
+    # domain = request.host
+    # expires = Time.now + (60 * 60 * 24 * 30 * 365 * 50) # 50 years
+    # response.set_cookie(key, {:value => value.to_s, :path => '/', :domain => domain, :expires => expires}.merge(opts))
+    response.set_cookie(key, value)
+  end
+
   def request_uuid
+    puts "request_uuid=#{@request_uuid}"
     @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
   end
 
@@ -19,31 +30,22 @@ helpers do
 
   def generate_and_set_uuid
     value = generate_uuid
-    set_uuid_cookie(value)
+    set_uuid(value)
     value
   end
 
-  def set_cookie(key, value, opts={})
-    puts "Setting cookie: #{key} => #{value}"
-    domain = request.host
-    expires = Time.now + (60 * 60 * 24 * 30 * 365 * 50) # 50 years
-    # FIXME not working?
-    # response.set_cookie(key, {:value => value.to_s, :path => '/', :domain => domain, :expires => expires}.merge(opts))
-    response.set_cookie(key, value)
-  end
-
-  def set_uuid_cookie(value)
-    set_cookie("uuid", value, :http => true)
+  def set_uuid(value)
+    set_cookie("uuid", value)
   end
 
   def generate_and_set_avatar
     value = "1" # TODO randomize based on uuid
-    set_avatar_cookie(value)
+    set_avatar(value)
     value
   end
 
-  def set_avatar_cookie(value)
-    set_cookie("avatar", value, :http => true)
+  def set_avatar(value)
+    set_cookie("avatar", value)
   end
 
 
