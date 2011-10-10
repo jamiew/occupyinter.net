@@ -3,7 +3,6 @@
 .bundle
 .gems
 *.sqlite3
-config.ru
 log/*.log
 settings.yml
 
