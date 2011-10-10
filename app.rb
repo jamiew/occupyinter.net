@@ -14,6 +14,7 @@ configure do |config|
 
   configatron.configure_from_yaml("#{ROOT}/settings.yml", :hash => Sinatra::Application.environment.to_s)
 
+  DataMapper::Logger.new(STDOUT, :debug)
   DataMapper.setup(:default, configatron.db_connection.gsub(/ROOT/, ROOT))
   DataMapper.auto_upgrade!
 end
