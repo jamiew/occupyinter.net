@@ -20,7 +20,7 @@ group :development do
 end
 
 group :development, :test do
-  # gem "do_sqlite3",         :require => false
+  gem "do_sqlite3",         :require => false
 end
 
 group :test do
