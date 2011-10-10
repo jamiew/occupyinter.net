@@ -28,8 +28,6 @@ GEM
       dm-core (~> 0.10.2)
     do_mysql (0.10.2)
       data_objects (= 0.10.2)
-    do_postgres (0.10.2)
-      data_objects (= 0.10.2)
     do_sqlite3 (0.10.2)
       data_objects (= 0.10.2)
     extlib (0.9.15)
@@ -73,7 +71,6 @@ DEPENDENCIES
   dm-types (= 0.10.2)
   dm-validations (= 0.10.2)
   do_mysql (= 0.10.2)
-  do_postgres
   do_sqlite3
   haml (= 3.1.2)
   json (= 1.4.6)
