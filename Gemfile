@@ -29,5 +29,5 @@ group :test do
 end
 
 group :production do
-  # gem "do_postgres"
+  gem "do_postgres", :require => false
 end
