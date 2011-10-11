@@ -16,7 +16,7 @@ gem "dm-types",             "0.10.2"
 gem "dm-validations",       "0.10.2"
 
 group :development do
-  gem "shotgun"
+  gem "shotgun",            "0.9"
 end
 
 group :development, :test do
@@ -29,5 +29,5 @@ group :test do
 end
 
 group :production do
-  gem "do_postgres", :require => false
+  # gem "do_postgres", :require => false
 end

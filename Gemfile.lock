@@ -28,8 +28,6 @@ GEM
       dm-core (~> 0.10.2)
     do_mysql (0.10.2)
       data_objects (= 0.10.2)
-    do_sqlite3 (0.10.2)
-      data_objects (= 0.10.2)
     extlib (0.9.15)
     fastercsv (1.5.4)
     haml (3.1.2)
@@ -71,11 +69,10 @@ DEPENDENCIES
   dm-types (= 0.10.2)
   dm-validations (= 0.10.2)
   do_mysql (= 0.10.2)
-  do_sqlite3
   haml (= 3.1.2)
   json (= 1.4.6)
   rack-test (= 0.6.0)
   rspec (= 2.6.0)
-  shotgun
+  shotgun (= 0.9)
   sinatra (= 1.2.6)
   sinatra-respond_to (= 0.7.0)

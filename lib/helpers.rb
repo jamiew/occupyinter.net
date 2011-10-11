@@ -5,7 +5,7 @@ helpers do
   end
 
   def set_cookie(key, value, opts={})
-    puts "Setting cookie: #{key} => #{value}"
+    # puts "Setting cookie: #{key} => #{value}"
     # TODO need to ensure setting HttpOnly
     # FIXME with headers not working?
     # domain = request.host
@@ -15,7 +15,6 @@ helpers do
   end
 
   def request_uuid
-    puts "request_uuid=#{@request_uuid}"
     @request_uuid ||= params[:uuid] unless params[:uuid].blank? # Play nice w/ extensions...
     @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
   end

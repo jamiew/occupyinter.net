@@ -5,4 +5,4 @@
 *.sqlite3
 log/*.log
 settings.yml
-
+s3.yml
