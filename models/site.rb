@@ -41,7 +41,6 @@ class Site
     uuids = protestor_uuids
     visits = Visit.all(:site_id => self.id)
     user_ids = visits.map(&:user_id).compact.uniq
-    # TODO strip/expire any visits that are Too Old
     users = User.all(:id => user_ids)
     @protestors = users
   end
@@ -58,7 +57,30 @@ class Site
     # TODO use time-based expiry and/or sorted-sets
     # so we only get protestors who were active in the last N minutes
     puts "add_protestor =========> user=#{user.inspect}"
+    self.visits_count = self.visits_count + 1 # FIXME DM needs increment/decrement
+    self.save!
+
     redis.sadd(protestors_key, user.id)
+  end
+
+  def remove_protestor(user)
+    self.visits_count = self.visits_count - 1 # FIXME DM needs increment/decrement
+    self.save!
+
+    redis.srem(protestors_key, user.id)
+  end
+
+  def flush_old_visits
+    expiry = 30 * 24 * 60 * 60 * 60 # 30.days
+    visits = Visit.all(:site_id => self.id)
+    puts "Time.now=#{Time.now.to_i}"
+    expired_visits = visits.select{|v| (Time.now - expiry) > Time.parse(v.updated_at.to_s) }
+    puts "#{expired_visits.length} expired visits"
+    expired_visits.each do |visit|
+      # TODO do something
+      # users = visits.map(&:user)
+
+    end
   end
 
 end
