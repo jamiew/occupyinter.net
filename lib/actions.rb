@@ -22,6 +22,7 @@ get "/join_protest" do
   # TODO if existing record, bump its updated_at or expires_at
   @site.visits_count += 1
 
+  @site.flush_protestors if params[:flush].to_s == 'true'
   @site.add_protestor(@user)
 
   respond_with_stats(@site)
