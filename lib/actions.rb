@@ -74,7 +74,14 @@ end
 # TODO make this PUT
 get "/settings" do
   # puts "params => #{params.inspect}"
+  @user = User.first_or_create(:uuid => request_uuid)
+
+  @user.avatar = params[:avatar]
   set_cookie('avatar', params[:avatar])
+  @user.tagline = params[:tagline]
+  set_cookie('tagline', params[:tagline])
+  @user.save!
+
   respond_to do |format|
     format.json { make_json(response.cookies['settings']) }
     format.html { redirect '/' }
