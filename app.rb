@@ -1,9 +1,13 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/redis'
 require 'digest/sha1'
 
 configure do |config|
   set :sessions, true
+
+  # TODO namespace all redis calls, or pick a genuinely unique DB number
+  set :redis, 'redis://localhost:6379/1'
 
   ROOT = File.expand_path(File.dirname(__FILE__))
 
@@ -15,7 +19,7 @@ configure do |config|
 
   configatron.configure_from_yaml("#{ROOT}/settings.yml", :hash => Sinatra::Application.environment.to_s)
 
-  # DataMapper::Logger.new(STDOUT, :debug)
+  DataMapper::Logger.new(STDOUT, :debug)
   DataMapper.setup(:default, ENV["DATABASE_URL"] || configatron.db_connection.gsub(/ROOT/, ROOT))
   DataMapper.auto_upgrade!
 end
@@ -23,7 +27,7 @@ end
 
 # 404 errors
 not_found do
-  @title ||= 'Where\'d it go!?'
+  @title ||= '404 File Not Found'
   @error ||= 'Sorry, but the page you were looking for could not be found.'
 
   respond_to do |format|
@@ -42,4 +46,6 @@ end
 
 # Require before
 before do
+  puts
+  puts "*** [#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] #{request.path} #{params.inspect}"
 end

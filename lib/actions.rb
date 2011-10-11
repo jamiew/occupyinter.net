@@ -5,31 +5,74 @@ put "/count" do
   @visit = Visit.first(:uuid => request_uuid, :site_id => @site.id) rescue nil
 
   if @visit.blank?
-    @visit = Visit.create(:uuid => params[:uuid], :site_id => @site.id)
+    @visit = create_visit_from_cookie(@site)
     @site.visits_count += 1
     @site.save
   end
 
+  @site.protestors = []
+  # user = {:uuid => request_uuid, :avatar => request_avatar, :tagline => request_tagline}
+  @site.add_protestor(request_uuid)
+
   respond_with_stats(@site)
 end
 
-# Site stats
+# Site info: stats, crowd
 get "/site" do
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
   respond_with_stats(@site)
 end
 
+def respond_with_stats(site)
+  puts "protestors=====>"
+  puts @site.protestors.inspect
+  puts "protester_users====>"
+  puts @site.protestor_users.inspect
+
+  output = {
+    :site => site.domain,
+    :visits => site.visits_count,
+    :uniques => site.unique_visits_count,
+    :protestor_uuids => @site.protestors,
+    :protestors => @site.protestor_users,
+
+    :uuid => request_uuid,
+    :avatar => request_avatar,
+    :tagline => request_tagline,
+  }
+
+  respond_to do |format|
+    format.json { make_json(output) }
+    format.html { haml :'api/site' }
+  end
+end
+
+
 # Avatar selector
 get "/" do
-  puts request.cookies.inspect
+  @site = Site.find_by_domain(request.host)
+  @site ||= Site.new(:domain => request.host)
+  @site.save! if @site.new? # FIXME how to do find_or_create_by in DM?
+
+  @visit = create_visit_from_cookie(@site)
+  puts "new visit=#{@visit.inspect}"
+
+  @protestors = @site.protestors
+  puts "protestors=#{@protestors.inspect}"
+
   respond_to do |format|
     format.html { haml :avatars }
   end
 end
 
-# Set avatar
-# TODO make this POST/PUT
+def create_visit_from_cookie(site)
+  Visit.create(:uuid => request_uuid, :avatar => request_avatar, :tagline => request_tagline, :site_id => site.id)
+
+end
+
+# Set user config options: avatar, tagline, etc
+# TODO make this PUT
 get "/settings" do
   puts "params => #{params.inspect}"
   set_cookie('avatar', params[:avatar])

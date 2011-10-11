@@ -1,32 +1,42 @@
 :css
   body { font-family: sans-serif; padding: 30px; }
-  h1, h2 { margin: 0px; }
-  h1 { margin-bottom: 10px; }
+  h1, h2 { margin: 0 0 5px 0; }
+  #instructions { width: 300px; font-size: 10pt; }
+  #instructions ol { padding: 0; margin: 0 0 0 20px; }
+  #instructions a { display: inline; border: 0; }
+  #avatars { padding-top: 25px; }
   .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; }
-  .avatar, .avatar a, .avatar img { width: 200px; height: 200px; }
+  .avatar, .avatar a, .avatar img { width: 100px; height: 100px; }
   .avatar a { display: block; border: 5px solid transparent; }
   .avatar a:hover { border-color: #f0f; }
   .avatar a.selected { border-color: #ff0; }
-  #instructions { width: 400px; }
-  #instructions a { display: inline; }
+  #signage { clear: both; padding-top: 30px; }
+  #signage input { font-size: 15pt; padding: 10px; }
 
 %h2
   Want to protest?
   But don't want to leave your house?
 %h1 Protest on the Internet instead
 
-.avatar#instructions
+#instructions
   %ol
     %li Choose your avatar
-    %li Install the <a href="javascript:alert('link here')">browser addon</a>
-    %li Visit websites and join the protest crowd
+    / %li Install the <a href="javascript:alert('link here')">browser addon</a>
+    %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
     %li Change the world, man
 
+#avatars
+  %h2 Your Avatar
+  - avatars = (1..11)
+  - avatars.each do |i|
+    - avatar = "/avatars/#{i}.gif"
+    .avatar
+      %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
+        %img{:src => avatar}
 
-- avatars = (1..11)
-
-- avatars.each do |i|
-  - avatar = "/avatars/#{i}.gif"
-  .avatar
-    %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
-      %img{:src => avatar}
+#signage
+  %h2 Your Sign
+  %form{:method => 'GET', :action => '/settings'}
+    %label{:for => 'tagline'}
+    %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
+    %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
