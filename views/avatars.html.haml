@@ -4,7 +4,6 @@
   #instructions { width: 300px; font-size: 10pt; }
   #instructions ol { padding: 0; margin: 0 0 0 20px; }
   #instructions a { display: inline; border: 0; }
-  #avatars { padding-top: 25px; }
   .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; }
   .avatar, .avatar a, .avatar img { width: 100px; height: 100px; }
   .avatar a { display: block; border: 5px solid transparent; }
@@ -13,30 +12,65 @@
   #signage { clear: both; padding-top: 30px; }
   #signage input { font-size: 15pt; padding: 10px; }
 
+  #container { width: 840px; }
+  #customize, #demo { width: 400px; float: left; padding-top: 25px; }
+  #customize { padding-right: 30px; }
+  #footer { clear: both; }
+
 %h2
   Want to protest?
   But don't want to leave your house?
 %h1 Protest on the Internet instead
 
-#instructions
-  %ol
-    %li Choose your avatar
-    / %li Install the <a href="javascript:alert('link here')">browser addon</a>
-    %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
-    %li Change the world, man
+#container
+  #instructions
+    %ol
+      %li Choose your avatar
+      / %li Install the <a href="javascript:alert('link here')">browser addon</a>
+      %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
+      %li Change the world, man
 
-#avatars
-  %h2 Your Avatar
-  - avatars = (1..11)
-  - avatars.each do |i|
-    - avatar = "/avatars/#{i}.gif"
-    .avatar
-      %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
-        %img{:src => avatar}
+  #customize
+    #avatars
+      %h2 Your Avatar
+      - avatars = (1..11)
+      - avatars.each do |i|
+        - avatar = "/avatars/#{i}.gif"
+        .avatar
+          %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
+            %img{:src => avatar}
 
-#signage
-  %h2 Your Sign
-  %form{:method => 'GET', :action => '/settings'}
-    %label{:for => 'tagline'}
-    %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
-    %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
+    #signage
+      %h2 Your Sign
+      %form{:method => 'GET', :action => '/settings'}
+        %label{:for => 'tagline'}
+        %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
+        %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
+
+
+  #demo
+    / Test out our embed on ourselves!
+    :javascript
+      function load_protest(data){
+        document.getElementById('occupy-site').innerHTML = data.site;
+        document.getElementById('occupy-uuid').innerHTML = data.uuid.slice(0,8);
+        document.getElementById('occupy-tagline').innerHTML = data.tagline;
+        document.getElementById('occupy-avatar').src = data.avatar;
+
+        document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count;
+        document.getElementById('occupy-protestor_avatars').innerHTML = data.protestor_avatars;
+      };
+
+    :plain
+      <h2>Demo</h2>
+      <div><strong>site:</strong> <span id="occupy-site">...</span></div>
+      <div><strong>protestor count:</strong> <span id="occupy-protestor_count">...</span></div>
+      <div><strong>protestor avatars:</strong> <span id="occupy-protestor_avatars">...</span></div>
+
+      <div><strong>your uuid:</strong> <span id="occupy-uuid">...</span></div>
+      <div><strong>your tagline:</strong> <span id="occupy-tagline">...</span></div>
+      <div><img id="occupy-avatar" src="http://www.loremipsum.net/pixelgif/pics/pixel.gif" /></div>
+      <script type="text/javascript" src="/join_protest.json?callback=load_protest&url=foobar.com"></script>
+
+  #footer
+    / nothing to see here

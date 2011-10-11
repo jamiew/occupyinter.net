@@ -47,5 +47,5 @@ end
 # Require before
 before do
   puts
-  puts "*** [#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] #{request.path} #{params.inspect}"
+  puts "*** [#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] #{request.url} #{params.inspect}"
 end

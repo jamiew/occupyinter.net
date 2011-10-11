@@ -1,8 +1,16 @@
 
 # Log a visit
+# FIXME not normal to respect the redirect here, TODO change yo addons
+# this needs to be a GET to be javascript widget friendly
 put "/count" do
+  query = request.query_string.blank? ? '' : "?"+request.query_string
+  redirect('/join_protest'+query)
+end
+
+get "/join_protest" do
+  params[:url] ||= request.referrer
+  return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
-  request_uuid
 
   @user = User.first_or_create(:uuid => request_uuid)
   @visit = Visit.first(:uuid => @user.uuid, :site_id => @site.id) rescue nil
@@ -21,7 +29,8 @@ put "/count" do
 end
 
 # Site info: stats, crowd
-get "/site" do
+get /\/(site|stats)/ do
+  params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
   respond_with_stats(@site)
@@ -30,17 +39,20 @@ end
 def respond_with_stats(site)
   puts "protestors=====>"
   puts @site.protestors.inspect
-  puts "protester_users====>"
-  puts @site.protestor_users.inspect
+
+  puts request
+  basepath = ["http://", request.host_with_port].join
 
   output = {
     :site => site.domain,
     :visits => site.visits_count,
     :uniques => site.unique_visits_count,
-    :protestors => @site.protestors,
+    :protestors => @site.protestors(basepath), # FIXME stop using basepath
+    :protestor_count => @site.protestor_count,
+    :protestor_avatars => @site.protestors.map{|x| x[:avatar] }, # REMOVEME completely
 
     :uuid => request_uuid,
-    :avatar => request_avatar,
+    :avatar => Site.fix_avatar(request_avatar, basepath), # FIXME stop using basepath
     :tagline => request_tagline,
   }
 
