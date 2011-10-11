@@ -8,9 +8,9 @@ if ENV['RACK_ENV'].to_s != 'production'
   set :root,        root_dir
   disable :run
 
-  log = File.new(root_dir + "/log/#{Sinatra::Application.environment.to_s}.log", "a+")
-  STDOUT.reopen(log)
-  STDERR.reopen(log)
+  # log = File.new(root_dir + "/log/#{Sinatra::Application.environment.to_s}.log", "a+")
+  # STDOUT.reopen(log)
+  # STDERR.reopen(log)
 end
 
 require "#{root_dir}/app"
