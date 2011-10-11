@@ -7,7 +7,7 @@ configure do |config|
   set :sessions, true
 
   # TODO namespace all redis calls, or pick a genuinely unique DB number
-  set :redis, 'redis://localhost:6379/1'
+  set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/1'
 
   ROOT = File.expand_path(File.dirname(__FILE__))
 
