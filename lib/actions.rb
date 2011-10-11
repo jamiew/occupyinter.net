@@ -76,10 +76,11 @@ get "/settings" do
   # puts "params => #{params.inspect}"
   @user = User.first_or_create(:uuid => request_uuid)
 
-  @user.avatar = params[:avatar] unless params[:avatar].blank?
-  set_cookie('avatar', params[:avatar])
-  @user.tagline = params[:tagline] unless params[:tagline].blank?
-  set_cookie('tagline', params[:tagline])
+  [:avatar, :tagline].each do |field|
+    next if params[field].blank?
+    @user.send("#{field}=", params[field])
+    set_cookie(field.to_s, params[field])
+  end
   @user.save!
 
   respond_to do |format|

@@ -17,18 +17,19 @@
   #customize { padding-right: 30px; }
   #footer { clear: both; }
 
-%h2
-  Want to protest?
-  But don't want to leave your house?
-%h1 Protest on the Internet instead
 
 #container
-  #instructions
-    %ol
-      %li Choose your avatar
-      / %li Install the <a href="javascript:alert('link here')">browser addon</a>
-      %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
-      %li Change the world, man
+  / #intro
+  /   %h2
+  /     Want to protest?
+  /     But don't want to leave your house?
+  /   %h1 Protest on the Internet instead
+  /
+  / #instructions
+  /   %ol
+  /     %li Choose your avatar
+  /     %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
+  /     %li Change the world, man
 
   #customize
     #avatars
@@ -39,9 +40,8 @@
         .avatar
           %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
             %img{:src => avatar}
-
     #signage
-      %h2 Your Sign
+      %h2 Your Sign Text
       %form{:method => 'GET', :action => '/settings'}
         %label{:for => 'tagline'}
         %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
