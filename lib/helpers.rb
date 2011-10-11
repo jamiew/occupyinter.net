@@ -15,12 +15,17 @@ helpers do
   end
 
   def request_uuid
-    @request_uuid ||= params[:uuid] unless params[:uuid].blank? # Play nice w/ extensions...
     @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
   end
 
   def request_avatar
+    request.cookies['avatar'] = nil if request.cookies['avatar'] && request.cookies['avatar'].empty? # FIXME don't allow blanks
     @request_avatar ||= request.cookies['avatar'] || generate_and_set_avatar
+  end
+
+  def request_tagline
+    default = 'hack the planet'
+    @request_tagline ||= request.cookies['tagline'] || (set_cookie('tagline', default) && default)
   end
 
   def generate_uuid
@@ -75,23 +80,6 @@ helpers do
     str = obj.to_json
     str = "#{params[:callback]}(#{str})" unless params[:callback].blank?
     return str
-  end
-
-  def respond_with_stats(site)
-    output = {
-      :uuid => request_uuid,
-      :avatar => request_avatar,
-      :site => site.domain,
-      :visits => site.visits_count,
-      :uniques => site.unique_visits_count,
-      :created_at => site.created_at,
-      :updated_at => site.updated_at
-    }
-
-    respond_to do |format|
-      format.json { make_json(output) }
-      format.html { haml :'api/site' }
-    end
   end
 
 end

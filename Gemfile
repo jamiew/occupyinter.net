@@ -5,6 +5,7 @@ gem "configatron",          "2.8.0"
 gem "haml",                 "3.1.2"
 gem "json",                 "1.4.6"
 gem "sinatra-respond_to",   "0.7.0"
+gem "sinatra-redis"
 
 gem "data_objects",         "0.10.2"
 gem "do_mysql",             "0.10.2"
@@ -20,7 +21,7 @@ group :development do
 end
 
 group :development, :test do
-  # gem "do_sqlite3",         :require => false
+  gem "do_sqlite3",         :require => false
 end
 
 group :test do
