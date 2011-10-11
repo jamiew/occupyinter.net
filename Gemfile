@@ -6,7 +6,6 @@ gem "haml",                 "3.1.2"
 gem "json",                 "1.4.6"
 gem "sinatra-respond_to",   "0.7.0"
 gem "sinatra-redis"
-gem "SystemTimer"
 
 gem "data_objects",         "0.10.2"
 gem "do_mysql",             "0.10.2"

@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    SystemTimer (1.2.3)
     addressable (2.2.6)
     bcrypt-ruby (2.1.4)
     configatron (2.8.0)
@@ -69,7 +68,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  SystemTimer
   configatron (= 2.8.0)
   data_objects (= 0.10.2)
   dm-aggregates (= 0.10.2)
