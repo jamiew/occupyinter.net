@@ -3,7 +3,7 @@ require 'sinatra'
 
 root_dir = File.dirname(__FILE__)
 
-if RACK_ENV != 'production'
+if ENV['RACK_ENV'].to_s != 'production'
   puts "Development mode..."
   set :environment, :development
   set :root,        root_dir
