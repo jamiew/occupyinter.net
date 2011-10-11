@@ -27,9 +27,6 @@ end
 
 # Avatar selector
 get "/" do
-  puts "my uuid: #{@request_uuid}"
-  request_uuid
-  puts "my uuid2: #{@request_uuid}"
   @uuid = UUID.first_or_create(:uuid => @request_uuid)
   puts @uuid.inspect
 
