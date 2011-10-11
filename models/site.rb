@@ -11,15 +11,11 @@ class Site
   validates_is_unique :domain
 
   has n, :visits
-
-  # FIXME REMOVEME gross hack
-  def self.fix_avatar(avatar, basepath=nil)
-    avatar.to_i > 0 ? "#{basepath}/avatars/#{avatar}.gif" : avatar
-  end
+  # has n, :users, :through => :visits
 
   def unique_visits_count
     # FIXME datampper can't do .count(distinct...) or .count.group_by() ?!
-    Visit.count(:uuid, :conditions => {:site_id => self.id})
+    Visit.count(:user_id, :conditions => {:site_id => self.id})
   end
 
   def protestors_key
@@ -38,27 +34,31 @@ class Site
     redis.smembers(protestors_key)
   end
 
-  # Turn protestors into Users (Visits)
-  # TODO refactor this into actual User objects. probably
+  # Turn protestors into Users
   def protestors(basepath=nil)
+    return @protestors unless @protestors.nil? # memoized
+
     uuids = protestor_uuids
-    visits = uuids.map{|uuid| Visit.first(:site_id => self.id, :uuid => uuid) }.compact
-    visits.map{|v| {:uuid => v.uuid, :avatar => Site.fix_avatar(v.avatar, basepath), :tagline => v.tagline} }
+    visits = Visit.all(:site_id => self.id)
+    user_ids = visits.map(&:user_id).compact.uniq
+    # TODO strip/expire any visits that are Too Old
+    users = User.all(:id => user_ids)
+    @protestors = users
   end
 
-  def protestors=(uuids)
+  def protestors=(users)
     redis.del(protestors_key)
     # redis.multi
-    uuids.each{|uuid| add_protestor(uuid) }
+    users.each{|user| add_protestor(user) }
     # redis.exec
-    uuids
+    users
   end
 
   def add_protestor(user)
     # TODO use time-based expiry and/or sorted-sets
     # so we only get protestors who were active in the last N minutes
-    puts "add_protestor =========> user.uuid=#{user.uuid.inspect}"
-    redis.sadd(protestors_key, user.uuid)
+    puts "add_protestor =========> user=#{user.inspect}"
+    redis.sadd(protestors_key, user.id)
   end
 
 end

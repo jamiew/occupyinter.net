@@ -13,16 +13,15 @@ get "/join_protest" do
   @site = get_site(params[:url])
 
   @user = User.first_or_create(:uuid => request_uuid)
-  @visit = Visit.first(:uuid => @user.uuid, :site_id => @site.id) rescue nil
+  # FIXME i want "first_or_initialize" then only save if new?.. fuckin DM
+  @user.avatar ||= request_avatar
+  @user.tagline ||= request_tagline
+  @user.save
 
-  if @visit.blank?
-    @visit = create_visit_from_cookie(@site)
-    @site.visits_count += 1
-    @site.save
-  end
+  @visit = Visit.first_or_create(:user_id => @user.id, :site_id => @site.id)
+  # TODO if existing record, bump its updated_at or expires_at
+  @site.visits_count += 1
 
-  @site.protestors = []
-  # user = {:uuid => request_uuid, :avatar => request_avatar, :tagline => request_tagline}
   @site.add_protestor(@user)
 
   respond_with_stats(@site)
@@ -40,19 +39,19 @@ def respond_with_stats(site)
   puts "protestors=====>"
   puts @site.protestors.inspect
 
-  puts request
   basepath = ["http://", request.host_with_port].join
 
   output = {
     :site => site.domain,
     :visits => site.visits_count,
     :uniques => site.unique_visits_count,
-    :protestors => @site.protestors(basepath), # FIXME stop using basepath
+
+    :protestors => @site.protestors(basepath).map{|u| u.public_attributes(basepath) }, # FIXME stop using basepath
     :protestor_count => @site.protestor_count,
-    :protestor_avatars => @site.protestors.map{|x| x[:avatar] }, # REMOVEME completely
+    :protestor_avatars => @site.protestors.map{|x| User.fix_avatar(x.avatar, basepath) }, # REMOVEME completely
 
     :uuid => request_uuid,
-    :avatar => Site.fix_avatar(request_avatar, basepath), # FIXME stop using basepath
+    :avatar => User.fix_avatar(request_avatar, basepath), # FIXME stop using basepath
     :tagline => request_tagline,
   }
 
@@ -65,25 +64,9 @@ end
 
 # Avatar selector
 get "/" do
-  @user = User.first_or_create(:uuid => request_uuid)
-  @site = Site.find_by_domain(request.host)
-  @site ||= Site.new(:domain => request.host)
-  @site.save! if @site.new? # FIXME how to do find_or_create_by in DM?
-
-  @visit = create_visit_from_cookie(@site)
-  puts "new visit=#{@visit.inspect}"
-
-  @protestors = @site.protestors
-  puts "protestors=#{@protestors.inspect}"
-
   respond_to do |format|
     format.html { haml :avatars }
   end
-end
-
-def create_visit_from_cookie(site)
-  Visit.create(:uuid => request_uuid, :avatar => request_avatar, :tagline => request_tagline, :site_id => site.id)
-
 end
 
 # Set user config options: avatar, tagline, etc
