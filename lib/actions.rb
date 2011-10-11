@@ -53,7 +53,7 @@ end
 
 # Avatar selector
 get "/" do
-  @user = UUID.first_or_create(:uuid => request_uuid)
+  @user = User.first_or_create(:uuid => request_uuid)
   @site = Site.find_by_domain(request.host)
   @site ||= Site.new(:domain => request.host)
   @site.save! if @site.new? # FIXME how to do find_or_create_by in DM?
