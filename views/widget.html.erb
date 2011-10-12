@@ -26,9 +26,9 @@ function load_protest(data){
       avatar_output += '</div>';
     }
     avatar_output += '<img src="'+protestor.avatar+'" />';
-    if(protestor.tagline != '' && protestor.tagline != undefined){
-      avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
-    }
+    // if(protestor.tagline != '' && protestor.tagline != undefined){
+    //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
+    // }
     avatar_output += '</div>';
   }
   document.getElementById('occupy-protestor_avatars').innerHTML = avatar_output;
