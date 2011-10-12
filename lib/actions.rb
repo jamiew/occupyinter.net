@@ -19,9 +19,9 @@ get "/join_protest" do
   @user.save
 
   @visit = Visit.first_or_create(:user_id => @user.id, :site_id => @site.id)
-  # TODO if existing record, bump its updated_at or expires_at
-  @site.visits_count += 1
+  @visit.touch
 
+  @site.flush_old_visits
   @site.flush_protestors if params[:flush].to_s == 'true'
   @site.add_protestor(@user)
 

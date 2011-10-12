@@ -28,8 +28,9 @@ helpers do
     @request_tagline ||= request.cookies['tagline'] || (set_cookie('tagline', default) && default)
   end
 
+  UUID_SALT = "ourc4azyrandomSALTv3ryl0ng__9384234" # Don't change this
   def generate_uuid
-    inputs = [request.ip, request.user_agent]
+    inputs = [request.ip, request.user_agent, UUID_SALT]
     Digest::SHA1.hexdigest(inputs.join('_'))
   end
 

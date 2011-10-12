@@ -1,20 +1,22 @@
 :css
   body { font-family: sans-serif; padding: 30px; }
-  h1, h2 { margin: 0 0 5px 0; }
+  h1, h2 { margin: 20px 0 5px 0; }
   #instructions { width: 300px; font-size: 10pt; }
   #instructions ol { padding: 0; margin: 0 0 0 20px; }
   #instructions a { display: inline; border: 0; }
-  .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; }
+  .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 17pt; font-weight: bold; }
   .avatar, .avatar a, .avatar img { width: 100px; height: 100px; }
   .avatar a { display: block; border: 5px solid transparent; }
   .avatar a:hover { border-color: #f0f; }
   .avatar a.selected { border-color: #ff0; }
+  .bigavatar, .bigavatar a, .bigavatar img { width: 220px; height: 220px; }
+  .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
   #signage { clear: both; padding-top: 30px; }
   #signage input { font-size: 15pt; padding: 10px; }
 
   #container { width: 840px; }
-  #customize, #demo { width: 400px; float: left; padding-top: 25px; }
-  #customize { padding-right: 30px; }
+  #demo { width: 550px; float: left; padding-top: 25px; border-right: 1px solid #f9f9f9; }
+  #customize { position: absolute; margin-top: 150px; margin-left: 50px; padding: 10px 20px; background-color: #f9f9f9; border: 1px solid #dfdfdf; }
   #footer { clear: both; }
 
 
@@ -31,7 +33,20 @@
   /     %li Visit <a href="http://fffff.at">fffff.at</a> and join the crowd
   /     %li Change the world, man
 
-  #customize
+  #demo
+    / Test out our embed on ourselves!
+
+    %h1 Occupy Internet
+
+    %h2 Embed Code
+    %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :style => 'width: 400px; background-color: #efefef;', :click => "this.select()"}
+      == <script src="http://#{request.host_with_port}/embed.js"></script>
+
+    %h2 Demo
+    = erb :'widget'
+
+
+  #customize{:style => 'display: none;'}
     #avatars
       %h2 Your Avatar
       - avatars = (1..11)
@@ -47,38 +62,6 @@
         %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
         %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
 
-
-  #demo
-    / Test out our embed on ourselves!
-    :javascript
-      function load_protest(data){
-        document.getElementById('occupy-site').innerHTML = data.site;
-        document.getElementById('occupy-uuid').innerHTML = data.uuid.slice(0,8);
-        document.getElementById('occupy-tagline').innerHTML = data.tagline;
-        document.getElementById('occupy-avatar').src = data.avatar;
-
-        document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count;
-        var avatar_imgs = '';
-        for(i = 0; i < data.protestor_avatars.length; i++){
-          avatar_imgs += '<img src="'+data.protestor_avatars[i]+'" />';
-        }
-        document.getElementById('occupy-protestor_avatars').innerHTML = avatar_imgs;
-      };
-
-    :plain
-      <h2>Javascript Widget Demo</h2>
-
-      <br />
-      <div><strong>your uuid:</strong> <span id="occupy-uuid">...</span></div>
-      <div><strong>your tagline:</strong> <span id="occupy-tagline">...</span></div>
-      <div><img id="occupy-avatar" src="http://www.loremipsum.net/pixelgif/pics/pixel.gif" /></div>
-
-      <br />
-      <div><strong>site:</strong> <span id="occupy-site">...</span></div>
-      <div><strong>protestor count:</strong> <span id="occupy-protestor_count">...</span></div>
-      <div><strong>protestor avatars:</strong><br /> <span id="occupy-protestor_avatars">...</span></div>
-
-      <script type="text/javascript" src="/join_protest.json?callback=load_protest"></script>
-
   #footer
     / nothing to see here
+
