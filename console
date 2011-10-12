@@ -1,0 +1,3 @@
+#!/bin/sh
+# not supposed to need the ./
+bundle exec irb -r ./app.rb
