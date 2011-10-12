@@ -89,6 +89,14 @@ get "/settings" do
   end
 end
 
+get "/embed" do
+  respond_to do |format|
+    # widget = erb :widget, :format => :html
+    widget = "TODO";
+    format.js { "document.write(#{widget.to_json})" }
+  end
+end
+
 # Addon update URL
 get "/tools/update/:browser" do
   redirect "http://addons.gleuch.com/occupyinterenet/updates/#{params[:browser]}"

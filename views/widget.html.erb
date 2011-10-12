@@ -1,19 +1,31 @@
 <style type="text/css">
 #occupy-uuid { display: none; }
+#occupy-you { position: absolute; color: #aaa; background: #f0f0f0; opacity: 0.9; height: 20px; }
+#occupy-you a { color: #555; font-weight: normal; font-size: 9pt; display: block; padding: 5px 8px; }
+#occupy-site { float: left; display: inline; }
+#occupy-protestor_avatars { margin-top: 50px; }
+#occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 </style>
 
 <script type="text/javascript">
 function load_protest(data){
   // document.getElementById('occupy-uuid').innerHTML = data.uuid.slice(0,8);
-  document.getElementById('occupy-avatar').src = data.avatar;
-  document.getElementById('occupy-tagline').innerHTML = data.tagline;
+  // document.getElementById('occupy-avatar').src = data.avatar;
+  // document.getElementById('occupy-tagline').innerHTML = data.tagline;
 
   document.getElementById('occupy-site').innerHTML = data.site;
-  document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count;
+  document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count+" protestors";
   var avatar_output = '';
   for(i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
-    avatar_output += '<div class="avatar bigavatar"><img src="'+protestor.avatar+'" /><span class="tagline">'+protestor.tagline+'</span></div>';
+    if(protestor.uuid == data.uuid){
+      avatar_output += '<div id="occupy-you">';
+      avatar_output += '<a id="customize_button" href="javascript:toggle_customize(); return false">Customize Your Avatar</a>';
+      avatar_output += '</div>';
+    }
+    avatar_output += '<div class="avatar bigavatar">';
+    avatar_output += '<img src="'+protestor.avatar+'" /><span class="tagline">'+protestor.tagline+'</span>';
+    avatar_output += '</div>';
   }
   document.getElementById('occupy-protestor_avatars').innerHTML = avatar_output;
 };
@@ -29,15 +41,8 @@ function toggle_customize(){
 }
 </script>
 
-<br />
-<!-- <div><strong>your uuid:</strong> <span id="occupy-uuid">...</span></div> -->
-<div><strong>your avatar:</strong><br /> <img id="occupy-avatar" src="http://www.loremipsum.net/pixelgif/pics/pixel.gif" /></div>
-<div><strong>your tagline:</strong> <span id="occupy-tagline">...</span></div>
-<a id="customize_button" href="javascript:toggle_customize(); return false">Customize</a>
-
-<br /><br />
-<div><strong>site:</strong> <span id="occupy-site">...</span></div>
-<div><strong>protestor count:</strong> <span id="occupy-protestor_count">...</span></div>
-<div><strong>protestor avatars:</strong><br /> <span id="occupy-protestor_avatars">...</span></div>
-
+<div><strong><span id="occupy-site"></span></strong></div>
+<div><span id="occupy-protestor_count">Loading...</span></div>
+<br style="clear: both;" /><br />
+<div><span id="occupy-protestor_avatars"></span></div>
 <script type="text/javascript" src="/join_protest.json?callback=load_protest"></script>
