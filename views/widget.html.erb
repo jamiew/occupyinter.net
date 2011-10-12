@@ -1,7 +1,7 @@
 <style type="text/css">
 #occupy-uuid { display: none; }
-#occupy-you { position: absolute; color: #aaa; background: #f0f0f0; opacity: 0.9; height: 20px; }
-#occupy-you a { color: #555; font-weight: normal; font-size: 9pt; display: block; padding: 5px 8px; }
+#occupy-you { position: absolute; z-index: 5; color: #aaa; background: #f0f0f0; opacity: 0.9; font-family: sans-serif; padding-top: 5px; margin-top: 120px; }
+#occupy-you a { color: #555; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
 #occupy-site { float: left; display: inline; }
 #occupy-protestor_avatars { margin-top: 50px; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
@@ -18,12 +18,13 @@ function load_protest(data){
   var avatar_output = '';
   for(i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
+    avatar_output += '<div class="avatar bigavatar">';
     if(protestor.uuid == data.uuid){
       avatar_output += '<div id="occupy-you">';
-      avatar_output += '<a id="customize_button" href="javascript:toggle_customize(); return false">Customize Your Avatar</a>';
+      avatar_output += 'This is you!';
+      avatar_output += '<a id="customize_button" href="#" onclick="toggle_customize(); return false;">Customize Your Avatar</a>';
       avatar_output += '</div>';
     }
-    avatar_output += '<div class="avatar bigavatar">';
     avatar_output += '<img src="'+protestor.avatar+'" /><span class="tagline">'+protestor.tagline+'</span>';
     avatar_output += '</div>';
   }
