@@ -13,7 +13,7 @@ class User
 
   # FIXME REMOVEME gross hack
   def self.fix_avatar(avatar, basepath=nil)
-    avatar = (avatar =~ /\.(png|gif|jpg)$/ ? avatar : 'avatar.gif')
+    avatar = (avatar =~ /\.(png|gif|jpg)$/ ? avatar : avatar+(avatar.to_i > 3 ? '.png' : '.gif'))
     avatar.to_i > 0 ? "#{basepath}/avatars/#{avatar}" : avatar
   end
 

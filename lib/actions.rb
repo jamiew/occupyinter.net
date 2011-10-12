@@ -101,10 +101,3 @@ end
 get "/tools/update/:browser" do
   redirect "http://addons.gleuch.com/occupyinterenet/updates/#{params[:browser]}"
 end
-
-# FIXME
-get "/avatar" do
-  respond_to do |format|
-    format.gif { redirect("/avatars/1.gif") }
-  end
-end
