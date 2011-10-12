@@ -4,6 +4,13 @@ helpers do
     Sinatra::Application.environment.to_s != 'production'
   end
 
+  def default_avatars
+    [
+      '1.gif', '2.gif', '3.gif', # by @fi5e
+      '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png','13.png','14.png','15.png','16.png','17.png' # by @arambartholl
+    ]
+  end
+
   def set_cookie(key, value, opts={})
     # puts "Setting cookie: #{key} => #{value}"
     # TODO need to ensure setting HttpOnly

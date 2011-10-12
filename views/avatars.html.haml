@@ -38,9 +38,9 @@
     #avatars
       %a{:href => '#', :onclick => 'toggle_customize(); return false;', :style => 'float: right; color: #aaa;'} [CLOSE]
       %h2 Your Avatar
-      - avatars = (1..3)
-      - avatars.each do |i|
-        - avatar = "/avatars/#{i}.gif"
+      - default_avatars.each do |i|
+        -# Note: using index and not raw value for backwards compat
+        - avatar = "/avatars/#{i}"
         .avatar
           %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
             %img{:src => avatar}
