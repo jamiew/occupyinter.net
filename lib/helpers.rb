@@ -35,6 +35,38 @@ helpers do
     @request_tagline ||= request.cookies['tagline'] || (set_cookie('tagline', default) && default)
   end
 
+  # Object fetching filters
+  def get_site(url)
+    url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
+    url = url.gsub(/^http\:\/\//,'') if url =~ /^http\:\/\//
+    url = url.gsub(/^www\./,'') if url =~ /^www\./
+    return make_error("Invalid site URL") if url.blank?
+
+    site = Site.find_by_domain(url) rescue nil
+    site ||= Site.create(:domain => url)
+    return site
+  end
+
+  # Generalized responses
+  def make_error(err=nil)
+    err ||= 'Unknown Error'
+    @error = err
+
+    respond_to do |format|
+      format.json { halt 500, make_json({:error => err}) }
+      format.html { haml :error }
+    end
+  end
+
+  def make_json(obj={})
+    str = obj.to_json
+    str = "#{params[:callback]}(#{str})" unless params[:callback].blank?
+    return str
+  end
+
+
+protected
+
   UUID_SALT = "ourc4azyrandomSALTv3ryl0ng__9384234" # Don't change this
   def generate_uuid
     inputs = [request.ip, request.user_agent, UUID_SALT]
@@ -51,8 +83,8 @@ helpers do
     set_cookie("uuid", value)
   end
 
-  def generate_and_set_avatar
-    value = "1" # TODO randomize based on uuid
+  def generate_and_set_avatar(value=nil)
+    value ||= default_avatars.shuffle[0]
     set_avatar(value)
     value
   end
@@ -61,33 +93,5 @@ helpers do
     set_cookie("avatar", value)
   end
 
-
-  def get_site(url)
-    url = url.gsub(/^(.*)(\:\/\/)([A-Z0-9\-\_\.\:]+)(\/.*)$/i, '\3') rescue nil
-    url = url.gsub(/^http\:\/\//,'') if url =~ /^http\:\/\//
-    url = url.gsub(/^www\./,'') if url =~ /^www\./
-    return make_error("Invalid site URL") if url.blank?
-
-    site = Site.find_by_domain(url) rescue nil
-    site ||= Site.create(:domain => url)
-    return site
-  end
-
-
-  def make_error(err=nil)
-    err ||= 'Unknown Error'
-    @error = err
-
-    respond_to do |format|
-      format.json { halt 500, make_json({:error => err}) }
-      format.html { haml :error }
-    end
-  end
-
-  def make_json(obj={})
-    str = obj.to_json
-    str = "#{params[:callback]}(#{str})" unless params[:callback].blank?
-    return str
-  end
 
 end
