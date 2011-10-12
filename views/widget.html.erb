@@ -3,6 +3,7 @@
 #occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: 120px; width: 180px; text-align: center; }
 #occupy-you a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
 #occupy-site { float: left; display: inline; }
+#occupy-avatars { position: absolute; bottom: -15px; }
 #occupy-protestor_avatars { margin-top: 50px; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 </style>
@@ -48,5 +49,5 @@ function toggle_customize(){
 <div><strong><span id="occupy-site"></span></strong></div>
 <div><span id="occupy-protestor_count">Loading...</span></div>
 <br style="clear: both;" /><br />
-<div><span id="occupy-protestor_avatars"></span></div>
+<div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 <script type="text/javascript" src="/join_protest.json?callback=load_protest"></script>
