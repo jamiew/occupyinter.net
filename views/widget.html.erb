@@ -1,9 +1,9 @@
 <style type="text/css">
 #occupy-uuid { display: none; }
-#occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: 120px; width: 180px; text-align: center; }
+#occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
 #occupy-you a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
 #occupy-site { float: left; display: inline; }
-#occupy-avatars { position: absolute; bottom: -15px; }
+#occupy-avatars { position: absolute; bottom: -20px; }
 #occupy-protestor_avatars { margin-top: 50px; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 </style>
@@ -17,9 +17,9 @@ function load_protest(data){
   document.getElementById('occupy-site').innerHTML = data.site;
   document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count+" protestors";
   var avatar_output = '';
-  for(i = 0; i < data.protestors.length; i++){
+  for(var i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
-    avatar_output += '<div class="avatar bigavatar">';
+    avatar_output += '<div id="avatar'+i+'" class="avatar bigavatar" style="position: absolute; bottom: 0px; left: '+(i*170)+'px">';
     if(protestor.uuid == data.uuid){
       avatar_output += '<div id="occupy-you">';
       avatar_output += 'This is you!';
@@ -32,8 +32,33 @@ function load_protest(data){
     // }
     avatar_output += '</div>';
   }
+
+  move_avatars();
+
   document.getElementById('occupy-protestor_avatars').innerHTML = avatar_output;
 };
+
+function move_avatars(counter){
+  setTimeout(function(){
+    if(counter == undefined){
+      counter = 0;
+    }
+    var els = document.getElementsByClassName('bigavatar');
+    for(var j = 0; j < els.length; j++){
+      var el = els[j];
+      var distance = (counter % 10 < 5) == 0 ? -2 : 2;
+      if(counter % 15 == 0){
+        var left = (counter + j) % 2 == 0 ? 4 : -4;
+      }
+      el.style.bottom = (parseInt(el.style.bottom) + distance) + 'px';
+      el.style.left = (parseInt(el.style.left) + left) + 'px';
+    }
+
+    // keep moving
+    counter += 1;
+    move_avatars(counter);
+  }, 100);
+}
 
 function toggle_customize(){
   var el = document.getElementById('customize');
