@@ -90,10 +90,13 @@ get "/settings" do
 end
 
 get "/embed" do
+  content_type :html # so it renders widget.html, :format => :html does not work. WTF such a hack
+  widget = erb :widget
+  content_type :js
   respond_to do |format|
-    # widget = erb :widget, :format => :html
-    widget = "TODO";
-    format.js { "document.write(#{widget.to_json})" }
+    format.js {
+      "document.write(#{widget.to_json})"
+    }
   end
 end
 
