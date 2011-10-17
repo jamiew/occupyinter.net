@@ -8,6 +8,7 @@ h1, h2 { margin: 5px 0 20px 0; }
 .avatar a, .bigavatar a { display: block; border: 5px solid transparent; }
 .avatar a:hover, .bigavatar a:hover { border-color: #f0f; }
 .avatar a.selected, .bigavatar a.selected { border-color: #ff0; }
+.bigavatar img { max-height: 300px; }
 .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
 #signage { clear: both; padding-top: 30px; }
 #signage input { font-size: 15pt; padding: 10px; }

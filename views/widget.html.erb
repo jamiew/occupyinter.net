@@ -13,10 +13,8 @@ function load_protest(data){
   var avatar_output = '';
   for(var i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
-    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: 0px; left: '+(i*170)+'px">';
+    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: 0px; left: '+(i*150)+'px">';
     if(data.uuid != undefined && protestor.uuid == data.uuid){
-      console.log("You are participating in the crowd!");
-      console.log(protestor.uuid);
       document.getElementById('occupy-joinprotest').style.display = 'none';
       document.getElementById('occupy-avatars').style.left = '0px';
 
@@ -25,7 +23,7 @@ function load_protest(data){
       avatar_output += '<a id="customize_button" href="#" onclick="toggle_customize(); return false;">Customize Your Avatar</a>';
       avatar_output += '</div>';
     }
-    avatar_output += '<img src="'+protestor.avatar+'" />';
+    avatar_output += '<img src="/avatars/'+protestor.avatar+'" />';
     // if(protestor.tagline != '' && protestor.tagline != undefined){
     //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
     // }
