@@ -1,0 +1,13 @@
+body, html { font-family: sans-serif; margin: 0; padding: 0; }
+h1, h2 { margin: 5px 0 20px 0; }
+#instructions { width: 300px; font-size: 10pt; }
+#instructions ol { padding: 0; margin: 0 0 0 20px; }
+#instructions a { display: inline; border: 0; }
+
+body { background-color: #eee; }
+#container { background-color: #fff; padding: 20px 40px; }
+#demo { width: 840px; float: left; border-right: 1px solid #f9f9f9; }
+#customize { position: absolute; z-index: 10; width: 600px; margin-top: 0px; margin-left: 80px; padding: 10px 20px; background-color: #f9f9f9; border: 1px solid #dfdfdf; }
+#footer { clear: both; }
+#embed_code { margin-bottom: 20px; }
+

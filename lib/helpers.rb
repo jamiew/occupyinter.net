@@ -43,7 +43,7 @@ helpers do
 
   UUID_SALT = "ourc4azyrandomSALTv3ryl0ng__9384234" # Don't change this
   def generate_uuid
-    inputs = [request.ip, request.user_agent, UUID_SALT]
+    inputs = [request.ip, request.user_agent, Math.rand, UUID_SALT]
     Digest::SHA1.hexdigest(inputs.join('_'))
   end
 

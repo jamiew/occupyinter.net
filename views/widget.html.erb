@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" type="text/css" href="http://<%= request.host_with_port %>/widget.css" />
+<link rel="stylesheet" type="text/css" href="http://<%= request.host_with_port %>/stylesheets/widget.css" />
 
 <%= haml :customize %>
 
@@ -8,8 +8,8 @@ function load_protest(data){
   // document.getElementById('occupy-uuid').innerHTML = data.uuid.slice(0,8);
   // document.getElementById('occupy-avatar').src = data.avatar;
   // document.getElementById('occupy-tagline').innerHTML = data.tagline;
-  document.getElementById('occupy-site').innerHTML = data.site;
-  document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count+" protestors";
+  // document.getElementById('occupy-site').innerHTML = data.site;
+  // document.getElementById('occupy-protestor_count').innerHTML = data.protestor_count+" protestors";
   var avatar_output = '';
 
   // Change 'start' to 'join' if people here already
@@ -20,7 +20,10 @@ function load_protest(data){
   // Add all our avatars
   for(var i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
-    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: 0px; left: '+(i*150)+'px">';
+    var bottom = 0,
+        left = (i*150),
+        zindex = (100+Math.floor(Math.random()*20));
+    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
     if(data.uuid != undefined && protestor.uuid == data.uuid){
       document.getElementById('occupy-joinprotest').style.display = 'none';
       document.getElementById('occupy-avatars').style.left = '0px';
@@ -47,7 +50,8 @@ function load_protest(data){
 
 function show_protest(){
   var widget = document.getElementById('occupy-widget');
-  widget.style.display = 'block';
+  // widget.style.visibility = 'visible';
+  widget.style.display = "block";
 
   // var avatars = document.getElementById('occupy-avatars');
   // avatars.style.bottom = "-200px";
@@ -108,14 +112,14 @@ function join_protest(){
 <div id="occupy-widget" style="display: none;">
   <div id="occupy-joinprotest">
     <form id="occupy-joinprotest-form" method="POST" action="http://<%= request.host_with_port %>/join_protest">
-      <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header">Occupy Internet</span>
+      <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span>
       <a href="#" onclick="join_protest();" class="bigavatar" id="occupy-joinprotest-button">Start The Protest!</a>
     </form>
   </div>
 
-  <div><strong><span id="occupy-site"></span></strong></div>
-  <div><span id="occupy-protestor_count">Loading...</span></div>
-  <br style="clear: both;" /><br />
+  <!-- <div><strong><span id="occupy-site"></span></strong></div> -->
+  <!-- <div><span id="occupy-protestor_count">Loading...</span></div> -->
+  <!-- <br style="clear: both;" /><br /> -->
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 </div>
 

@@ -1,0 +1,47 @@
+#occupy-widget { position: fixed; bottom: 0px; left: 0px; }
+
+#occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
+#occupy-widget.avatar,
+#occupy-widget.avatar a,
+#occupy-widget.avatar img {
+  width: 100px; height: 100px;
+}
+#occupy-widget .avatar a, #occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
+#occupy-widget .avatar a:hover, #occupy-widget .bigavatar a:hover { border-color: #f0f; }
+#occupy-widget .avatar a.selected, #occupy-widget .bigavatar a.selected { border-color: #ff0; }
+#occupy-widget .bigavatar img { max-height: 300px; }
+#occupy-widget .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
+#occupy-widget #signage { clear: both; padding-top: 30px; }
+#occupy-widget #signage input { font-size: 15pt; padding: 10px; }
+
+#occupy-uuid { display: none; }
+#occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
+#occupy-you a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
+#occupy-site { float: left; display: inline; }
+
+#occupy-avatars { position: absolute; bottom: -10px; left: 240px; }
+#occupy-protestor_avatars { margin-top: 50px; }
+#occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
+
+#occupy-joinprotest { position: absolute; bottom: 40px; left: 20px; text-align: center; padding-right: 10px; }
+#occupy-joinprotest a#occupy-joinprotest-header {
+  background-color: #555;
+  color: #fff;
+  padding: 5px 10px;
+  font-weight: bold;
+  text-decoration: none;
+}
+#occupy-joinprotest a#occupy-joinprotest-header:hover { color: #fff; }
+
+#occupy-joinprotest a#occupy-joinprotest-button {
+/*  background-color: #313;*/
+/*  color: #fff;*/
+  background-color: #fff;
+  color: #000;
+  display: block;
+  margin-top: 5px;
+  padding: 21px 20px;
+  text-decoration: none;
+  font-size: 15pt;
+}
+#occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #faf; }

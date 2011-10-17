@@ -1,3 +1,5 @@
+%link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen', :href => '/stylesheets/frontpage.css'}
+
 #container
   #demo
     %h1 Occupy Internet
@@ -7,10 +9,10 @@
 
     %h2 Embed Code
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :style => 'width: 400px; background-color: #efefef;', :click => "this.select()"}
-      == <script src="http://#{request.host_with_port}/embed.js"></script>
+      == <script src="http://#{request.host_with_port}/embed.js" defer="defer"></script>
 
     %h2 Demo
-    %script{:src => '/embed.js'}
+    %script{:src => "http://#{request.host_with_port}/embed.js", :defer => 'defer'}
 
 
   #footer
