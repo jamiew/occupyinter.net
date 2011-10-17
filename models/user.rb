@@ -2,7 +2,7 @@ class User
   include DataMapper::Resource
 
   property :id,                   Serial
-  property :uuid,                 String, :index => true
+  property :uuid,                 String, :required => true, :index => true
   property :avatar,               String
   property :tagline,              String
   property :created_at,           DateTime
@@ -13,6 +13,7 @@ class User
 
   # FIXME REMOVEME gross hack
   def self.fix_avatar(avatar, basepath=nil)
+    return nil if avatar.nil?
     avatar = (avatar =~ /\.(png|gif|jpg)$/ ? avatar : avatar+(avatar.to_i > 3 ? '.png' : '.gif'))
     avatar.to_i > 0 ? "#{basepath}/avatars/#{avatar}" : avatar
   end

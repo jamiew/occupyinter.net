@@ -2,8 +2,8 @@ class Visit
   include DataMapper::Resource
 
   property :id,               Serial
-  property :site_id,          Integer, :index => true
-  property :user_id,          Integer, :index => true
+  property :site_id,          Integer, :required => true, :index => true
+  property :user_id,          Integer, :required => true, :index => true
   property :created_at,       DateTime
   property :updated_at,       DateTime
 

@@ -5,12 +5,7 @@ post "/join_protest" do
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
 
-  @user = User.first_or_create(:uuid => request_uuid)
-  # FIXME i want "first_or_initialize" then only save if new?.. fuckin DM
-  @user.avatar ||= request_avatar
-  @user.tagline ||= request_tagline
-  @user.save
-
+  @user = create_user_from_cookie
   @visit = Visit.first_or_create(:user_id => @user.id, :site_id => @site.id)
   @visit.touch
 
@@ -29,6 +24,14 @@ post "/join_protest" do
   end
 end
 
+def create_user_from_cookie
+  user = User.first_or_create(:uuid => request_uuid)
+  user.avatar ||= request_avatar
+  user.tagline ||= request_tagline
+  user.save
+  user
+end
+
 # Site info
 get /\/(site|stats|protest)/ do
   params[:url] ||= request.referrer
@@ -41,9 +44,6 @@ get /\/(site|stats|protest)/ do
 end
 
 def respond_with_stats(site)
-  puts "protestors=====>"
-  puts @site.protestors.inspect
-
   basepath = ["http://", request.host_with_port].join
 
   output = {
@@ -74,7 +74,7 @@ end
 # TODO make this PUT
 get "/settings" do
   # puts "params => #{params.inspect}"
-  @user = User.first_or_create(:uuid => request_uuid)
+  @user = create_user_from_cookie
 
   [:avatar, :custom_avatar, :tagline].each do |field|
     next if params[field].blank?

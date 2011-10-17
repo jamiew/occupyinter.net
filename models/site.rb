@@ -2,12 +2,13 @@ class Site
   include DataMapper::Resource
 
   property :id,               Serial
-  property :domain,           String,   :index => true
-  property :visits_count,     Integer,  :default => 0
-  property :views_count,      Integer,  :default => 0
+  property :domain,           String, :required => true, :index => true
+  property :visits_count,     Integer, :default => 0
+  property :views_count,      Integer, :default => 0
   property :created_at,       DateTime
   property :updated_at,       DateTime
 
+  # validates_presence_of :domain
   validates_is_unique :domain
 
   has n, :visits
@@ -42,6 +43,10 @@ class Site
     visits = Visit.all(:site_id => self.id)
     user_ids = visits.map(&:user_id).compact.uniq
     users = User.all(:id => user_ids)
+
+    # Strip bad elements... TODO where are these being made?!
+    users.reject!{|u| u.uuid.nil? }
+
     @protestors = users
   end
 

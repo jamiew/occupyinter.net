@@ -10,6 +10,7 @@
       .avatar
         %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
           %img{:src => avatar}
+
   #signage
     %form{:method => 'GET', :action => '/settings'}
 
