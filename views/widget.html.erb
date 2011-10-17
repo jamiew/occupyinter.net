@@ -1,7 +1,8 @@
 
 <link rel="stylesheet" type="text/css" href="http://<%= request.host_with_port %>/stylesheets/widget.css" />
 
-<%= haml :customize %>
+<%# FIXME super broken right now %>
+<%#= haml :customize %>
 
 <script type="text/javascript">
 function load_protest(data){
@@ -95,6 +96,9 @@ function move_avatars(counter){
 }
 
 function toggle_customize(){
+  alert("broken, FIXME");
+  return;
+
   var el = document.getElementById('customize');
   if(el.style.display == 'none'){
     el.style.display = 'block';
