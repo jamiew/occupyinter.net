@@ -9,10 +9,10 @@
 
     %h2 Embed Code
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :style => 'width: 500px; background-color: #efefef;', :click => "this.select()"}
-      == <script src="http://#{request.host_with_port}/embed.js" defer="defer"></script>
+      == <script src="http://#{request.host_with_port}/embed.js"></script>
 
     %h2 Demo
-    %script{:src => "http://#{request.host_with_port}/embed.js", :defer => 'defer'}
+    %script{:src => "http://#{request.host_with_port}/embed.js"}
 
 
   #footer
