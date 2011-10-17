@@ -30,7 +30,7 @@ function load_protest(data){
       avatar_output += '<a id="customize_button" href="#" onclick="toggle_customize(); return false;">Customize Your Avatar</a>';
       avatar_output += '</div>';
     }
-    avatar_output += '<img src="/avatars/'+protestor.avatar+'" />';
+    avatar_output += '<img src="'+protestor.avatar+'" />';
     // if(protestor.tagline != '' && protestor.tagline != undefined){
     //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
     // }
@@ -49,10 +49,9 @@ function show_protest(){
   var widget = document.getElementById('occupy-widget');
   widget.style.display = 'block';
 
-  var avatars = document.getElementById('occupy-avatars');
-  avatars.style.bottom = "-200px";
-  // avatars.style.left = "-200px";
-  slide_protest_in(avatars);
+  // var avatars = document.getElementById('occupy-avatars');
+  // avatars.style.bottom = "-200px";
+  // slide_protest_in(avatars);
 }
 
 function slide_protest_in(el){
@@ -62,7 +61,6 @@ function slide_protest_in(el){
       console.log("done animating protest");
     }
     else {
-      // el.style.left = (parseInt(el.style.left) + 12)+'px'
       el.style.bottom = (parseInt(el.style.bottom) + 12)+'px';
       slide_protest_in(el);
     }
