@@ -11,15 +11,33 @@ class User
   has n, :visits
   # has n, :sites, :through => :visits
 
-  # FIXME REMOVEME gross hack
-  def self.fix_avatar(avatar, basepath=nil)
-    return nil if avatar.nil?
-    avatar = (avatar =~ /\.(png|gif|jpg)$/ ? avatar : avatar+(avatar.to_i > 3 ? '.png' : '.gif'))
-    avatar.to_i > 0 ? "#{basepath}/avatars/#{avatar}" : avatar
+  def self.default_avatars
+    files = Dir["#{settings.root}/public/avatars/*"]
+    files.map{|f| f.gsub(/^\.\/public\/avatars\//, '') }
   end
 
-  def avatar_url
-    # TODO fix this
+  def self.random_avatar
+    User.default_avatars.shuffle.first
+  end
+
+  # FIXME REMOVEME gross hack
+  def self.broken_avatar?(avatar)
+    !(avatar =~ /http/) && !File.exists?("#{settings.root}/public/avatars/#{avatar}")
+  end
+
+  def self.fix_avatar(avatar, basepath=nil)
+    return nil if avatar.nil?
+
+    # replace local 404s with random
+    if broken_avatar?(avatar)
+      puts "Local avatar 404! Randomizing..."
+      avatar = User.random_avatar
+      puts " ==> #{avatar}"
+      # FIXME reset user field + cookie!
+    else
+      puts "Valid Avatar: #{avatar}"
+    end
+
     avatar
   end
 

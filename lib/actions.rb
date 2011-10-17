@@ -37,6 +37,7 @@ get /\/(site|stats|protest)/ do
   params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
+
   respond_to do |format|
     format.json { respond_with_stats(@site) }
     format.html { haml :'api/site' }

@@ -4,13 +4,6 @@ helpers do
     Sinatra::Application.environment.to_s != 'production'
   end
 
-  def default_avatars
-    [
-      '1.gif', '2.gif', '3.gif', # by @fi5e
-      '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png','13.jpg','14.png','15.png','16.png','17.png' # by @arambartholl
-    ]
-  end
-
   def set_cookie(key, value, opts={})
     # puts "Setting cookie: #{key} => #{value}"
     # TODO need to ensure setting HttpOnly
@@ -42,9 +35,26 @@ helpers do
     ['Damn the man', 'Hack the planet', 'WTF'].shuffle.first
   end
 
-  def participating?
-    request.cookies['participating'].to_s == 'true'
+  # TODO move these to User, then set both cookie AND user at once
+
+  UUID_SALT = "ourc4azyrandomSALTv3ryl0ng__9384234" # Don't change this
+  def generate_uuid
+    inputs = [request.ip, request.user_agent, UUID_SALT]
+    Digest::SHA1.hexdigest(inputs.join('_'))
   end
+
+  def generate_and_set_uuid
+    value = generate_uuid
+    set_cookie("uuid", value)
+    value
+  end
+
+  def generate_and_set_avatar(value=nil)
+    value ||= User.random_avatar
+    set_cookie("avatar", value)
+    value
+  end
+
 
   # Object fetching filters
   def get_site(url)
@@ -73,35 +83,6 @@ helpers do
     str = obj.to_json
     str = "#{params[:callback]}(#{str})" unless params[:callback].blank?
     return str
-  end
-
-
-protected
-
-  UUID_SALT = "ourc4azyrandomSALTv3ryl0ng__9384234" # Don't change this
-  def generate_uuid
-    inputs = [request.ip, request.user_agent, UUID_SALT]
-    Digest::SHA1.hexdigest(inputs.join('_'))
-  end
-
-  def generate_and_set_uuid
-    value = generate_uuid
-    set_uuid(value)
-    value
-  end
-
-  def set_uuid(value)
-    set_cookie("uuid", value)
-  end
-
-  def generate_and_set_avatar(value=nil)
-    value ||= default_avatars.shuffle[0]
-    set_avatar(value)
-    value
-  end
-
-  def set_avatar(value)
-    set_cookie("avatar", value)
   end
 
 
