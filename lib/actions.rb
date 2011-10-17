@@ -42,7 +42,8 @@ get /\/(site|stats|protest)/ do
   if request_uuid
     puts "Bumping visit updated_at ..."
     @user = User.find_by_uuid(request_uuid)
-    @visit = Visit.first(:user_id => @user.id, :site_id => @site.id)
+
+    @visit = @user ? Visit.first(:user_id => @user.id, :site_id => @site.id) : nil
     @visit.touch if @visit
   end
 
