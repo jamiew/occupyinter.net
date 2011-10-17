@@ -69,7 +69,9 @@ class Site
   end
 
   def remove_protestor(user)
-    puts "#{site.domain}: removing protestor: #{visit.user.inspect}"
+    return if user.nil?
+
+    puts "#{self.domain}: removing protestor: #{user.inspect}"
     self.visits_count = self.visits_count - 1 # FIXME DM needs increment/decrement
     self.save!
 
@@ -80,7 +82,9 @@ class Site
     expiry = 30 * 24 * 60 * 60 * 60 # 30.days
     visits = Visit.all(:site_id => self.id)
     puts "Time.now=#{Time.now.to_i}"
-    expired_visits = visits.select{|v| (Time.now - expiry) > Time.parse(v.updated_at.to_s) }
+    expired_visits = visits.select do |v|
+      (Time.now - expiry) < Time.parse(v.updated_at.to_s)
+    end
     puts "#{expired_visits.length} expired visits"
     expired_visits.each do |visit|
       remove_protestor(visit.user)

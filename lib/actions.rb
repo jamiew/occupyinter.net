@@ -9,9 +9,6 @@ post "/join_protest" do
   @visit = Visit.first_or_create(:user_id => @user.id, :site_id => @site.id)
   @visit.touch
 
-  @site.flush_old_visits
-  @site.flush_protestors if params[:flush].to_s == 'true'
-
   @site.add_protestor(@user)
   set_cookie('uuid', generate_and_set_uuid)
   set_cookie('avatar', generate_and_set_avatar)
@@ -36,7 +33,11 @@ end
 get /\/(site|stats|protest)/ do
   params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
+
   @site = get_site(params[:url])
+  @site.flush_old_visits
+  @site.flush_protestors if dev? && params[:flush].to_s == 'true'
+
 
   respond_to do |format|
     format.json { respond_with_stats(@site) }

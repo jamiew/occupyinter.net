@@ -30,12 +30,9 @@ class User
 
     # replace local 404s with random
     if broken_avatar?(avatar)
-      puts "Local avatar 404! Randomizing..."
       avatar = User.random_avatar
-      puts " ==> #{avatar}"
+      puts "Local avatar 404! Randomizing... ==> #{avatar}"
       # FIXME reset user field + cookie!
-    else
-      puts "Valid Avatar: #{avatar}"
     end
 
     avatar
