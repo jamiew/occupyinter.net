@@ -1,4 +1,4 @@
-#occupy-widget { position: fixed; bottom: 0px; left: 0px; }
+#occupy-widget { position: fixed; bottom: 0px; left: 0px; z-index: 200; }
 
 #occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
 #occupy-widget.avatar,
