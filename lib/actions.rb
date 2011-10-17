@@ -43,7 +43,7 @@ get /\/(site|stats|protest)/ do
     puts "Bumping visit updated_at ..."
     @user = User.find_by_uuid(request_uuid)
     @visit = Visit.first(:user_id => @user.id, :site_id => @site.id)
-    @visit.touch
+    @visit.touch if @visit
   end
 
   respond_to do |format|
