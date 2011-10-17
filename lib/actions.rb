@@ -1,13 +1,6 @@
 
 # Log a visit
-# FIXME not normal to respect the redirect here, TODO change yo addons
-# this needs to be a GET to be javascript widget friendly
-put "/count" do
-  query = request.query_string.blank? ? '' : "?"+request.query_string
-  redirect('/join_protest'+query)
-end
-
-get "/join_protest" do
+post "/join_protest" do
   params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
@@ -23,17 +16,28 @@ get "/join_protest" do
 
   @site.flush_old_visits
   @site.flush_protestors if params[:flush].to_s == 'true'
-  @site.add_protestor(@user)
 
-  respond_with_stats(@site)
+  @site.add_protestor(@user)
+  set_cookie('uuid', generate_and_set_uuid)
+  set_cookie('avatar', generate_and_set_avatar)
+  set_cookie('custom_avatar', '')
+  set_cookie('tagline', default_tagline)
+
+  respond_to do |format|
+    format.json { respond_with_stats(@site) }
+    format.html { redirect(params[:url] || '/embed.js') }
+  end
 end
 
-# Site info: stats, crowd
-get /\/(site|stats)/ do
+# Site info
+get /\/(site|stats|protest)/ do
   params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
-  respond_with_stats(@site)
+  respond_to do |format|
+    format.json { respond_with_stats(@site) }
+    format.html { haml :'api/site' }
+  end
 end
 
 def respond_with_stats(site)
@@ -55,18 +59,14 @@ def respond_with_stats(site)
     :avatar => User.fix_avatar(request_avatar, basepath), # FIXME stop using basepath
     :tagline => request_tagline,
   }
-
-  respond_to do |format|
-    format.json { make_json(output) }
-    format.html { haml :'api/site' }
-  end
+  make_json(output)
 end
 
 
 # Avatar selector
 get "/" do
   respond_to do |format|
-    format.html { haml :avatars }
+    format.html { haml :frontpage }
   end
 end
 
@@ -76,7 +76,7 @@ get "/settings" do
   # puts "params => #{params.inspect}"
   @user = User.first_or_create(:uuid => request_uuid)
 
-  [:avatar, :tagline].each do |field|
+  [:avatar, :custom_avatar, :tagline].each do |field|
     next if params[field].blank?
     @user.send("#{field}=", params[field])
     set_cookie(field.to_s, params[field])

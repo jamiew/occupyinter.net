@@ -1,7 +1,8 @@
-#customize{:style => 'display: none;'}
+- puts request.path
+#customize{:style => request.path == '/customize' ? '' : 'display: none;'}
   #avatars
     %a{:href => '#', :onclick => 'toggle_customize(); return false;', :style => 'float: right; color: #aaa;'} [CLOSE]
-    %h2 Choose Your Avatar
+    / %h2 Choose Your Avatar
 
     - default_avatars.each do |i|
       -# Note: using index and not raw value for backwards compat
@@ -10,8 +11,17 @@
         %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
           %img{:src => avatar}
   #signage
-    %h2 Custom URL:
     %form{:method => 'GET', :action => '/settings'}
-      %label{:for => 'tagline'}
-      %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
+
+      %label{:for => 'custom_avatar'}
+        %strong <big>Custom URL</big>
+        %div Examples and more info: <a href="http://fffff.at">fffff.at/enlist-today</a>
+      %input{:type => 'text', :value => request_custom_avatar, :name => 'custom_avatar', :class => 'text', :id => 'custom_avatar', :onclick => "this.select();"}
       %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
+
+      - if false
+        %br{:style => 'clear: both;'}
+        %label{:for => 'tagline'}
+          Tagline (speech bubble)
+        %input{:type => 'text', :value => request_custom_avatar, :name => 'custom_avatar', :class => 'text', :id => 'custom_avatar', :onclick => "this.select();"}
+        %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}

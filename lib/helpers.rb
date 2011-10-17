@@ -7,7 +7,7 @@ helpers do
   def default_avatars
     [
       '1.gif', '2.gif', '3.gif', # by @fi5e
-      '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png','13.png','14.png','15.png','16.png','17.png' # by @arambartholl
+      '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png','13.jpg','14.png','15.png','16.png','17.png' # by @arambartholl
     ]
   end
 
@@ -22,18 +22,28 @@ helpers do
   end
 
   def request_uuid
-    @request_uuid ||= request.cookies['uuid'] || generate_and_set_uuid
+    request.cookies['uuid']
   end
 
   def request_avatar
     request.cookies['avatar'] = nil if request.cookies['avatar'] && request.cookies['avatar'].empty? # FIXME don't allow blanks
-    @request_avatar ||= request.cookies['avatar'] || generate_and_set_avatar
+    request.cookies['avatar'] || '' # FIXME blank string is lame
+  end
+
+  def request_custom_avatar
+    request.cookies['custom_avatar']
   end
 
   def request_tagline
-    # default = 'your slogan here'
-    default = ''
-    @request_tagline ||= request.cookies['tagline'] || (set_cookie('tagline', default) && default)
+    request.cookies['tagline']
+  end
+
+  def default_tagline
+    ['Damn the man', 'Hack the planet', 'WTF'].shuffle.first
+  end
+
+  def participating?
+    request.cookies['participating'].to_s == 'true'
   end
 
   # Object fetching filters
