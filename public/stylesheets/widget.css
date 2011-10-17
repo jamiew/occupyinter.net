@@ -47,6 +47,7 @@
 #occupy-joinprotest a#occupy-joinprotest-button {
 /*  background-color: #313;*/
 /*  color: #fff;*/
+  font-style: italic;
   background-color: #fff;
   color: #000;
   display: block;
@@ -66,4 +67,6 @@
 /*  background-color: #f9f9f9;
   border: 1px solid #dfdfdf;
 */}
-#occupy-customize #avatars .avatar { color: purple; }
+#occupy-customize a, #occupy-customize a img { background-color: transparent !important; border-color: transparent !important; }
+
+
