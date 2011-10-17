@@ -4,6 +4,10 @@ helpers do
     Sinatra::Application.environment.to_s != 'production'
   end
 
+  def protesting?
+    !request_uuid.nil? && !request_uuid.empty?
+  end
+
   def set_cookie(key, value, opts={})
     # puts "Setting cookie: #{key} => #{value}"
     # TODO need to ensure setting HttpOnly

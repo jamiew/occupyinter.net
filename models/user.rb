@@ -35,6 +35,10 @@ class User
       # FIXME reset user field + cookie!
     end
 
+    if !(avatar =~ /^http/)
+      avatar = "#{basepath}/#{avatar}" if basepath
+    end
+
     avatar
   end
 

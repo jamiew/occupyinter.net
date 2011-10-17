@@ -46,21 +46,25 @@ get /\/(site|stats|protest)/ do
 end
 
 def respond_with_stats(site)
-  basepath = ["http://", request.host_with_port].join
+  basepath = ["http://", request.host_with_port, '/avatars'].join
+  puts "basepath=#{basepath.inspect}"
 
   output = {
     :site => site.domain,
     :visits => site.visits_count,
     :uniques => site.unique_visits_count,
-
     :protestors => @site.protestors(basepath).map{|u| u.public_attributes(basepath) }, # FIXME stop using basepath
     :protestor_count => @site.protestor_count,
     :protestor_avatars => @site.protestors.map{|x| User.fix_avatar(x.avatar, basepath) }, # REMOVEME completely
-
-    :uuid => request_uuid,
-    :avatar => User.fix_avatar(request_avatar, basepath), # FIXME stop using basepath
-    :tagline => request_tagline,
   }
+
+  if protesting?
+    output[:uuid] = request_uuid
+    output[:avatar] = User.fix_avatar(request_avatar, basepath) # FIXME stop using basepath
+    # output[:custom_avatar] = request_custom_avatar
+    output[:tagline] = request_tagline
+  end
+
   make_json(output)
 end
 

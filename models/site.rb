@@ -39,10 +39,14 @@ class Site
   def protestors(basepath=nil)
     return @protestors unless @protestors.nil? # memoized
 
+    puts "site.protestors, basepath=#{basepath.inspect}"
     uuids = protestor_uuids
     visits = Visit.all(:site_id => self.id)
     user_ids = visits.map(&:user_id).compact.uniq
     users = User.all(:id => user_ids)
+
+    # Expand avatars to full paths, FIXME h8 basepath
+    users.each{|u| u.avatar = User.fix_avatar(u.avatar, basepath) }
 
     # Strip bad elements... TODO where are these being made?!
     users.reject!{|u| u.uuid.nil? }
