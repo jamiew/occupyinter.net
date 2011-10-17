@@ -38,7 +38,6 @@ get /\/(site|stats|protest)/ do
   @site.flush_old_visits
   @site.flush_protestors if dev? && params[:flush].to_s == 'true'
 
-
   respond_to do |format|
     format.json { respond_with_stats(@site) }
     format.html { haml :'api/site' }
@@ -47,14 +46,13 @@ end
 
 def respond_with_stats(site)
   basepath = ["http://", request.host_with_port, '/avatars'].join
-  puts "basepath=#{basepath.inspect}"
 
   output = {
     :site => site.domain,
     :visits => site.visits_count,
     :uniques => site.unique_visits_count,
     :protestors => @site.protestors(basepath).map{|u| u.public_attributes(basepath) }, # FIXME stop using basepath
-    :protestor_count => @site.protestor_count,
+    :protestor_count => @site.protestors_count,
     :protestor_avatars => @site.protestors.map{|x| User.fix_avatar(x.avatar, basepath) }, # REMOVEME completely
   }
 
@@ -79,7 +77,6 @@ end
 # Set user config options: avatar, tagline, etc
 # TODO make this PUT
 get "/settings" do
-  # puts "params => #{params.inspect}"
   @user = create_user_from_cookie
 
   [:avatar, :custom_avatar, :tagline].each do |field|

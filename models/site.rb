@@ -27,23 +27,19 @@ class Site
     redis.del(protestors_key)
   end
 
-  def protestor_count
+  def protestors_count
     redis.scard(protestors_key)
   end
 
-  def protestor_uuids
+  def protestor_user_ids
     redis.smembers(protestors_key)
   end
 
   # Turn protestors into Users
   def protestors(basepath=nil)
-    return @protestors unless @protestors.nil? # memoized
+    # return @protestors unless @protestors.nil? # memoized
 
-    puts "site.protestors, basepath=#{basepath.inspect}"
-    uuids = protestor_uuids
-    visits = Visit.all(:site_id => self.id)
-    user_ids = visits.map(&:user_id).compact.uniq
-    users = User.all(:id => user_ids)
+    users = User.all(:id => protestor_user_ids)
 
     # Expand avatars to full paths, FIXME h8 basepath
     users.each{|u| u.avatar = User.fix_avatar(u.avatar, basepath) }
@@ -65,7 +61,6 @@ class Site
   def add_protestor(user)
     # TODO use time-based expiry and/or sorted-sets
     # so we only get protestors who were active in the last N minutes
-    puts "add_protestor =========> user=#{user.inspect}"
     self.visits_count = self.visits_count + 1 # FIXME DM needs increment/decrement
     self.save!
 
@@ -75,23 +70,24 @@ class Site
   def remove_protestor(user)
     return if user.nil?
 
-    puts "#{self.domain}: removing protestor: #{user.inspect}"
+    puts "#{self.domain}: removing protestor: #{user.id.inspect}"
+    redis.srem(protestors_key, user.id)
     self.visits_count = self.visits_count - 1 # FIXME DM needs increment/decrement
     self.save!
 
-    redis.srem(protestors_key, user.id)
   end
 
   def flush_old_visits
     expiry = 30 * 24 * 60 * 60 * 60 # 30.days
     visits = Visit.all(:site_id => self.id)
-    puts "Time.now=#{Time.now.to_i}"
     expired_visits = visits.select do |v|
       (Time.now - expiry) < Time.parse(v.updated_at.to_s)
     end
-    puts "#{expired_visits.length} expired visits"
+    puts "#{self.domain}: found #{visits.length} visits, #{expired_visits.length} expired"
+
     expired_visits.each do |visit|
       remove_protestor(visit.user)
+      visit.destroy
     end
   end
 
