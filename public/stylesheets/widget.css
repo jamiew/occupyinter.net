@@ -21,12 +21,13 @@
 
 #occupy-customize #avatars { background: #fef; clear: both; }
 
-#occupy-customize #embed_code { margin-bottom: 20px; font-size: 7pt; width: 300px; background-color: #bfbfbf; }
+#occupy-customize #embed_code { margin-bottom: 20px; font-size: 8pt; width: 300px; background-color: #dedede; padding: 5px 1px 0; }
 
-#occupy-uuid { display: none; }
-#occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
-#occupy-you a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
-#occupy-site { float: left; display: inline; }
+.occupy-widget #occupy-uuid { display: none; }
+.occupy-widget #occupy-customize {  }
+.occupy-widget #occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
+.occupy-widget #occupy-you a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
+.occupy-widget #occupy-site { float: left; display: inline; }
 
 #occupy-avatars { position: absolute; bottom: -10px; left: 240px; }
 #occupy-protestor_avatars { margin-top: 50px; }
