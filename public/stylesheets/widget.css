@@ -67,6 +67,6 @@
 /*  background-color: #f9f9f9;
   border: 1px solid #dfdfdf;
 */}
-#occupy-customize a, #occupy-customize a:link, #occupy-customize a:visited { background-color: transparent !important; border-color: transparent !important; }
+.occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent !important; border-color: transparent !important; }
 
 
