@@ -1,18 +1,27 @@
-#occupy-widget { position: fixed; bottom: 0px; left: 0px; z-index: 200; }
+#occupy-widget { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif; }
+#occupy-customize { font-family: sans-serif; }
 
-#occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
-#occupy-widget.avatar,
-#occupy-widget.avatar a,
-#occupy-widget.avatar img {
-  width: 100px; height: 100px;
+.occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
+
+.occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img {
+  /*width: 250px;*/
+  height: 230px;
 }
-#occupy-widget .avatar a, #occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
-#occupy-widget .avatar a:hover, #occupy-widget .bigavatar a:hover { border-color: #f0f; }
-#occupy-widget .avatar a.selected, #occupy-widget .bigavatar a.selected { border-color: #ff0; }
-#occupy-widget .bigavatar img { max-height: 300px; }
-#occupy-widget .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
-#occupy-widget #signage { clear: both; padding-top: 30px; }
-#occupy-widget #signage input { font-size: 15pt; padding: 10px; }
+.occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
+.occupy-widget .avatar a:hover, .occupy-widget .bigavatar a:hover { border-color: #f0f; }
+.occupy-widget .avatar a.selected, .occupy-widget .bigavatar a.selected { border-color: #ff0; }
+#occupy-customize .bigavatar img { max-height: 300px; }
+#occupy-customize .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
+
+#occupy-customize #introduction { float: left; width: 350px; margin-top: 30px; padding-right: 25px; }
+#occupy-customize #introduction strong { font-size: 15pt; color: #f0f; padding: 0 20px; }
+#occupy-customize #signage { }
+#occupy-customize #signage { float: left; width: 300px; height: 120px; margin-top: 50px; }
+#occupy-customize #signage input { font-size: 15pt; padding: 10px; }
+
+#occupy-customize #avatars { background: #fef; clear: both; }
+
+#occupy-customize #embed_code { margin-bottom: 20px; font-size: 7pt; width: 300px; background-color: #bfbfbf; }
 
 #occupy-uuid { display: none; }
 #occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
@@ -46,3 +55,14 @@
   font-size: 15pt;
 }
 #occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #faf; }
+
+#occupy-customize {
+/*  position: absolute;*/
+  z-index: 10;
+/*  width: 600px;*/
+/*  margin-top: 0px; margin-left: 80px; padding: 10px 20px;*/
+
+/*  background-color: #f9f9f9;
+  border: 1px solid #dfdfdf;
+*/}
+#occupy-customize #avatars .avatar { color: purple; }

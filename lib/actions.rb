@@ -4,21 +4,26 @@ post "/join_protest" do
   params[:url] ||= request.referrer
   return make_error("You must specify a ?url param") if params[:url].blank?
   @site = get_site(params[:url])
-
-  @user = create_user_from_cookie
-  @visit = Visit.first_or_create(:user_id => @user.id, :site_id => @site.id)
-  @visit.touch
-
-  @site.add_protestor(@user)
-  set_cookie('uuid', generate_and_set_uuid)
-  set_cookie('avatar', generate_and_set_avatar)
-  set_cookie('custom_avatar', '')
-  set_cookie('tagline', default_tagline)
+  join_site(@site)
 
   respond_to do |format|
     format.json { respond_with_stats(@site) }
     format.html { redirect(params[:url] || '/embed.js') }
   end
+end
+
+def join_site(site)
+  @user = create_user_from_cookie
+  puts @user.inspect
+  puts site.inspect
+  @visit = Visit.first_or_create(:user_id => @user.id, :site_id => site.id)
+  @visit.touch
+
+  site.add_protestor(@user)
+  set_cookie('uuid', generate_and_set_uuid)
+  set_cookie('avatar', generate_and_set_avatar)
+  set_cookie('custom_avatar', '')
+  set_cookie('tagline', default_tagline)
 end
 
 def create_user_from_cookie
@@ -83,8 +88,7 @@ get "/" do
   end
 end
 
-# Set user config options: avatar, tagline, etc
-# TODO make this PUT
+# Set user pimpings
 get "/settings" do
   @user = create_user_from_cookie
 
@@ -96,8 +100,8 @@ get "/settings" do
   @user.save!
 
   respond_to do |format|
+    format.html { redirect params[:redirect_to] || '/' }
     format.json { make_json(response.cookies['settings']) }
-    format.html { redirect '/' }
   end
 end
 
@@ -111,7 +115,11 @@ get "/embed" do
 end
 
 get "/customize" do
-  erb :widget
+  @redirect_to = request.referrer
+  @site = get_site(params[:url] || request.referrer)
+  puts "@redirect_to=#{@redirect_to.inspect} @site.domain=#{@site.domain}"
+  join_site(@site)
+  haml :customize
 end
 
 # Addon update URL
