@@ -31,7 +31,8 @@ helpers do
   end
 
   def request_tagline
-    default = 'your slogan here'
+    # default = 'your slogan here'
+    default = ''
     @request_tagline ||= request.cookies['tagline'] || (set_cookie('tagline', default) && default)
   end
 

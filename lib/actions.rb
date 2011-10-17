@@ -94,10 +94,12 @@ get "/embed" do
   widget = erb :widget
   content_type :js
   respond_to do |format|
-    format.js {
-      "document.write(#{widget.to_json})"
-    }
+    format.js { "document.write(#{widget.to_json})" }
   end
+end
+
+get "/customize" do
+  erb :widget
 end
 
 # Addon update URL

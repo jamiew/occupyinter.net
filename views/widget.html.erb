@@ -1,3 +1,7 @@
+
+<link rel="stylesheet" type="text/css" href="widget.css" />
+
+
 <style type="text/css">
 #occupy-uuid { display: none; }
 #occupy-you { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
@@ -7,6 +11,8 @@
 #occupy-protestor_avatars { margin-top: 50px; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 </style>
+
+<%= haml :customize %>
 
 <script type="text/javascript">
 function load_protest(data){
@@ -19,7 +25,7 @@ function load_protest(data){
   var avatar_output = '';
   for(var i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
-    avatar_output += '<div id="avatar'+i+'" class="avatar bigavatar" style="position: absolute; bottom: 0px; left: '+(i*170)+'px">';
+    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: 0px; left: '+(i*170)+'px">';
     if(protestor.uuid == data.uuid){
       avatar_output += '<div id="occupy-you">';
       avatar_output += 'This is you!';

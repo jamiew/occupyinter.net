@@ -1,0 +1,20 @@
+body, html { font-family: sans-serif; margin: 0; padding: 0; }
+h1, h2 { margin: 5px 0 20px 0; }
+#instructions { width: 300px; font-size: 10pt; }
+#instructions ol { padding: 0; margin: 0 0 0 20px; }
+#instructions a { display: inline; border: 0; }
+.avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
+.avatar, .avatar a, .avatar img { width: 100px; height: 100px; }
+.avatar a, .bigavatar a { display: block; border: 5px solid transparent; }
+.avatar a:hover, .bigavatar a:hover { border-color: #f0f; }
+.avatar a.selected, .bigavatar a.selected { border-color: #ff0; }
+.bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
+#signage { clear: both; padding-top: 30px; }
+#signage input { font-size: 15pt; padding: 10px; }
+
+body { background-color: #eee; }
+#container { background-color: #fff; padding: 20px 40px; }
+#demo { width: 840px; float: left; border-right: 1px solid #f9f9f9; }
+#customize { position: absolute; z-index: 10; width: 600px; margin-top: 0px; margin-left: 80px; padding: 10px 20px; background-color: #f9f9f9; border: 1px solid #dfdfdf; }
+#footer { clear: both; }
+#embed_code { margin-bottom: 20px; }

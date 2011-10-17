@@ -1,27 +1,3 @@
-:css
-  body, html { font-family: sans-serif; margin: 0; padding: 0; }
-  h1, h2 { margin: 5px 0 20px 0; }
-  #instructions { width: 300px; font-size: 10pt; }
-  #instructions ol { padding: 0; margin: 0 0 0 20px; }
-  #instructions a { display: inline; border: 0; }
-  .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
-  .avatar, .avatar a, .avatar img { width: 100px; height: 100px; }
-  .avatar a { display: block; border: 5px solid transparent; }
-  .avatar a:hover { border-color: #f0f; }
-  .avatar a.selected { border-color: #ff0; }
-  .bigavatar, .bigavatar a, .bigavatar img { width: 180px; height: 180px; }
-  .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
-  #signage { clear: both; padding-top: 30px; }
-  #signage input { font-size: 15pt; padding: 10px; }
-
-  body { background-color: #eee; }
-  #container { background-color: #fff; padding: 20px 40px; }
-  #demo { width: 840px; float: left; border-right: 1px solid #f9f9f9; }
-  #customize { position: absolute; z-index: 10; width: 600px; margin-top: 150px; margin-left: 80px; padding: 10px 20px; background-color: #f9f9f9; border: 1px solid #dfdfdf; }
-  #footer { clear: both; }
-  #embed_code { margin-bottom: 20px; }
-
-
 #container
   #demo
     %h1 Occupy Internet
@@ -31,25 +7,8 @@
       == <script src="http://#{request.host_with_port}/embed.js"></script>
 
     %h2 Demo
-    = erb :widget
+    %script{:src => '/embed.js'}
 
-
-  #customize{:style => 'display: none;'}
-    #avatars
-      %a{:href => '#', :onclick => 'toggle_customize(); return false;', :style => 'float: right; color: #aaa;'} [CLOSE]
-      %h2 Your Avatar
-      - default_avatars.each do |i|
-        -# Note: using index and not raw value for backwards compat
-        - avatar = "/avatars/#{i}"
-        .avatar
-          %a{:href => "/settings?avatar=#{i}", :class => (i.to_s == request_avatar.to_s ? 'selected' : '')}
-            %img{:src => avatar}
-    #signage
-      %h2 Your Sign Text
-      %form{:method => 'GET', :action => '/settings'}
-        %label{:for => 'tagline'}
-        %input{:type => 'text', :value => request_tagline, :name => 'tagline', :class => 'text', :id => 'tagline', :onclick => "this.select();"}
-        %input{:type => 'submit', :value => "Save", :class => 'submit', :id => 'save'}
 
   #footer
     / nothing to see here
