@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" type="text/css" href="widget.css" />
+<link rel="stylesheet" type="text/css" href="http://<%= request.host_with_port %>/widget.css" />
 
 <%= haml :customize %>
 
@@ -107,7 +107,7 @@ function join_protest(){
 
 <div id="occupy-widget" style="display: none;">
   <div id="occupy-joinprotest">
-    <form id="occupy-joinprotest-form" method="POST" action="/join_protest">
+    <form id="occupy-joinprotest-form" method="POST" action="http://<%= request.host_with_port %>/join_protest">
       <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header">Occupy Internet</span>
       <a href="#" onclick="join_protest();" class="bigavatar" id="occupy-joinprotest-button">Start The Protest!</a>
     </form>
@@ -119,4 +119,4 @@ function join_protest(){
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 </div>
 
-<script type="text/javascript" src="/site.json?callback=load_protest"></script>
+<script type="text/javascript" src="http://<%= request.host_with_port %>/site.json?callback=load_protest"></script>
