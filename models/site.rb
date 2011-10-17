@@ -39,7 +39,8 @@ class Site
   def protestors(basepath=nil)
     # return @protestors unless @protestors.nil? # memoized
 
-    users = User.all(:id => protestor_user_ids)
+    # users = User.all(:id => protestor_user_ids)
+    users = self.visits.map(&:user)
 
     # Expand avatars to full paths, FIXME h8 basepath
     users.each{|u| u.avatar = User.fix_avatar(u.avatar, basepath) }
@@ -78,10 +79,13 @@ class Site
   end
 
   def flush_old_visits
-    expiry = 30 * 24 * 60 * 60 * 60 # 30.days
+    expiry = 30 * 60 # 30.minutes
     visits = Visit.all(:site_id => self.id)
     expired_visits = visits.select do |v|
-      (Time.now - expiry) < Time.parse(v.updated_at.to_s)
+      parsed = Time.parse(v.updated_at.to_s) + expiry
+      versus = Time.now
+      puts "#{parsed.inspect} <=> #{versus.inspect}"
+      parsed < versus
     end
     puts "#{self.domain}: found #{visits.length} visits, #{expired_visits.length} expired"
 

@@ -38,6 +38,14 @@ get /\/(site|stats|protest)/ do
   @site.flush_old_visits
   @site.flush_protestors if dev? && params[:flush].to_s == 'true'
 
+  # Bump current user's updated_at if protesting
+  if request_uuid
+    puts "Bumping visit updated_at ..."
+    @user = User.find_by_uuid(request_uuid)
+    @visit = Visit.first(:user_id => @user.id, :site_id => @site.id)
+    @visit.touch
+  end
+
   respond_to do |format|
     format.json { respond_with_stats(@site) }
     format.html { haml :'api/site' }
