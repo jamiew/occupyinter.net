@@ -24,6 +24,7 @@
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 
 #occupy-joinprotest { position: absolute; bottom: 40px; left: 20px; text-align: center; padding-right: 10px; }
+#occupy-joinprotest a { font-size: 9pt; }
 #occupy-joinprotest a#occupy-joinprotest-header {
   background-color: #555;
   color: #fff;
