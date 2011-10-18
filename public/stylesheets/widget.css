@@ -36,20 +36,24 @@
 /* Fix any stray a bg styles, like on fffff.at */
 .occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent; border-color: transparent; }
 
-#occupy-joinprotest { position: absolute; bottom: 40px; left: 20px; text-align: center; padding-right: 10px; }
+#occupy-joinprotest { position: absolute; z-index: 300; bottom: 40px; left: 20px; text-align: center; padding-right: 10px; }
 #occupy-joinprotest a { font-size: 9pt; }
 #occupy-joinprotest a#occupy-joinprotest-header {
-  background-color: #555;
+  background-color: #f0f;
+  border: 1px solid #f0f;
+  border-right: 0; /* ... */
   color: #fff;
   padding: 5px 10px;
   font-weight: bold;
   text-decoration: none;
 }
-#occupy-joinprotest a#occupy-joinprotest-header:hover { color: #fff; }
+#occupy-joinprotest a#occupy-joinprotest-header:hover { color: #ff0; }
 
 #occupy-joinprotest a#occupy-joinprotest-button {
   font-style: italic;
   background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: 0;
   color: #000;
   display: block;
   margin-top: 5px;
@@ -57,7 +61,7 @@
   text-decoration: none;
   font-size: 15pt;
 }
-#occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #faf; }
+#occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #ff0; color: #000; }
 
 #occupy-customize {
 /*  position: absolute;*/

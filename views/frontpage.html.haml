@@ -1,17 +1,35 @@
 %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen', :href => '/stylesheets/frontpage.css'}
 
+- script_src = "http://#{request.host_with_port}/embed.js"
+
+:javascript
+  function update_embed_code(){
+    console.log("updating embed code...");
+  }
+
 #container
   #demo
     %h1 Occupy Internet
 
     / %h2 Default Avatars...
     / = User.default_avatars.inspect
-
-    %h2 Embed Code
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :style => 'width: 500px; background-color: #efefef;', :click => "this.select()"}
-      == <script src="http://#{request.host_with_port}/embed.js"></script>
+      == <script src="#{script_src}"></script>
 
-    %h2 Demo
+    %form
+      %strong Size
+      &nbsp;
+      %label{:for => 'small'} Small
+      %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code()'}
+      %label{:for => 'medium'} Medium
+      %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :onclick => 'update_embed_code()'}
+      %label{:for => 'large'} Large
+      %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code()'}
+      &nbsp;&nbsp;&nbsp;
+      %label{:for => 'orderly'} <strong>Orderly protest?</strong>
+      %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
+
+    -# TODO put this in an frame so we can update it from the customizer
     %script{:src => "http://#{request.host_with_port}/embed.js"}
 
 

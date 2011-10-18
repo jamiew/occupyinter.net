@@ -1,6 +1,15 @@
 <% server = "http://#{request.host_with_port}" %>
-
+<% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
+<% avatar_height = params['height'] ? params['height'].to_i : 200 %>
 <link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
+
+<script type="text/javascript">
+var avatar_orderly = <%= avatar_orderly %>;
+console.log(avatar_orderly);
+var avatar_height = '<%= avatar_height %>px';
+console.log(avatar_height);
+</script>
+
 
 <script type="text/javascript">
 function load_protest(data){
