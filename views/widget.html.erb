@@ -21,7 +21,7 @@ function load_protest(data){
     {avatar: "http://occupyinternet.heroku.com/avatars/banana-evanroth-occupy.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/jig-evanroth-occupy.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/gdance-evanroth-occupy.gif"},
-    {avatar: "http://occupyinternet.heroku.com/avatars/theo-beyonce.gif"},
+    // {avatar: "http://occupyinternet.heroku.com/avatars/theo-beyonce.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/david_goliath-evanroth-stevelambert-occupy.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/bugs_troll_mrqmarx.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/hallo-surfer_dragan.gif"},
@@ -46,13 +46,17 @@ function load_protest(data){
     {avatar: "http://occupyinternet.heroku.com/avatars/cxzy-dear-maslow-2.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/snoop-evanroth-occupy.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/bellydance-evanroth-occupy.gif"},
-    {avatar: "http://occupyinternet.heroku.com/avatars/theo-doucheCat.gif"},
+    // {avatar: "http://occupyinternet.heroku.com/avatars/theo-doucheCat.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/txt-minimi_makemoney.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/frodo-evanroth-occupy.gif"},
     {avatar: "http://occupyinternet.heroku.com/avatars/bowlers-evanroth-occupy.gif"}
   ]
 
-  data.uuid = undefined; // Current user's id; null for no login shiz
+  // Randomize dem avatars
+  data.protestors.sort(function(){ return 0.5 - Math.random() });
+
+  // Current user's id; not using this yet
+  data.uuid = undefined;
 
 
   // Change 'start' to 'join' if people here already
@@ -61,8 +65,10 @@ function load_protest(data){
     document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
   }
 
-  // Add all our avatars
-  for(var i = 0; i < data.protestors.length; i++){
+  // Add a selection of our avatars
+  // FIXME don't want to load too many imgs, but what's the right #?
+  var max_protestors = 10;
+  for(var i = 0; i < max_protestors; i++){
     var protestor = data.protestors[i];
     protestor.uuid = i + 1; // ...
 
