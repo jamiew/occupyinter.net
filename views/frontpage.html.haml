@@ -3,8 +3,14 @@
 - script_src = "http://#{request.host_with_port}/embed.js"
 
 :javascript
-  function update_embed_code(){
+  function update_embed_code(size){
     console.log("updating embed code...");
+    var el = document.getElementById('embed_code');
+    var script_src = #{script_src.inspect};
+    // var orderly = document.getElementById('orderly').checked;
+    // el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
+    // el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?size='+size+'&orderly='+orderly+'"></sc'+'ript>';
+    el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?size='+size+'"></sc'+'ript>';
   }
 
 #container
@@ -20,14 +26,14 @@
       %strong Size
       &nbsp;
       %label{:for => 'small'} Small
-      %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code()'}
+      %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code(this.value)'}
       %label{:for => 'medium'} Medium
-      %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :onclick => 'update_embed_code()'}
+      %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :onclick => 'update_embed_code(this.value)'}
       %label{:for => 'large'} Large
-      %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code()'}
-      &nbsp;&nbsp;&nbsp;
-      %label{:for => 'orderly'} <strong>Orderly protest?</strong>
-      %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
+      %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
+      / &nbsp;&nbsp;&nbsp;
+      / %label{:for => 'orderly'} <strong>Orderly protest?</strong>
+      / %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
     -# TODO put this in an frame so we can update it from the customizer
     %script{:src => "http://#{request.host_with_port}/embed.js"}
