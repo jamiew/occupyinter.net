@@ -6,14 +6,57 @@
 function load_protest(data){
   var avatar_output = '';
 
+  // Hardcode the response data
+  if(data == undefined) data = {};
+  data.protestors = [
+    {avatar: "http://occupyinternet.heroku.com/avatars/banana-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/jig-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/gdance-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/theo-beyonce.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/david_goliath-evanroth-stevelambert-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/bugs_troll_mrqmarx.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/hallo-surfer_dragan.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/jesus-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/Hombre-65_gyna.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/moonwalk-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/jeanluc-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/occupy-net-evanroth-02.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/headless-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/weare99percent_DAG.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/occupy-net-evanroth-03.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/unicorn-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/retake-public-domain_telegramsam.jpg"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/chunli-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/classwar-ahead_goulassoflosy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/pow-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/droid-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/LCKY-capitalism_adamharms.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/hulkster-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/dino-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/unfucktheworld_seb.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/cxzy-dear-maslow-2.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/snoop-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/bellydance-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/theo-doucheCat.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/txt-minimi_makemoney.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/frodo-evanroth-occupy.gif"},
+    {avatar: "http://occupyinternet.heroku.com/avatars/bowlers-evanroth-occupy.gif"}
+  ]
+
+  data.uuid = undefined; // Current user's id; null for no login shiz
+
+
   // Change 'start' to 'join' if people here already
   if(data.protestors.length > 0){
+    console.log("changing protest button text...");
     document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
   }
 
   // Add all our avatars
   for(var i = 0; i < data.protestors.length; i++){
     var protestor = data.protestors[i];
+    protestor.uuid = i + 1; // ...
+
     var bottom = 0,
         left = (i*150),
         zindex = (100+Math.floor(Math.random()*20));
@@ -110,6 +153,27 @@ function toggle_customize(){
 function join_protest(){
   document.getElementById('occupy-joinprotest-form').submit();
 }
+
+// window.onLoad = function(){
+//   console.log("loading protest...");
+//   load_protest();
+// };
+
+if(window.attachEvent) {
+  window.attachEvent('onload', yourFunctionName);
+} else {
+  if(window.onload) {
+    var curronload = window.onload;
+    var newonload = function() {
+      load_protest;
+    };
+    window.onload = newonload;
+  } else {
+    window.onload = load_protest;
+  }
+}
+
+
 </script>
 
 <div id="occupy-widget" class="occupy-widget" style="display: none;">
@@ -126,4 +190,4 @@ function join_protest(){
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 </div>
 
-<script type="text/javascript" src="<%= server %>/site.json?callback=load_protest"></script>
+<!-- <script type="text/javascript" src="<%= server %>/site.json?callback=load_protest"></script> -->
