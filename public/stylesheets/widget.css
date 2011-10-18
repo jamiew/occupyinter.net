@@ -33,6 +33,9 @@
 #occupy-protestor_avatars { margin-top: 50px; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 
+/* Fix any stray a bg styles, like on fffff.at */
+.occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent; border-color: transparent; }
+
 #occupy-joinprotest { position: absolute; bottom: 40px; left: 20px; text-align: center; padding-right: 10px; }
 #occupy-joinprotest a { font-size: 9pt; }
 #occupy-joinprotest a#occupy-joinprotest-header {
@@ -45,8 +48,6 @@
 #occupy-joinprotest a#occupy-joinprotest-header:hover { color: #fff; }
 
 #occupy-joinprotest a#occupy-joinprotest-button {
-/*  background-color: #313;*/
-/*  color: #fff;*/
   font-style: italic;
   background-color: #fff;
   color: #000;
@@ -67,6 +68,5 @@
 /*  background-color: #f9f9f9;
   border: 1px solid #dfdfdf;
 */}
-.occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent !important; border-color: transparent !important; }
 
 
