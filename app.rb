@@ -39,9 +39,20 @@ end
 
 # -------------------------
 
+def last_modified_from(files)
+  filemtimes = files.map{|file| File.mtime([settings.root, file].join('/')) }
+  filemtimes.last
+end
+
 get "/" do
   respond_to do |format|
-    format.html { haml :frontpage }
+    format.html {
+      output = haml :frontpage
+      etag(Digest::SHA1.hexdigest(output))
+      last_modified(File.mtime("#{settings.root}/views/frontpage.html.haml"))
+      response['Cache-Control'] = "public, max-age=60"
+      output
+    }
   end
 end
 
@@ -49,8 +60,15 @@ get "/embed" do
   content_type :html # so it renders widget.html, :format => :html does not work. WTF such a hack
   widget = erb :widget
   content_type :js
+
   respond_to do |format|
-    format.js { "document.write(#{widget.to_json})" }
+    format.js {
+      output = "document.write(#{widget.to_json})"
+      etag(Digest::SHA1.hexdigest(output))
+      last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
+      response['Cache-Control'] = "public, max-age=60"
+      output
+    }
   end
 end
 
