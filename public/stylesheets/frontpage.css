@@ -5,13 +5,22 @@ h1, h2 { margin: 5px 0 20px 0; }
 #instructions a { display: inline; border: 0; }
 
 body { height: 100%; }
+a { color: #00a; }
+
 #container { background-color: #fff; padding: 20px 40px; }
-#demo { width: 840px; float: left; border-right: 1px solid #f9f9f9; }
+#demo { width: 630px; float: left; border-right: 1px solid #f9f9f9; padding-bottom: 500px; }
 #footer { clear: both; }
-#embed_code { margin-bottom: 20px; padding: 8px; width: 466px; font-size: 9pt; font-family: monospace; border: 1px solid #900; }
+
+#demo h1 a { padding: 6px 14px 8px; background-color: #000; color: #fff; font-weight: bold; text-decoration: none; }
+#demo h1 { margin-bottom: 30px; }
+#demo h2 { margin-top: 30px; }
+
+#demo #embed_code { margin-bottom: 20px; padding: 8px; width: 600px; font-size: 11pt; font-family: monospace; border: 1px solid #900; background-color: #efe0e0; }
 
 #embed_size label { margin-left: 9px; }
 #embed_size, #embed_orderly { display: inline; }
 #embed_size { margin-right: 20px; }
 
 /*#embed_demo { border: 0; height: 78%; width: 100%; }*/
+
+.soc-button { float: left; }

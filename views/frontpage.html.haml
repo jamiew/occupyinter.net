@@ -24,12 +24,10 @@
     // Unload old protest script, then create <script> and inject
     var widget = document.getElementById('occupy-widget');
     if(widget) {
-      console.log("deleting previous widget");
       widget.parentNode.removeChild(widget);
     }
     var old_skript = document.getElementById('embed_demo');
     if(old_skript){
-      console.log("deleting old skript");
       old_skript.parentNode.removeChild(old_skript);
     }
 
@@ -37,23 +35,47 @@
     skript.id = "embed_demo";
     skript.type = 'text/javascript';
     skript.src = url;
-    console.log("new script ------->");
-    console.log(skript);
     document.body.appendChild(skript);
   }
 
 #container
   #demo
     %h1
-      Occupy The Internet
-      / %img{:src => 'http://ni9e.com/photos/data/occupy-the-net/occupy-the-internet.gif', :alt => "Occupy The Internet", :title => "Occupy The Internet", :height => "300"}
+      %a{:href => '/'} Occupy The Internet
 
-    %p Copy and paste this code into your website and join the revolution. <a href="http://fffff.at/occupy-the-internet">More info here</a>
+    %p
+      Are you a “webmaster”, admin, blog owner or someone with access to index.html files? Are you interested in taking part in the recent global wave of revolution from the comfort of your home computer?
+      <em>Occupy the Internet!</em>
+    %p
+      Add the animated GIF army to websites you control (or can get control of) by pasting the following code into any HTML file:
 
-    / %h2 Default Avatars...
-    / = User.default_avatars.inspect
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :onclick => "this.select()"}
       == <script src="#{script_src}"></script>
+
+    = erb :socialmedia
+
+    %h2 Info
+    %p
+      For the full list of occupied websites visit <a href="http://fffff.at/occupy-the-internet">fffff.at/occupy-the-internet</a>
+
+    %p
+      To add your occupied website to this list send us an email <script>document.write('<a href="mailto:jamie@fffff.at">jamie[at]fffff.at</a>')</script>
+      or tweet us <a href="http://twitter.com/fffffat">@FFFFFAT</a>
+
+    %p
+      If you would like to contribute animated GIF occupation soldiers please leave URLs in the comment thread of <a href="http://fffff.at/enlist-today/">this post</a> where they will be called up for duty. Note: images should have transparent backgrounds.
+
+    %p
+      Source code: <a href="https://github.com/jamiew/occupy-internet-widget">http://github.com/jamiew/occupy-internet-widget</a> <br />
+      (MIT Licensed)
+
+
+    %h2 About
+    %p
+      A <strong><a href="http://fffff.at">F.A.T. Lab</a></strong> Production<br />
+      Concept development by <a href="http://www.theowatson.com/">Theo</a>, <a href="http://www.simple-mechanisms.com/">Jerry</a>, <a href="http://jamiedubs.com/">Jamie</a>, <a href="http://gleuch.com/">Greg</a>, <a href="http://evan-roth.com">Evan</a> and <a href="http://datenform.de/">Aram</a>.<br />
+      Code development by <a href="http://jamiedubs.com/">Jamie</a> and <a href="http://gleuch.com">Greg</a>.
+
 
     - if false
       %form
