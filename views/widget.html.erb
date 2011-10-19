@@ -94,9 +94,23 @@ function load_protest(data){
 
   // Add and start animating
   document.getElementById('occupy-protestor_avatars').innerHTML = avatar_output;
+
+  inject_sound();
   move_avatars();
   show_protest();
 };
+
+function inject_sound(){
+  var audio = document.createElement('audio');
+  audio.setAttribute('src', '<%= server %>/crowd.mp3');
+  audio.setAttribute('loop', 'true');
+  audio.volume = .3;
+  audio.play();
+
+  var widget = document.getElementById('occupy-widget')
+  widget.appendChild(audio);
+}
+
 
 function show_protest(){
   var widget = document.getElementById('occupy-widget');
