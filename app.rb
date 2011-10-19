@@ -49,7 +49,7 @@ get "/" do
     format.html {
       output = haml :frontpage
       etag(Digest::SHA1.hexdigest(output))
-      last_modified(File.mtime("#{settings.root}/views/frontpage.html.haml"))
+      # last_modified(last_modified_from(["views/frontpage.html.haml", "views/socialmedia.html.erb", "views/stats.html.erb"])
       response['Cache-Control'] = "public, max-age=60"
       output
     }
@@ -65,7 +65,7 @@ get "/embed" do
     format.js {
       output = "document.write(#{widget.to_json})"
       etag(Digest::SHA1.hexdigest(output))
-      last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
+      # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
       response['Cache-Control'] = "public, max-age=60"
       output
     }
