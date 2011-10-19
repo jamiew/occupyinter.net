@@ -55,20 +55,21 @@
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :onclick => "this.select()"}
       == <script src="#{script_src}"></script>
 
-    %form
-      #embed_size
-        %strong Size
-        %label{:for => 'small'} Small
-        %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code(this.value)'}
-        %label{:for => 'medium'} Medium
-        %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :checked => 'checked', :onclick => 'update_embed_code(this.value)'}
-        %label{:for => 'large'} Large
-        %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
-        %label{:for => 'extralarge'} XL
-        %input{:type => 'radio', :name => 'size', :id => 'extralarge', :value => '500', :onclick => 'update_embed_code(this.value)'}
-      #embed_orderly
-        %label{:for => 'orderly'} <strong>Orderly protest?</strong>
-        %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
+    - if false
+      %form
+        #embed_size
+          %strong Size
+          %label{:for => 'small'} Small
+          %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code(this.value)'}
+          %label{:for => 'medium'} Medium
+          %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :checked => 'checked', :onclick => 'update_embed_code(this.value)'}
+          %label{:for => 'large'} Large
+          %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
+          %label{:for => 'extralarge'} XL
+          %input{:type => 'radio', :name => 'size', :id => 'extralarge', :value => '500', :onclick => 'update_embed_code(this.value)'}
+        #embed_orderly
+          %label{:for => 'orderly'} <strong>Orderly protest?</strong>
+          %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
     -# TODO put this in an frame so we can update it from the customizer
     %script{:id => 'embed_demo', :src => "http://#{request.host_with_port}/embed.js"}
