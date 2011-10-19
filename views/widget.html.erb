@@ -50,7 +50,6 @@ function load_protest(data){
 
   // Change 'start' to 'join' if people here already
   // if(data.protestors.length > 0){
-  //   console.log("changing protest button text...");
   //   document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
   // }
 
@@ -95,21 +94,41 @@ function load_protest(data){
   // Add and start animating
   document.getElementById('occupy-protestor_avatars').innerHTML = avatar_output;
 
-  inject_sound();
+  add_audio();
   move_avatars();
   show_protest();
 };
 
-function inject_sound(){
+var audio_is_playing = false;
+function add_audio(){
   var audio = document.createElement('audio');
-  audio.setAttribute('src', '<%= server %>/crowd.mp3');
-  audio.setAttribute('loop', 'true');
+  audio.setAttribute
+  audio.id = 'occupy-audio';
+  audio.src = '<%= server %>/crowd.mp3';
+  audio.loop = 'true';
   audio.volume = .2;
   audio.play();
+  audio_is_playing = true;
 
   var widget = document.getElementById('occupy-widget')
   widget.appendChild(audio);
 }
+
+function toggle_audio(){
+ var audio = document.getElementById('occupy-audio'),
+     img = document.getElementById('occupy-audio-image');
+ if(audio_is_playing){
+   audio.pause();
+   audio_is_playing = false;
+   img.src = "<%= server %>/images/unmute.png";
+  }
+  else {
+    audio.play();
+    audio_is_playing = true;
+    img.src = "<%= server %>/images/mute.png";
+  }
+}
+
 
 
 function show_protest(){
@@ -124,7 +143,7 @@ function show_protest(){
 function slide_protest_in(el){
   setTimeout(function(){
     if(parseInt(el.style.bottom) >= -20){
-      // console.log("done animating protest");
+      // Done
     }
     else {
       el.style.bottom = (parseInt(el.style.bottom) + 12)+'px';
@@ -171,11 +190,7 @@ function join_protest(){
   document.getElementById('occupy-joinprotest-form').submit();
 }
 
-// window.onLoad = function(){
-//   console.log("loading protest...");
-//   load_protest();
-// };
-
+// Initialize protest onload
 if(window.attachEvent) {
   window.attachEvent('onload', yourFunctionName);
 } else {
@@ -208,6 +223,10 @@ if(window.attachEvent) {
       <!-- <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span> -->
       <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button">We Are Occupying The Internet!</a>
     </form>
+  </div>
+
+  <div id="occupy-mute">
+    <a href="#" onclick="toggle_audio(); return false;"><img id="occupy-audio-image" src="<%= server %>/images/mute.png" alt="Mute" title="Mute Protest Audio" /></a>
   </div>
 
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>

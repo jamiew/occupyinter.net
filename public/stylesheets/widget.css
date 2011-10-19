@@ -36,6 +36,13 @@
 /* Fix any stray a bg styles, like on fffff.at */
 .occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent; border-color: transparent; }
 
+#occupy-mute {
+  position: absolute;
+  z-index: 301;
+  left: 158px;
+  bottom: 22px;
+}
+
 #occupy-joinprotest {
   position: absolute;
   z-index: 300;
