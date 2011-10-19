@@ -8,5 +8,7 @@ body { background-color: #eee; }
 #container { background-color: #fff; padding: 20px 40px; }
 #demo { width: 840px; float: left; border-right: 1px solid #f9f9f9; }
 #footer { clear: both; }
-#embed_code { margin-bottom: 20px; }
-
+#embed_code { margin-bottom: 20px; padding: 8px; width: 466px; font-size: 9pt; font-family: monospace; border: 1px solid #900; background-color: #ffe9e9; }
+#embed_size label { margin-left: 9px; }
+#embed_size, #embed_orderly { display: inline; }
+#embed_size { margin-right: 20px; }

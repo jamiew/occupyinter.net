@@ -3,40 +3,66 @@
 - script_src = "http://#{request.host_with_port}/embed.js"
 
 :javascript
+  var prev_size;
   function update_embed_code(size){
-    console.log("updating embed code...");
     var el = document.getElementById('embed_code');
     var script_src = #{script_src.inspect};
-    // var orderly = document.getElementById('orderly').checked;
-    // el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
-    // el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?size='+size+'&orderly='+orderly+'"></sc'+'ript>';
-    el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?size='+size+'"></sc'+'ript>';
+    var orderly = document.getElementById('orderly').checked;
+    el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
+    if(size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
+
+    var url;
+
+    if(orderly == false) {
+      el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?orderly='+orderly+'"></sc'+'ript>';
+    }
+    else {
+      el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
+    }
+
+    // TODO unload old protest, then create <script> and inject
+    var widget = document.getElementById('occupy-widget');
+    if(widget) {
+      console.log("deleting previous widget");
+      skript.parentNode.removeChild(skript);
+    }
+
+    var scriptNode = document.createElement('script');
+    scriptNode.type = 'text/javascript';
+    scriptNode.src = ;
+
   }
 
 #container
   #demo
-    %h1 Occupy Internet
+    %h1
+      Occupy The Internet
+      / %img{:src => 'http://ni9e.com/photos/data/occupy-the-net/occupy-the-internet.gif', :alt => "Occupy The Internet", :title => "Occupy The Internet", :height => "300"}
+
+    %p Copy and paste this code into your website and <a href="http://fffff.at/occupy-the-internet">join the revolution</a>
 
     / %h2 Default Avatars...
     / = User.default_avatars.inspect
-    %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :style => 'width: 500px; background-color: #efefef;', :click => "this.select()"}
+    %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :onclick => "this.select()"}
       == <script src="#{script_src}"></script>
 
     %form
-      %strong Size
-      &nbsp;
-      %label{:for => 'small'} Small
-      %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code(this.value)'}
-      %label{:for => 'medium'} Medium
-      %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :onclick => 'update_embed_code(this.value)'}
-      %label{:for => 'large'} Large
-      %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
-      / &nbsp;&nbsp;&nbsp;
-      / %label{:for => 'orderly'} <strong>Orderly protest?</strong>
-      / %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
+      #embed_size
+        %strong Size
+        %label{:for => 'small'} Small
+        %input{:type => 'radio', :name => 'size', :id => 'small', :value => '100', :onclick => 'update_embed_code(this.value)'}
+        %label{:for => 'medium'} Medium
+        %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :checked => 'checked', :onclick => 'update_embed_code(this.value)'}
+        %label{:for => 'large'} Large
+        %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
+        %label{:for => 'large'} XL
+        %input{:type => 'radio', :name => 'size', :id => 'extralarge', :value => '500', :onclick => 'update_embed_code(this.value)'}
+      #embed_orderly
+        %label{:for => 'orderly'} <strong>Orderly protest?</strong>
+        %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
     -# TODO put this in an frame so we can update it from the customizer
-    %script{:src => "http://#{request.host_with_port}/embed.js"}
+    %script{:id => 'embed_demo', :src => "http://#{request.host_with_port}/embed.js"}
 
 
   #footer

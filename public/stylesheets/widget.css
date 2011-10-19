@@ -40,8 +40,6 @@
 #occupy-joinprotest a { font-size: 9pt; }
 #occupy-joinprotest a#occupy-joinprotest-header {
   background-color: #f0f;
-  border: 1px solid #f0f;
-  border-right: 0; /* ... */
   color: #fff;
   padding: 5px 10px;
   font-weight: bold;
@@ -51,10 +49,8 @@
 
 #occupy-joinprotest a#occupy-joinprotest-button {
   font-style: italic;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-top: 0;
-  color: #000;
+  background-color: #000;
+  color: #fff;
   display: block;
   margin-top: 5px;
   padding: 21px 20px;

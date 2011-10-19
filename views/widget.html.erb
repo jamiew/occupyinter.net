@@ -1,7 +1,6 @@
 <% server = "http://#{request.host_with_port}" %>
 <% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
 <% avatar_height = params['height'] ? params['height'].to_i : 200 %>
-<link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
 
 <script type="text/javascript">
 var avatar_orderly = <%= avatar_orderly %>;
@@ -9,6 +8,11 @@ console.log(avatar_orderly);
 var avatar_height = '<%= avatar_height %>px';
 console.log(avatar_height);
 </script>
+
+<link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
+<style type="text/css">
+.occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img { height: "<%= avatar_height %>px"; }
+</style>
 
 
 <script type="text/javascript">
@@ -60,10 +64,10 @@ function load_protest(data){
 
 
   // Change 'start' to 'join' if people here already
-  if(data.protestors.length > 0){
-    console.log("changing protest button text...");
-    document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
-  }
+  // if(data.protestors.length > 0){
+  //   console.log("changing protest button text...");
+  //   document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
+  // }
 
   // Add a selection of our avatars
   // FIXME don't want to load too many imgs, but what's the right #?
@@ -194,8 +198,8 @@ if(window.attachEvent) {
 <div id="occupy-widget" class="occupy-widget" style="display: none;">
   <div id="occupy-joinprotest">
     <form id="occupy-joinprotest-form" method="POST" action="<%= server %>/join_protest">
-      <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span>
-      <a href="<%= server %>/customize" onclick="join_protest();" class="bigavatar" id="occupy-joinprotest-button">Start The Protest!</a>
+      <!-- <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span> -->
+      <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button">I Am Occupying The Internet!</a>
     </form>
   </div>
 
