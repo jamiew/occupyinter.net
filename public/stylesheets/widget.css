@@ -30,7 +30,7 @@
 .occupy-widget #occupy-site { float: left; display: inline; }
 
 #occupy-avatars { position: absolute; bottom: -10px; left: 25px; }
-#occupy-protestor_avatars { margin-top: 50px; }
+#occupy-protestor_avatars { margin-top: 50px; pointer-events: none; }
 #occupy-protestor_count { float: left; color: #ccc; margin-left: 10px; }
 
 /* Fix any stray a bg styles, like on fffff.at */
