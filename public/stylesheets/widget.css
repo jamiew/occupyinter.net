@@ -10,7 +10,7 @@
 .occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
 .occupy-widget .avatar a:hover, .occupy-widget .bigavatar a:hover { border-color: #f0f; }
 .occupy-widget .avatar a.selected, .occupy-widget .bigavatar a.selected { border-color: #ff0; }
-.occupy-widget .bigavatar img { max-height: 300px; }
+.occupy-widget .bigavatar img { max-height: 400px; }
 .occupy-widget .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
 
 #occupy-customize #introduction { float: left; width: 350px; margin-top: 30px; padding-right: 25px; }
