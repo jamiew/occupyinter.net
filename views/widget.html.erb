@@ -124,7 +124,7 @@ function show_protest(){
 function slide_protest_in(el){
   setTimeout(function(){
     if(parseInt(el.style.bottom) >= -20){
-      console.log("done animating protest");
+      // console.log("done animating protest");
     }
     else {
       el.style.bottom = (parseInt(el.style.bottom) + 12)+'px';
@@ -195,7 +195,6 @@ if(window.attachEvent) {
 
 <div id="occupy-widget" class="occupy-widget" style="display: none;">
   <script type="text/javascript">
-  console.log("greetings from widget.html.erb!");
   <% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
   var avatar_orderly = <%= avatar_orderly %>;
   <% avatar_size = params['size'] ? params['size'].to_i : 200 %>
