@@ -56,13 +56,14 @@
 
 #occupy-joinprotest a#occupy-joinprotest-button {
   font-style: italic;
+  font-weight: bold;
+  font-size: 15pt;
   background-color: #000;
   color: #fff;
   display: block;
   margin-top: 5px;
   padding: 21px 20px;
   text-decoration: none;
-  font-size: 15pt;
 }
 #occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #ff0; color: #000; }
 
