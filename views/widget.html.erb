@@ -1,17 +1,15 @@
 <% server = "http://#{request.host_with_port}" %>
-<% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
-<% avatar_height = params['height'] ? params['height'].to_i : 200 %>
 
 <script type="text/javascript">
+<% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
 var avatar_orderly = <%= avatar_orderly %>;
-console.log(avatar_orderly);
-var avatar_height = '<%= avatar_height %>px';
-console.log(avatar_height);
+<% avatar_size = params['size'] ? params['size'].to_i : 200 %>
+var avatar_size = '<%= avatar_size %>px';
 </script>
 
 <link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
 <style type="text/css">
-.occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img { height: "<%= avatar_height %>px"; }
+.occupy-widget .bigavatar img { height: <%= avatar_size %>px !important; }
 </style>
 
 
@@ -124,7 +122,6 @@ function show_protest(){
 
 function slide_protest_in(el){
   setTimeout(function(){
-    console.log(el.style.bottom);
     if(parseInt(el.style.bottom) >= -20){
       console.log("done animating protest");
     }

@@ -53,3 +53,9 @@ get "/embed" do
     format.js { "document.write(#{widget.to_json})" }
   end
 end
+
+get "/demo" do
+  real_url = params[:url] && params[:url].split('?')[1]
+  puts real_url.inspect
+  %{<script type="text/javascript" src="/embed.js#{real_url && "?"+real_url}"></script>}
+end

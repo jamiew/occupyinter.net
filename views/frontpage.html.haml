@@ -11,26 +11,29 @@
     el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
     if(size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
 
-    var url;
-
+    var url = '';
     if(orderly == false) {
-      el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?orderly='+orderly+'"></sc'+'ript>';
+      url = 'http://#{request.host_with_port}/embed.js?orderly='+orderly;
+      el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
     else {
+      url = 'http://#{request.host_with_port}/embed.js?size='+size;
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
 
-    // TODO unload old protest, then create <script> and inject
+    // Unload old protest script, then create <script> and inject
     var widget = document.getElementById('occupy-widget');
     if(widget) {
       console.log("deleting previous widget");
-      skript.parentNode.removeChild(skript);
+      widget.parentNode.removeChild(widget);
     }
 
-    var scriptNode = document.createElement('script');
-    scriptNode.type = 'text/javascript';
-    scriptNode.src = ;
-
+    var skript = document.createElement('script');
+    skript.id = "embed_demo";
+    skript.type = 'text/javascript';
+    skript.src = url;
+    console.log(skript);
+    document.body.appendChild(skript);
   }
 
 #container
@@ -55,7 +58,7 @@
         %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :checked => 'checked', :onclick => 'update_embed_code(this.value)'}
         %label{:for => 'large'} Large
         %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
-        %label{:for => 'large'} XL
+        %label{:for => 'extralarge'} XL
         %input{:type => 'radio', :name => 'size', :id => 'extralarge', :value => '500', :onclick => 'update_embed_code(this.value)'}
       #embed_orderly
         %label{:for => 'orderly'} <strong>Orderly protest?</strong>
