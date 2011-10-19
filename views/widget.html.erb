@@ -1,19 +1,6 @@
 <% server = "http://#{request.host_with_port}" %>
 
 <script type="text/javascript">
-<% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
-var avatar_orderly = <%= avatar_orderly %>;
-<% avatar_size = params['size'] ? params['size'].to_i : 200 %>
-var avatar_size = '<%= avatar_size %>px';
-</script>
-
-<link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
-<style type="text/css">
-.occupy-widget .bigavatar img { height: <%= avatar_size %>px !important; }
-</style>
-
-
-<script type="text/javascript">
 function load_protest(data){
   var avatar_output = '';
 
@@ -193,6 +180,19 @@ if(window.attachEvent) {
 </script>
 
 <div id="occupy-widget" class="occupy-widget" style="display: none;">
+  <script type="text/javascript">
+  console.log("greetings from widget.html.erb!");
+  <% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
+  var avatar_orderly = <%= avatar_orderly %>;
+  <% avatar_size = params['size'] ? params['size'].to_i : 200 %>
+  var avatar_size = '<%= avatar_size %>px';
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
+  <style type="text/css">
+  .occupy-widget .bigavatar img { height: <%= avatar_size %>px !important; }
+  </style>
+
   <div id="occupy-joinprotest">
     <form id="occupy-joinprotest-form" method="POST" action="<%= server %>/join_protest">
       <!-- <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span> -->
@@ -200,10 +200,5 @@ if(window.attachEvent) {
     </form>
   </div>
 
-  <!-- <div><strong><span id="occupy-site"></span></strong></div> -->
-  <!-- <div><span id="occupy-protestor_count">Loading...</span></div> -->
-  <!-- <br style="clear: both;" /><br /> -->
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 </div>
-
-<!-- <script type="text/javascript" src="<%= server %>/site.json?callback=load_protest"></script> -->

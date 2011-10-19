@@ -5,30 +5,41 @@
 :javascript
   var prev_size;
   function update_embed_code(size){
-    var el = document.getElementById('embed_code'),
-        script_src = '#{script_src}',
-        demo = document.getElementById('embed_demo'),
-        orderly = document.getElementById('orderly').checked;
+    var el = document.getElementById('embed_code');
+    var script_src = #{script_src.inspect};
+    var orderly = document.getElementById('orderly').checked;
+    el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
+    if(size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
 
-    if (size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
-
-    var url = script_src+"?size="+size+"&orderly="+avatar_orderly;
-
-    if (orderly == false) {
-      el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?orderly='+orderly+'"></sc'+'ript>';
-    } else {
+    var url = '';
+    if(orderly == false) {
+      url = 'http://#{request.host_with_port}/embed.js?orderly='+orderly;
+      el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
+    }
+    else {
+      url = 'http://#{request.host_with_port}/embed.js?size='+size;
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
 
     // Unload old protest script, then create <script> and inject
     var widget = document.getElementById('occupy-widget');
-    if (widget) widget.parentNode.removeChild(widget);
+    if(widget) {
+      console.log("deleting previous widget");
+      widget.parentNode.removeChild(widget);
+    }
+    var old_skript = document.getElementById('embed_demo');
+    if(old_skript){
+      console.log("deleting old skript");
+      old_skript.parentNode.removeChild(old_skript);
+    }
 
-    var scriptNode = document.createElement('script');
-    scriptNode.type = 'text/javascript';
-    scriptNode.src = url;
-    demo.innerHTML = '';
-    demo.insertBefore(scriptNode);
+    var skript = document.createElement('script');
+    skript.id = "embed_demo";
+    skript.type = 'text/javascript';
+    skript.src = url;
+    console.log("new script ------->");
+    console.log(skript);
+    document.body.appendChild(skript);
   }
 
 #container
@@ -60,8 +71,7 @@
         %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
     -# TODO put this in an frame so we can update it from the customizer
-    #embed_demo
-      %script{:src => "http://#{request.host_with_port}/embed.js"}
+    %script{:id => 'embed_demo', :src => "http://#{request.host_with_port}/embed.js"}
 
 
   #footer
