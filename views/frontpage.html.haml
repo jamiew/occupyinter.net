@@ -20,7 +20,7 @@
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
 
-    // TODO unload old protest, then create <script> and inject
+    // Unload old protest script, then create <script> and inject
     var widget = document.getElementById('occupy-widget');
     if (widget) widget.parentNode.removeChild(widget);
 
@@ -53,7 +53,7 @@
         %input{:type => 'radio', :name => 'size', :id => 'medium', :value => '200', :checked => 'checked', :onclick => 'update_embed_code(this.value)'}
         %label{:for => 'large'} Large
         %input{:type => 'radio', :name => 'size', :id => 'large', :value => '300', :onclick => 'update_embed_code(this.value)'}
-        %label{:for => 'large'} XL
+        %label{:for => 'extralarge'} XL
         %input{:type => 'radio', :name => 'size', :id => 'extralarge', :value => '500', :onclick => 'update_embed_code(this.value)'}
       #embed_orderly
         %label{:for => 'orderly'} <strong>Orderly protest?</strong>
