@@ -5,32 +5,30 @@
 :javascript
   var prev_size;
   function update_embed_code(size){
-    var el = document.getElementById('embed_code');
-    var script_src = #{script_src.inspect};
-    var orderly = document.getElementById('orderly').checked;
-    el.innerHTML = script_src+"?size="+size+"&orderly="+avatar_orderly;
-    if(size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
+    var el = document.getElementById('embed_code'),
+        script_src = '#{script_src}',
+        demo = document.getElementById('embed_demo'),
+        orderly = document.getElementById('orderly').checked;
 
-    var url;
+    if (size == undefined) size = '200'; // FIXME not resetting properly. Just add jquery, yeesh
 
-    if(orderly == false) {
+    var url = script_src+"?size="+size+"&orderly="+avatar_orderly;
+
+    if (orderly == false) {
       el.innerHTML = '<sc'+'ript src="http://#{request.host_with_port}/embed.js?orderly='+orderly+'"></sc'+'ript>';
-    }
-    else {
+    } else {
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
 
     // TODO unload old protest, then create <script> and inject
     var widget = document.getElementById('occupy-widget');
-    if(widget) {
-      console.log("deleting previous widget");
-      skript.parentNode.removeChild(skript);
-    }
+    if (widget) widget.parentNode.removeChild(widget);
 
     var scriptNode = document.createElement('script');
     scriptNode.type = 'text/javascript';
-    scriptNode.src = ;
-
+    scriptNode.src = url;
+    demo.innerHTML = '';
+    demo.insertBefore(scriptNode);
   }
 
 #container
@@ -62,7 +60,8 @@
         %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
     -# TODO put this in an frame so we can update it from the customizer
-    %script{:id => 'embed_demo', :src => "http://#{request.host_with_port}/embed.js"}
+    #embed_demo
+      %script{:src => "http://#{request.host_with_port}/embed.js"}
 
 
   #footer
