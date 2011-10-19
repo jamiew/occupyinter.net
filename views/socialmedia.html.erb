@@ -1,0 +1,31 @@
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({appId: '126002040780966', status: true, cookie: true,
+             xfbml: true});
+    FB.Event.subscribe('xfbml.render', function(response) {
+          masonry_options = {
+              columnWidth: 12,
+              animate: true,
+              animationOptions: {
+                  duration: 'fast',
+                  queue: false
+              }
+          }
+          $('.project-detail').masonry(masonry_options);
+    });
+  };
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
+
+<section class="social-sharing">
+ <div class="soc-button" id="facebook-button"><fb:like href="http://occupyinter.net/" send="false" layout="button_count" show_faces="false" font="arial"></fb:like></div>
+ <div class="soc-button" id="twitter-button"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://occupyinter.net" data-text="Occupy The Internet! #occupy #ows" data-count="horizontal" data-via="FFFFFAT">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script></div>
+ <div style="clear: both;"></div>
+</section>
+
