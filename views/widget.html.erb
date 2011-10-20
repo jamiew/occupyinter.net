@@ -4,12 +4,11 @@
 
 <%= erb :avatars %>
 
-
 function load_protest(data){
   var avatar_output = '';
 
   // Hardcode the response data
-  if(data == undefined) data = {};
+  if (data == undefined) data = {};
   if (typeof(occupy_internet_protesters) == 'object' && occupy_internet_protesters.length) data.protesters = occupy_internet_protesters;
   if (typeof(data.protesters) == 'undefined' || data.protesters.length <= 0) {
 
@@ -69,6 +68,7 @@ function load_protest(data){
   // Add a selection of our avatars
   // FIXME don't want to load too many imgs, but what's the right #?
   var max_protesters = 10;
+  if (data.protesters.length < max_protesters) max_protesters = data.protesters.length;
   for(var i = 0; i < max_protesters; i++){
     var protestor = data.protesters[i];
     protestor.uuid = i + 1; // ...
@@ -123,6 +123,7 @@ function add_audio(){
   audio.setAttribute
   audio.id = 'occupy-audio';
   audio.src = '<%= server %>/crowd.mp3';
+  if (typeof(occupy_internet_audio_src) != 'undefined') audio.src = occupy_internet_audio_src;
   audio.loop = 'true';
   audio.volume = .2;
 
