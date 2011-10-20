@@ -57,17 +57,31 @@ get "/" do
 end
 
 get "/embed" do
-  content_type :html # so it renders widget.html, :format => :html does not work. WTF such a hack
-  widget = erb :widget
-  content_type :js
-
   respond_to do |format|
     format.js {
-      output = "document.write(#{widget.to_json})"
-      etag(Digest::SHA1.hexdigest(output))
+      content_type :html # so it renders widget.html, :format => :html does not work. WTF such a hack
+      embed = erb :embed
+      content_type :js
+
+      etag(Digest::SHA1.hexdigest(embed))
       # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
       response['Cache-Control'] = "public, max-age=60"
-      output
+      embed
+    }
+  end
+end
+
+get "/avatars" do
+  respond_to do |format|
+    format.js {
+      content_type :html
+      avatars = erb :avatars
+      content_type :js
+
+      etag(Digest::SHA1.hexdigest(avatars))
+      # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
+      response['Cache-Control'] = "public, max-age=60"
+      avatars
     }
   end
 end

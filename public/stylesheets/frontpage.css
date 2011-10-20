@@ -15,6 +15,8 @@ a { color: #00a; }
 #demo h1 { margin-bottom: 30px; }
 #demo h2 { margin-top: 30px; }
 
+#header {margin: 0 0 0 -18px; padding: 2px 0 0 61px; min-height: 46px; background: url(../images/net-protester.gif) 0 0 no-repeat;}
+
 #demo #embed_code { margin-bottom: 20px; padding: 8px; width: 600px; font-size: 11pt; font-family: monospace; border: 1px solid #900; background-color: #efe0e0; }
 
 #embed_size label { margin-left: 9px; }
