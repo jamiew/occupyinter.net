@@ -12,7 +12,7 @@ function load_protest(data){
   if (typeof(occupy_internet_protesters) == 'object' && occupy_internet_protesters.length) data.protesters = occupy_internet_protesters;
   if (typeof(data.protesters) == 'undefined' || data.protesters.length <= 0) {
 
-    /* DON'T PUT AVATARS IN HERE... CONTIUNE TO PUT THEM IN AVATARS.ERB!!!! */
+    /* DON'T PUT AVATARS IN HERE... CONTIUNE TO PUT THEM IN _AVATARS.ERB!!!! */
 
     data.protesters = [
       {avatar: "http://occupyinter.net/avatars/banana-evanroth-occupy.gif"},

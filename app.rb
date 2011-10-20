@@ -72,17 +72,28 @@ get "/embed" do
 end
 
 get "/avatars" do
+  # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
+  response['Cache-Control'] = "public, max-age=60"
+
   respond_to do |format|
+    format.json {
+      content_type :html
+      avatars = '['+ (erb :'_avatars').gsub(/\n/m, '') +']'
+      content_type :json
+      
+      avatars = "#{params[:callback]}(#{avatars})" unless params[:callback].nil? || params[:callback] == ''
+      etag(Digest::SHA1.hexdigest(avatars))
+      avatars
+    }
     format.js {
       content_type :html
       avatars = erb :avatars
       content_type :js
 
       etag(Digest::SHA1.hexdigest(avatars))
-      # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
-      response['Cache-Control'] = "public, max-age=60"
       avatars
     }
+
   end
 end
 
