@@ -163,12 +163,13 @@ get "/stats" do
   hosts = redis.smembers('sites')
   host_keys = hosts.map{|host| "site/#{host}/hits" }
   # hits = redis.mget(host_keys) # FIXME not working?
-  hits = uniques = nil
-  redis.pipelined do
-    hits = host_keys.map{|k| redis.get(k) }
-    uniques = hosts.map{|host| redis.scard("site/#{host}/uuids") }
-  end
-  @sites = hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse # TODO switch to unique sorting
+  hits = redis.pipelined { host_keys.map{|k| redis.get(k) } }
+  puts hits.inspect
+  uniques = redis.pipelined { hosts.map{|host| redis.scard("site/#{host}/uuids") } }
+  puts uniques.inspect
+
+  # TODO switch sorting to use uniques once we have more data
+  @sites = hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse
 
   respond_to do |format|
     format.html { haml :stats }
@@ -178,10 +179,10 @@ end
 get "/sites" do
   @sites = redis.smembers('sites')
 
-  # TODO use sorted set for created_at dates, sheesh!
-  redis.pipelined do
-    @sites.sort_by! {|host| redis.get("site/#{host}/created_at") }
-  end
+  # TODO use sorted set for created_at dates, sheesh
+  created_ats = redis.pipelined { @sites.map{|host| redis.get("site/#{host}/created_at") } }
+  sorted = @sites.zip(created_ats).sort_by {|host,created_at| Time.parse(created_at) }
+  @sites = sorted.map{|a,b| a}
 
   respond_to do |format|
     format.html { haml :'sites' }
