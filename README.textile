@@ -1,10 +1,15 @@
-h1. Occupy Inter.net Tracker
+h1. Occupy Inter.net widget
 
-For use with the OccupyInter.net extension. Basic UUID visit tracking system.
+Install this on your website and join "#OCCUPYINTERNET":http://occupyinter.net
 
-More info: http://occupyinter.net
 
-h2. Deploying with Heroku
+h2. License
 
-TODO
+Source code released under an MIT license.
 
+
+h2. Contributors
+
+* "@jamiew":http://github.com/jamiew
+* "@gleuch":http://github.com/gleuch
+* "@tbx":http://github.com/tbx
