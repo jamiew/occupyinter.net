@@ -1,0 +1,4 @@
+%ol
+  - @sites.each do |site|
+    - site = "http://#{site}" unless site =~ /^http/
+    %li <a rel="nofollow" href="#{site}">site</a>

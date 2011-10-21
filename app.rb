@@ -22,7 +22,7 @@ not_found do
   @error ||= 'Sorry, but the page you were looking for could not be found.'
 
   respond_to do |format|
-    format.html { haml :not_found, 404 }
+    format.html { halt 404, "404 File Not Found"  }
     format.json { halt 404, {:message => @error}.to_json }
   end
 end
@@ -149,7 +149,6 @@ get "/avatars" do
       etag(Digest::SHA1.hexdigest(avatars))
       avatars
     }
-
   end
 end
 
@@ -173,4 +172,23 @@ get "/stats" do
   end
 end
 
+get "/sites" do
+  @sites = redis.smembers('sites')
 
+  # TODO use sorted set for created_at dates, sheesh!
+  @sites.sort_by! {|host| redis.get("site/#{host}/created_at") }
+
+  respond_to do |format|
+    format.html {
+      haml 'sites'
+    format.json {
+      params[:callback] && !params[:callback].empty? ? "#{params[:callback]}(#{@sites.to_json})" : @sites.to_json
+    }
+    format.js {
+      content_type :html
+      output = haml :sites
+      content_type :js
+      "document.write(#{output.to_json})"
+    }
+  end
+end
