@@ -5,12 +5,10 @@ require 'digest/sha1'
 configure do |config|
   set :sessions, true
 
-  %w(haml sinatra/respond_to json).each{|lib| require lib}
+  %w(haml json sinatra/respond_to).each{|lib| require lib}
 
   Sinatra::Application.register Sinatra::RespondTo
   # configatron.configure_from_yaml("#{settings.root}/settings.yml", :hash => Sinatra::Application.environment.to_s)
-
-  %w(helpers).each{|lib| require "#{settings.root}/#{lib}"}
 end
 
 # Global
@@ -59,7 +57,7 @@ end
 get "/embed" do
   respond_to do |format|
     format.js {
-      content_type :html # so it renders widget.html, :format => :html does not work. WTF such a hack
+      content_type :html # so it renders widget.html; :format => :html does not work. WTF such a hack
       embed = erb :embed
       content_type :js
 
@@ -77,6 +75,8 @@ get "/avatars" do
 
   respond_to do |format|
     format.json {
+      # FIXME avatars should just be in a ruby method, not in a view that
+      # gets reparsed depending on context
       content_type :html
       r = erb(:'_avatars').split("\n").reject{|r| 
         s = r.gsub(/\s/m, '').gsub(/(\/\/.*)/, '')
@@ -85,7 +85,7 @@ get "/avatars" do
 
       avatars = '['+ r +']'
       content_type :json
-      
+
       avatars = "#{params[:callback]}(#{avatars})" unless params[:callback].nil? || params[:callback] == ''
       etag(Digest::SHA1.hexdigest(avatars))
       avatars
@@ -104,6 +104,5 @@ end
 
 get "/demo" do
   real_url = params[:url] && params[:url].split('?')[1]
-  puts real_url.inspect
   %{<script type="text/javascript" src="/embed.js#{real_url && "?"+real_url}"></script>}
 end
