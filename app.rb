@@ -1,14 +1,13 @@
 require 'rubygems'
-require 'sinatra'
+require 'bundler'
+Bundler.require
 require 'digest/sha1'
 
 configure do |config|
-  set :sessions, true
-
-  %w(haml json sinatra/respond_to).each{|lib| require lib}
-
   Sinatra::Application.register Sinatra::RespondTo
-  # configatron.configure_from_yaml("#{settings.root}/settings.yml", :hash => Sinatra::Application.environment.to_s)
+
+  set :sessions, true
+  set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/5' # TODO smarter db number? namespace?
 end
 
 # Global
@@ -23,24 +22,59 @@ not_found do
   @error ||= 'Sorry, but the page you were looking for could not be found.'
 
   respond_to do |format|
-    format.json { halt 404, make_json({:message => @error}) }
     format.html { haml :not_found, 404 }
+    format.json { halt 404, {:message => @error}.to_json }
   end
 end
 
-# 500s
 error do
   err = request.env['sinatra.error'].message
   err ||= 'An unknown error has occured.'
-  make_error(error)
+  respond_to do |format|
+    format.html { halt 500, err }
+    format.json { halt 500, {:message => @error}.to_json }
+  end
 end
-
-# -------------------------
 
 def last_modified_from(files)
   filemtimes = files.map{|file| File.mtime([settings.root, file].join('/')) }
   filemtimes.last
 end
+
+UUID_SALT = "f-a9sjql23knfieu082FJlkmf__wraw34-("
+def request_uuid
+  inputs = [request.ip, request.user_agent, UUID_SALT]
+  Digest::SHA1.hexdigest(inputs.join('_'))
+end
+
+def record_hit
+  domain = request.referrer || params['url'] # TODO normalize these urls
+  if domain.nil? || domain.empty?
+    puts "No HTTP_REFERER or ?url param, skipping"
+  else
+    domain = "http://#{domain}" unless domain =~ /\http/
+    uri = Addressable::URI.parse(domain)
+    host = uri.host
+    host = host.gsub(/^www\./, '')
+    # hashed = Digest::SHA1.hexdigest(host)
+
+    new_record = redis.setnx("site/#{host}/created_at", Time.now)
+    if new_record
+      puts "NEW PROTEST SITE! #{host.inspect}"
+      redis.sadd("sites", host)
+      redis.setnx("site/#{host}/domain", domain)
+      puts "NEW DOMAIN! #{domain}" if new_record
+    end
+
+    hits = redis.incr("site/#{host}/hits")
+    redis.sadd("site/#{host}/uuids", request_uuid) # for tracking uniques
+    uniques = redis.scard("site/#{host}/uuids")
+
+    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] LOGGING host=#{host} hits=#{hits} uniques=#{uniques} referrer=#{domain}"
+  end
+end
+
+# -------------------------
 
 get "/" do
   respond_to do |format|
@@ -57,14 +91,19 @@ end
 get "/embed" do
   respond_to do |format|
     format.js {
-      content_type :html # so it renders widget.html; :format => :html does not work. WTF such a hack
-      embed = erb :embed
-      content_type :js
+      record_hit
 
-      etag(Digest::SHA1.hexdigest(embed))
+      content_type :html # so it renders embed.html; :format => :html does not work. WTF such a hack
+      widget = erb :embed
+      output = "document.write(#{widget.to_json});"
+
+      etag(Digest::SHA1.hexdigest(output))
       # last_modified(File.mtime("#{settings.root}/views/widget.html.erb"))
-      response['Cache-Control'] = "public, max-age=60"
-      embed
+      # response['Cache-Control'] = "public, max-age=60"
+      response['Cache-Control'] = "private, max-age=0, must-revalidate"
+
+      content_type :js
+      output
     }
   end
 end
@@ -78,7 +117,7 @@ get "/avatars" do
       # FIXME avatars should just be in a ruby method, not in a view that
       # gets reparsed depending on context
       content_type :html
-      r = erb(:'_avatars').split("\n").reject{|r| 
+      r = erb(:'_avatars').split("\n").reject{|r|
         s = r.gsub(/\s/m, '').gsub(/(\/\/.*)/, '')
         (s == '')
       }.join("")
