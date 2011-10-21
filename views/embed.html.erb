@@ -130,9 +130,9 @@ function add_audio(){
   if (!!audio_setting().play) {
     audio.play();
     audio_is_playing = true;
-    if (img) img.src = "<%= server %>/images/unmute.png";
-  } else {
     if (img) img.src = "<%= server %>/images/mute.png";
+  } else {
+    if (img) img.src = "<%= server %>/images/unmute.png";
   }
 
   var widget = document.getElementById('occupy-widget')
