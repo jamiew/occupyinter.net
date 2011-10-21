@@ -1,15 +1,30 @@
 :css
+  body { font-family: sans-serif; padding: 30px; }
   #site-stats { font-size: 15pt; }
+  th { text-align: left; background-color: #000; color: #fff; padding: 8px 4px; font-size: 9pt; }
+  td { padding: 4px 10px; }
+  td.count { text-align: center; }
 
 %h1 Top Occupy Internet Protest Sites
 
-== Hits since 10/21/2011 1pm PST (Occupation day 3)
+%p== Hits since 10/21/2011 1pm PST (Occupation day 3)
 
 -# TODO keep these all in a sorted set
-%ol#site-stats
-  - @sites.each do |site,hits|
-    %li
-      %bold== <a rel="nofollow" href="http://#{site}">#{site}</a>
-      &ndash;
-      %span= commify(hits)
+%table#site-stats
+  %thead
+    %tr
+      %th &nbsp;&nbsp;&nbsp;&nbsp;
+      %th Site
+      %th Visits
+      %th Uniques
+  %tbody
+    - @sites.each_with_index do |arr,i|
+      - site = arr[0]
+      %tr
+        %td.count= i+1
+        %td.site
+          %bold== <a rel="nofollow" href="http://#{site}">#{site}</a>
+        %td.visits= commify(arr[1])
+        %td.uniques= commify(arr[2])
+
 

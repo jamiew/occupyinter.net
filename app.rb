@@ -77,10 +77,10 @@ def record_hit
 
     hits = redis.incr("site/#{host}/hits")
 
-    # redis.sadd("site/#{host}/uuids", request_uuid)
-    # uniques = redis.scard("site/#{host}/uuids")
+    redis.sadd("site/#{host}/uuids", request_uuid)
+    uniques = redis.scard("site/#{host}/uuids")
 
-    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{host} hits=#{hits} referrer=#{domain}"
+    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{host} hits=#{hits} uniques=#{uniques} referrer=#{domain}"
   end
 end
 
@@ -162,7 +162,8 @@ get "/stats" do
   host_keys = hosts.map{|host| "site/#{host}/hits" }
   # hits = redis.mget(host_keys) # FIXME not working?
   hits = host_keys.map{|k| redis.get(k) }
-  @sites = hosts.zip(hits).sort_by{|k,v| v.to_i }.reverse
+  uniques = hosts.map{|host| redis.scard("site/#{host}/uuids") }
+  @sites = hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse # TODO switch to unique sorting
 
   respond_to do |format|
     format.html { haml :stats }
