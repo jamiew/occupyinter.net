@@ -3,11 +3,13 @@
 
 %h1 Top Occupy Internet Protest Sites
 
+== Hits since 10/21/2011 1pm PST (Occupation day 3)
+
 -# TODO keep these all in a sorted set
 %ol#site-stats
   - @sites.each do |site,hits|
     %li
       %bold== <a rel="nofollow" href="http://#{site}">#{site}</a>
       &ndash;
-      %span= hits
+      %span= commify(hits)
 
