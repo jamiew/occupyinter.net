@@ -3,7 +3,6 @@
 .bundle
 .gems
 *.sqlite3
-deploy
 log/*.log
 settings.yml
 s3.yml
