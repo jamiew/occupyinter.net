@@ -184,14 +184,11 @@ get "/sites" do
   end
 
   respond_to do |format|
-    format.html {
-      haml 'sites'
-    format.json {
-      params[:callback] && !params[:callback].empty? ? "#{params[:callback]}(#{@sites.to_json})" : @sites.to_json
-    }
+    format.html { haml :'sites' }
+    format.json { params[:callback] && !params[:callback].empty? ? "#{params[:callback]}(#{@sites.to_json})" : @sites.to_json }
     format.js {
       content_type :html
-      output = haml :sites
+      output = haml :sites, :layout => false
       content_type :js
       "document.write(#{output.to_json})"
     }
