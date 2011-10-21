@@ -78,7 +78,12 @@ get "/avatars" do
   respond_to do |format|
     format.json {
       content_type :html
-      avatars = '['+ (erb :'_avatars').gsub(/\n/m, '') +']'
+      r = erb(:'_avatars').split("\n").reject{|r| 
+        s = r.gsub(/\s/m, '').gsub(/(\/\/.*)/, '')
+        (s == '')
+      }.join("")
+
+      avatars = '['+ r +']'
       content_type :json
       
       avatars = "#{params[:callback]}(#{avatars})" unless params[:callback].nil? || params[:callback] == ''

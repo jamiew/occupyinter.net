@@ -74,7 +74,7 @@ function load_protest(data){
     protestor.uuid = i + 1; // ...
 
     var bottom = 0,
-        left = (i*150),
+        left = (i*150)-50,
         zindex = (100+Math.floor(Math.random()*20));
     avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
     var owner = data.uuid != undefined && protestor.uuid == data.uuid;
