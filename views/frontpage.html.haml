@@ -53,7 +53,7 @@
     %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :onclick => "this.select()"}
       == <script src="#{script_src}"></script>
 
-    = erb :socialmedia
+    = erb :'_socialmedia'
 
     %hr
 
@@ -119,5 +119,5 @@
 
   #footer
     / nothing to see here
-    = erb :stats
+    = erb :'_stats'
 
