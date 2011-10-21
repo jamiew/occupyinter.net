@@ -54,7 +54,7 @@ def record_hit
   if domain.nil? || domain.empty?
     puts "No HTTP_REFERER or ?url param, skipping"
   else
-    domain = "http://#{domain}" unless domain =~ /\http/
+    domain = "http://#{domain}" unless domain =~ /^http/
     uri = Addressable::URI.parse(domain)
     host = uri.host
     host = host.gsub(/^www\./, '')
