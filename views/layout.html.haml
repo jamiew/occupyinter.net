@@ -1,8 +1,11 @@
 !!!
 %head
-  %title= @title || "occupyinter.net &ndash; embeds, browser addons, website hijacks"
+  %title= @title || "occupyinter.net &ndash; animated GIF army &ndash; embeds, browser addons, website hijacks"
+  %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen', :href => '/stylesheets/frontpage.css'}
 %body
-  = yield
+
+  #container
+    = yield
 
   #footer
     = erb :'_ganalytics'

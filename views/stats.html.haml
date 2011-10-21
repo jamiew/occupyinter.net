@@ -1,11 +1,5 @@
-:css
-  body { font-family: sans-serif; padding: 30px; }
-  #site-stats { font-size: 15pt; }
-  th { text-align: left; background-color: #000; color: #fff; padding: 8px 4px; font-size: 9pt; }
-  td { padding: 4px 10px; }
-  td.count { text-align: center; }
 
-%h1 Top Occupy Internet Protest Sites
+%h1 <a href="/stats">Top Protest Sites</a>
 
 %p== Hits since 10/21/2011 1pm PST (Occupation day 3)
 
@@ -13,10 +7,10 @@
 %table#site-stats
   %thead
     %tr
-      %th &nbsp;&nbsp;&nbsp;&nbsp;
-      %th Site
-      %th Visits
-      %th Uniques
+      %th.count &nbsp;&nbsp;&nbsp;&nbsp;
+      %th.site Site
+      %th.visits Visits
+      %th.uniques Uniques
   %tbody
     - @sites.each_with_index do |arr,i|
       - site = arr[0]

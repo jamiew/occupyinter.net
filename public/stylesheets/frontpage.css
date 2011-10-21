@@ -11,9 +11,9 @@ a { color: #00a; }
 #demo { width: 630px; float: left; border-right: 1px solid #f9f9f9; padding-bottom: 500px; }
 #footer { clear: both; }
 
-#demo h1 a { padding: 6px 14px 8px; background-color: #000; color: #fff; font-weight: bold; text-decoration: none; }
-#demo h1 { margin-bottom: 30px; }
-#demo h2 { margin-top: 30px; }
+h1 a { padding: 6px 14px 8px; background-color: #000; color: #fff; font-weight: bold; text-decoration: none; }
+h1 { margin-bottom: 30px; }
+h2 { margin-top: 30px; }
 
 #header {margin: 0 0 0 -18px; padding: 2px 0 0 61px; min-height: 46px; background: url(../images/net-protester.gif) 0 0 no-repeat;}
 
@@ -28,3 +28,9 @@ a { color: #00a; }
 #install-addons { text-align: left; padding: 16px 0 16px 0; }
 a.addon-button { display: inline-block; padding: 9px 16px 12px 16px; margin: 0 3px; background: #ddd; color: #666; text-shadow: 0 0 1px rgba(0,0,0,.24); font-weight: bold; font-size: 24px; border: 3px solid #eee; text-decoration: none; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 5px; }
 a.addon-button:hover { background-color: #e500e5; border-color: #e500e5; color: #fff; }
+
+#site-stats { font-size: 15pt; }
+#site-stats th { text-align: left; background-color: #aaa; color: #fff; padding: 8px 8px; font-size: 9pt; }
+#site-stats th.count { background-color: transparent; }
+#site-stats td { padding: 4px 10px; }
+#site-stats td.count { text-align: center; color: #bbb; }
