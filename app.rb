@@ -152,12 +152,13 @@ get "/avatars" do
 end
 
 get "/demo" do
+  @title = "Demo"
   real_url = params[:url] && params[:url].split('?')[1]
   %{<script type="text/javascript" src="/embed.js#{real_url && "?"+real_url}"></script>}
 end
 
 get "/stats" do
-
+  @title = "Site Stats"
   hosts = redis.smembers('sites')
   host_keys = hosts.map{|host| "site/#{host}/hits" }
   # hits = redis.mget(host_keys) # FIXME not working?
