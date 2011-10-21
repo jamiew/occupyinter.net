@@ -66,7 +66,9 @@ def record_hit
     uri = Addressable::URI.parse(domain)
     host = uri.host
     host = host.gsub(/^www\./, '')
-    # hashed = Digest::SHA1.hexdigest(host)
+
+    # Hack to allow FAT's /occupy/ service as their own domains
+    host = [uri.host, uri.path].join if uri.host == 'fffff.at' && uri.path =~ /^\/occupy\//
 
     new_record = redis.setnx("site/#{host}/created_at", Time.now)
     if new_record
