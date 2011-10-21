@@ -1,0 +1,9 @@
+%h1 Top 10 Protest Sites
+
+-# TODO keep these all in a sorted set
+%ul
+  - @sites.each do |site,hits|
+    %li
+      %bold= site
+      %span= hits
+

@@ -2,12 +2,14 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 require 'digest/sha1'
+require 'logger'
 
 configure do |config|
   Sinatra::Application.register Sinatra::RespondTo
 
   set :sessions, true
-  set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/5' # TODO smarter db number? namespace?
+  set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/1' # TODO smarter db number, or namespace
+  set :redis_settings, {:logger => Logger.new(STDOUT)} # FIXME doesn't see to work?
 end
 
 # Global
@@ -63,14 +65,14 @@ def record_hit
       puts "NEW PROTEST SITE! #{host.inspect}"
       redis.sadd("sites", host)
       redis.setnx("site/#{host}/domain", domain)
-      puts "NEW DOMAIN! #{domain}" if new_record
     end
 
     hits = redis.incr("site/#{host}/hits")
-    redis.sadd("site/#{host}/uuids", request_uuid) # for tracking uniques
-    uniques = redis.scard("site/#{host}/uuids")
 
-    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] LOGGING host=#{host} hits=#{hits} uniques=#{uniques} referrer=#{domain}"
+    # redis.sadd("site/#{host}/uuids", request_uuid)
+    # uniques = redis.scard("site/#{host}/uuids")
+
+    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] LOGGING host=#{host} hits=#{hits} referrer=#{domain}"
   end
 end
 
@@ -145,3 +147,21 @@ get "/demo" do
   real_url = params[:url] && params[:url].split('?')[1]
   %{<script type="text/javascript" src="/embed.js#{real_url && "?"+real_url}"></script>}
 end
+
+get "/stats" do
+
+  hosts = redis.smembers('sites')
+  host_keys = hosts.map{|host| "site/#{host}/hits" }
+  puts hosts.inspect
+  # hits = redis.mget(host_keys) # FIXME not working?
+  hits = host_keys.map{|k| redis.get(k) }
+  puts hits.inspect
+  @sites = hosts.zip(hits)
+  puts @sites.inspect
+
+  respond_to do |format|
+    format.html { haml :stats }
+  end
+end
+
+
