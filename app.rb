@@ -163,8 +163,11 @@ get "/stats" do
   hosts = redis.smembers('sites')
   host_keys = hosts.map{|host| "site/#{host}/hits" }
   # hits = redis.mget(host_keys) # FIXME not working?
-  hits = host_keys.map{|k| redis.get(k) }
-  uniques = hosts.map{|host| redis.scard("site/#{host}/uuids") }
+  hits = uniques = nil
+  redis.pipelined do
+    hits = host_keys.map{|k| redis.get(k) }
+    uniques = hosts.map{|host| redis.scard("site/#{host}/uuids") }
+  end
   @sites = hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse # TODO switch to unique sorting
 
   respond_to do |format|
@@ -176,7 +179,9 @@ get "/sites" do
   @sites = redis.smembers('sites')
 
   # TODO use sorted set for created_at dates, sheesh!
-  @sites.sort_by! {|host| redis.get("site/#{host}/created_at") }
+  redis.pipelined do
+    @sites.sort_by! {|host| redis.get("site/#{host}/created_at") }
+  end
 
   respond_to do |format|
     format.html {
