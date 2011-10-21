@@ -7,7 +7,7 @@
 %ol#site-stats
   - @sites.each do |site,hits|
     %li
-      %bold== <a href="http://#{site}">#{site}</a>
+      %bold== <a rel="nofollow" href="http://#{site}">#{site}</a>
       &ndash;
       %span= hits
 
