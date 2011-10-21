@@ -36,6 +36,16 @@ error do
   end
 end
 
+helpers do
+  def commify(n)
+    n.to_s =~ /([^\.]*)(\..*)?/
+    int, dec = $1.reverse, $2 ? $2 : ""
+    while int.gsub!(/(,|\.|^)(\d{3})(\d)/, '\1\2,\3')
+    end
+    int.reverse + dec
+  end
+end
+
 def last_modified_from(files)
   filemtimes = files.map{|file| File.mtime([settings.root, file].join('/')) }
   filemtimes.last
