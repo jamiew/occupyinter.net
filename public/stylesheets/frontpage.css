@@ -29,7 +29,7 @@ h2 { margin-top: 30px; }
 a.addon-button { display: inline-block; padding: 9px 16px 12px 16px; margin: 0 3px; background: #ddd; color: #666; text-shadow: 0 0 1px rgba(0,0,0,.24); font-weight: bold; font-size: 24px; border: 3px solid #eee; text-decoration: none; border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 5px; }
 a.addon-button:hover { background-color: #e500e5; border-color: #e500e5; color: #fff; }
 
-#site-stats { font-size: 15pt; }
+#site-stats { font-size: 15pt; margin-left: -35px; }
 #site-stats th { text-align: left; background-color: #aaa; color: #fff; padding: 8px 8px; font-size: 9pt; }
 #site-stats th.count { background-color: transparent; }
 #site-stats td { padding: 4px 10px; }
