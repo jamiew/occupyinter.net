@@ -1,9 +1,13 @@
-%h1 Top 10 Protest Sites
+:css
+  #site-stats { font-size: 15pt; }
+
+%h1 Top Occupy Internet Protest Sites
 
 -# TODO keep these all in a sorted set
-%ul
+%ol#site-stats
   - @sites.each do |site,hits|
     %li
-      %bold= site
+      %bold== <a href="http://#{site}">#{site}</a>
+      &ndash;
       %span= hits
 

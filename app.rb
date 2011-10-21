@@ -12,13 +12,11 @@ configure do |config|
   set :redis_settings, {:logger => Logger.new(STDOUT)} # FIXME doesn't see to work?
 end
 
-# Global
-before do
-  puts
-  puts "*** [#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] #{request.url} #{params.inspect}"
-end
+# before do
+#   puts
+#   puts "*** [#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] #{request.url} #{params.inspect}"
+# end
 
-# 404s
 not_found do
   @title ||= '404 File Not Found'
   @error ||= 'Sorry, but the page you were looking for could not be found.'
@@ -72,7 +70,7 @@ def record_hit
     # redis.sadd("site/#{host}/uuids", request_uuid)
     # uniques = redis.scard("site/#{host}/uuids")
 
-    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] LOGGING host=#{host} hits=#{hits} referrer=#{domain}"
+    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{host} hits=#{hits} referrer=#{domain}"
   end
 end
 
@@ -152,12 +150,9 @@ get "/stats" do
 
   hosts = redis.smembers('sites')
   host_keys = hosts.map{|host| "site/#{host}/hits" }
-  puts hosts.inspect
   # hits = redis.mget(host_keys) # FIXME not working?
   hits = host_keys.map{|k| redis.get(k) }
-  puts hits.inspect
-  @sites = hosts.zip(hits)
-  puts @sites.inspect
+  @sites = hosts.zip(hits).sort_by{|k,v| v.to_i }.reverse
 
   respond_to do |format|
     format.html { haml :stats }
