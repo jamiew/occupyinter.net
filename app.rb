@@ -103,7 +103,11 @@ end
 get "/embed" do
   respond_to do |format|
     format.js {
-      record_hit
+      begin
+        record_hit
+      rescue
+        STDERR.puts "ERROR recording hit: #{$!}"
+      end
 
       content_type :html # so it renders embed.html; :format => :html does not work. WTF such a hack
       widget = erb :embed
