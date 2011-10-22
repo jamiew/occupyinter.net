@@ -74,7 +74,7 @@ def record_hit
     if new_record
       puts "NEW PROTEST SITE! #{host.inspect}"
       redis.sadd("sites", host)
-      redis.setnx("site/#{host}/domain", domain)
+      # redis.setnx("site/#{host}/domain", domain)
     end
 
     hits = redis.incr("site/#{host}/hits")
@@ -160,16 +160,13 @@ end
 
 get "/stats" do
   @title = "Site Stats"
-  hosts = redis.smembers('sites')
-  host_keys = hosts.map{|host| "site/#{host}/hits" }
-  # hits = redis.mget(host_keys) # FIXME not working?
-  hits = redis.pipelined { host_keys.map{|k| redis.get(k) } }
-  puts hits.inspect
-  uniques = redis.pipelined { hosts.map{|host| redis.scard("site/#{host}/uuids") } }
-  puts uniques.inspect
+  @hosts = redis.smembers('sites')
+
+  hits = redis.pipelined { @hosts.map{|host| redis.get("site/#{host}/hits") } }
+  uniques = redis.pipelined { @hosts.map{|host| redis.scard("site/#{host}/uuids") } }
 
   # TODO switch sorting to use uniques once we have more data
-  @sites = hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse
+  @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse
 
   respond_to do |format|
     format.html { haml :stats }

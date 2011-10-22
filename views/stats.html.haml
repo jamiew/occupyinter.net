@@ -1,7 +1,10 @@
 
 %h1 <a href="/stats">Top Protest Sites</a>
 
-%p== Hits since 10/21/2011 1pm PST (Occupation day 3)
+- occupied_count = @hosts.select{|host| host.gsub(/^https?\:\/\//, '') =~ /^fffff.at\/?occupy\// }.length
+%p== #{@hosts.length - occupied_count} websites have installed the embed
+%P== #{occupied_count} sites via fffff.at/occupy
+%p== Hits counted since 10/21/2011 1pm PST (Occupation day 3)
 
 -# TODO keep these all in a sorted set
 %table#site-stats
