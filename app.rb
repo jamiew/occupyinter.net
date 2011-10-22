@@ -170,7 +170,7 @@ get "/stats" do
   uniques = redis.pipelined { @hosts.map{|host| redis.scard("site/#{host}/uuids") } }
 
   # TODO switch sorting to use uniques once we have more data
-  @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| v.to_i }.reverse
+  @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| u.to_i }.reverse
 
   respond_to do |format|
     format.html { haml :stats }
