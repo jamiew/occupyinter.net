@@ -185,7 +185,7 @@ get "/sites" do
 
   # TODO use sorted set for created_at dates, sheesh
   created_ats = redis.pipelined { @sites.map{|host| redis.get("site/#{host}/created_at") } }
-  sorted = @sites.zip(created_ats).sort_by {|host,created_at| Time.parse(created_at) }
+  sorted = @sites.zip(created_ats).sort_by {|host,created_at| created_at && Time.parse(created_at) }
   @sites = sorted.map{|a,b| a}
 
   respond_to do |format|
