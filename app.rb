@@ -72,7 +72,7 @@ def record_hit
 
     new_record = redis.setnx("site/#{host}/created_at", Time.now)
     if new_record
-      puts "NEW PROTEST SITE! #{host.inspect}"
+      # puts "NEW PROTEST SITE! #{host.inspect}"
       redis.sadd("sites", host)
       # redis.setnx("site/#{host}/domain", domain)
     end
@@ -82,7 +82,7 @@ def record_hit
     redis.sadd("site/#{host}/uuids", request_uuid)
     uniques = redis.scard("site/#{host}/uuids")
 
-    puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{host} hits=#{hits} uniques=#{uniques} referrer=#{domain}"
+    # puts "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{host} hits=#{hits} uniques=#{uniques} referrer=#{domain}"
   end
 end
 
