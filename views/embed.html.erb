@@ -223,7 +223,7 @@ if(window.attachEvent) {
     </form>
     <div id="occupy-length">
       <a href="<%= server %>/stats">
-        <%= @host %>: <span id="occupy-length-days">day <%= @been_protesting_for %></span>
+        <%= @host %>: <span id="occupy-length-days"><%= @been_protesting_for %> <%= @been_protesting_for != 1 ? 'days' : 'day' %></span>
       </a>
     </div>
   </div>
