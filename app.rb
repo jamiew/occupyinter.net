@@ -173,7 +173,9 @@ get "/stats" do
   @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| u.to_i }.reverse
   @sites = @sites[0..params[:limit].to_i] if params[:limit]
 
+  last_modified(Time.now)
   response['Cache-Control'] = "public, max-age=60"
+
   respond_to do |format|
     format.html { haml :stats }
     format.json { @sites.to_json }
