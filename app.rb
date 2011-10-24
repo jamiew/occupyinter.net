@@ -191,9 +191,12 @@ get "/embed" do
       end
 
       # Calculate num of days this site has been protesting
+      # TODO offset all dates by diff b/w beginning of protests and when we started storing dates
       @beginning_of_protests = Time.parse('2011-10-19 08:00 -0700')
-      @started_protesting_at = redis.get("site/#{@host}/created_at") rescue nil # prod no-redis failsafe
-      @been_protesting_for = (@started_protesting_at && ((@started_protesting_at.to_i - @beginning_of_protests.to_i) / 1000 / 60 / 60 / 24).ceil || nil)
+
+      created_at = redis.get("site/#{@host}/created_at") rescue nil # prod no-redis failsafe
+      @started_protesting_at = created_at && Time.parse(created_at)
+      @been_protesting_for = (@started_protesting_at && ((Time.now.to_i - @started_protesting_at.to_i) / 60.0 / 60.0 / 24.0).ceil || nil)
       debug "#{@host} @beginning_of_protests=#{@beginning_of_protests} @started_protesting_at=#{@started_protesting_at.inspect} @been_protesting_for=#{@been_protesting_for.inspect}"
 
       # horrible hack so we render "embed.html" view; :format => :html does not work
