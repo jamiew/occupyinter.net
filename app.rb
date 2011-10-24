@@ -171,6 +171,7 @@ get "/stats" do
 
   # TODO switch sorting to use uniques once we have more data
   @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| u.to_i }.reverse
+  @sites = @sites[0..params[:limit].to_i] if params[:limit]
 
   response['Cache-Control'] = "public, max-age=60"
   respond_to do |format|
