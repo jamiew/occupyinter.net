@@ -221,7 +221,11 @@ if(window.attachEvent) {
       <!-- <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span> -->
       <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button">We Are Occupying The Internet!</a>
     </form>
-    <div id="occupy-length"><%= @host %>: day <span id="occupy-length-days"><%= @been_protesting_for %></span></div>
+    <div id="occupy-length">
+      <a href="<%= server %>/stats">
+        <%= @host %>: <span id="occupy-length-days">day <%= @been_protesting_for %></span>
+      </a>
+    </div>
   </div>
 
   <div id="occupy-mute">
