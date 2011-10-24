@@ -245,11 +245,11 @@ if(window.attachEvent) {
   <script type="text/javascript">
   <% avatar_orderly = ['0','false'].include?(params['orderly'].to_s) ? 'false' : 'true' %>
   <% avatar_size = params['size'] ? params['size'].to_i : 200 %>
-  <% site_created_at = redis.get("site/#{host}/created_at") %>
+  <%# site_created_at = redis.get("site/#{host}/created_at") %>
 
   var avatar_orderly = <%= avatar_orderly %>;
   var avatar_size = '<%= avatar_size %>px';
-  var site_created_at = '<%= site_created_at %>';
+  // var site_created_at = '<%= site_created_at %>';
   </script>
 
   <link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
