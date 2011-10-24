@@ -3,10 +3,11 @@
 
 - occupied_count = @hosts.select{|host| host.gsub(/^https?\:\/\//, '') =~ /^fffff.at\/?occupy\// }.length
 %p== Current Time = #{Time.now}
-%p== Hits counted since 10/21/2011 13:00 PST (<a href="http://fffff.at/occupy-the-internet">Occupation day 3</a>)
+%p== Hits recorded since 10/21/2011 13:00 PST (<a href="http://fffff.at/occupy-the-internet">Day 3</a>)
+%p== For the complete list of #occupynet websites in chronological order <a href="/sites">click here</a>
 
 %p== #{@hosts.length - occupied_count} websites have installed the embed
-%p== #{occupied_count} sites via fffff.at/occupy
+%p== #{occupied_count} sites via <a href="http://fffff.at/occupy" target="_blank">fffff.at/occupy</a>
 
 -# TODO keep these all in a sorted set
 %table#site-stats
