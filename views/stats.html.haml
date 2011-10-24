@@ -17,11 +17,12 @@
       %th.visits Visits
       %th.uniques Uniques
   %tbody
+    - max_length = 45
     - @sites.each_with_index do |arr,i|
       - site = arr[0]
       %tr
         %td.count= i+1
         %td.site
-          %bold== <a rel="nofollow" href="http://#{site}">#{site[0..100]}</a>
+          %bold== <a rel="nofollow" href="http://#{site}">#{site.length > max_length ? site[0..max_length]+'...' : site}</a>
         %td.visits= commify(arr[1])
         %td.uniques= commify(arr[2])
