@@ -1,0 +1,9 @@
+// occupyinter.net audio
+if (typeof(occupy_internet_audio_src) == 'undefined') {
+  var occupy_internet_audio_src = '<%= default_sound_url %>';
+}
+
+// occupyinter.net protesters
+if (typeof(occupy_internet_protesters) == 'undefined') {
+  var occupy_internet_protesters = <%= avatars.to_json %>;
+}

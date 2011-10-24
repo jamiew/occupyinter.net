@@ -4,7 +4,6 @@
 .occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
 
 .occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img {
-  /*width: 250px;*/
   height: 230px;
 }
 .occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
@@ -43,6 +42,8 @@
   bottom: 22px;
 }
 
+#occupy-length { background: #555; color: #f0f0f0; padding: 8px 0; font-size: 8pt; }
+
 #occupy-joinprotest {
   position: absolute;
   z-index: 300;
@@ -73,15 +74,5 @@
   text-decoration: none;
 }
 #occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #ff0; color: #000; }
-
-#occupy-customize {
-/*  position: absolute;*/
-  z-index: 10;
-/*  width: 600px;*/
-/*  margin-top: 0px; margin-left: 80px; padding: 10px 20px;*/
-
-/*  background-color: #f9f9f9;
-  border: 1px solid #dfdfdf;
-*/}
 
 
