@@ -172,8 +172,11 @@ get "/stats" do
   # TODO switch sorting to use uniques once we have more data
   @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| u.to_i }.reverse
 
+  response['Cache-Control'] = "public, max-age=60"
   respond_to do |format|
     format.html { haml :stats }
+    format.json { @sites.to_json }
+    format.js { "document.write(#{content_type :html; haml :stats});" }
   end
 end
 
