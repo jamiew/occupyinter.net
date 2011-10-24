@@ -1,13 +1,18 @@
+:css
+  #info { float: right; background-color: #fafafa; border: 1px solid #efefef; width: 400px; padding: 0 20px; margin: 15px 0; }
+  #info h2 { margin: 15px 0 0 0; padding: 0; }
+  #summary-stats { margin-top: 20px; }
 
-%h1 <a href="/stats">Top Protest Sites</a>
+#info
+  %h2 Stats
+  %p== Current Time = #{Time.now}
+  %p== Hits recorded since 10/21/2011 13:00 PST (<a href="http://fffff.at/occupy-the-internet">Day 3</a>)
+  %p== For the complete list of #occupynet websites in chronological order <a href="/sites">click here</a>
 
-- occupied_count = @hosts.select{|host| host.gsub(/^https?\:\/\//, '') =~ /^fffff.at\/?occupy\// }.length
-%p== Current Time = #{Time.now}
-%p== Hits recorded since 10/21/2011 13:00 PST (<a href="http://fffff.at/occupy-the-internet">Day 3</a>)
-%p== For the complete list of #occupynet websites in chronological order <a href="/sites">click here</a>
-
-%p== #{@hosts.length - occupied_count} websites have installed the embed
-%p== #{occupied_count} sites via <a href="http://fffff.at/occupy" target="_blank">fffff.at/occupy</a>
+#summary-stats
+  - occupied_count = @hosts.select{|host| host.gsub(/^https?\:\/\//, '') =~ /^fffff.at\/?occupy\// }.length
+  %p== #{@hosts.length - occupied_count} websites have installed the embed
+  %p== #{occupied_count} sites via <a href="http://fffff.at/occupy" target="_blank">fffff.at/occupy</a>
 
 -# TODO keep these all in a sorted set
 %table#site-stats

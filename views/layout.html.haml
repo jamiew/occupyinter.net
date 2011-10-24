@@ -3,9 +3,14 @@
   %title= @title && "#{@title} - occupyinter.net" || "occupyinter.net &ndash; animated GIF army &ndash; embeds, browser addons, website hijacks"
   %link{:rel => 'stylesheet', :type => 'text/css', :media => 'screen', :href => '/stylesheets/frontpage.css'}
 %body
-
   #container
-    = yield
+    #header
+      %h1
+        %a{:href => '/'} Occupy The Internet
+      = erb :'_socialmedia'
 
-  #footer
-    = erb :'_ganalytics'
+    #body
+      = yield
+
+    #footer
+      = erb :'_ganalytics'

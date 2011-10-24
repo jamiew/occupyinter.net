@@ -37,10 +37,6 @@
   }
 
 #demo
-  #header
-    %h1
-      %a{:href => '/'} Occupy The Internet
-
   %p
     Are you a “webmaster”, admin, blog owner or someone with access to index.html files? Are you interested in taking part in the recent global wave of revolution from the comfort of your home computer?
     <em>Occupy the Internet!</em>
@@ -49,8 +45,6 @@
 
   %textarea#embed_code{:rows => 2, :cols => 100, :readonly => 'readonly', :onclick => "this.select()"}
     == <script src="#{script_src}"></script>
-
-  = erb :'_socialmedia'
 
   %p
     For the full list of occupied websites visit <a href="http://fffff.at/occupy-the-internet">fffff.at/occupy-the-internet</a>
@@ -92,8 +86,10 @@
 
   %h2 About
   %p
-    A <strong><a href="http://fffff.at">F.A.T. Lab</a></strong> Production<br />
+    A <strong><a href="http://fffff.at">F.A.T. Lab</a></strong> Production
+    <br />
     Concept development by <a href="http://www.theowatson.com/">Theo</a>, <a href="http://www.simple-mechanisms.com/">Jerry</a>, <a href="http://jamiedubs.com/">Jamie</a>, <a href="http://gleuch.com/">Greg</a>, <a href="http://evan-roth.com">Evan</a>, <a href="http://datenform.de/">Aram</a>, and <a href="http://tobi-x.com">Tobi</a>
+    <br />
     Code development by <a href="http://jamiedubs.com/">Jamie</a>, <a href="http://gleuch.com">Greg</a>, <a href="http://theowatson.com">Theo</a>, and <a href="http://tobi-x.com">Tobi</a>.
 
 

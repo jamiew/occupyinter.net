@@ -15,7 +15,9 @@ h1 a { padding: 6px 14px 8px; background-color: #000; color: #fff; font-weight: 
 h1 { margin-bottom: 30px; }
 h2 { margin-top: 30px; }
 
-#header {margin: 0 0 0 -18px; padding: 2px 0 0 61px; min-height: 46px; background: url(../images/net-protester.gif) 0 0 no-repeat;}
+#header h1 { margin: 0 0 0 -18px; padding: 2px 0 10px 61px; min-height: 46px; background: url(../images/net-protester.gif) 0 0 no-repeat; }
+#header { padding-bottom: 20px; }
+#header .social-sharing { margin-left: 43px; }
 
 #demo #embed_code { margin-bottom: 20px; padding: 19px 20px 0px; width: 600px; font-size: 11pt; font-family: monospace; color: #666; border: 3px solid #eee; background-color: #ddd; font-weight: bold; }
 
