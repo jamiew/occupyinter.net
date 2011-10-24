@@ -2,9 +2,11 @@
 %h1 <a href="/stats">Top Protest Sites</a>
 
 - occupied_count = @hosts.select{|host| host.gsub(/^https?\:\/\//, '') =~ /^fffff.at\/?occupy\// }.length
+%p== Current Time = #{Time.now}
+%p== Hits counted since 10/21/2011 13:00 PST (<a href="http://fffff.at/occupy-the-internet">Occupation day 3</a>)
+
 %p== #{@hosts.length - occupied_count} websites have installed the embed
-%P== #{occupied_count} sites via fffff.at/occupy
-%p== Hits counted since 10/21/2011 1pm PST (Occupation day 3)
+%p== #{occupied_count} sites via fffff.at/occupy
 
 -# TODO keep these all in a sorted set
 %table#site-stats
@@ -20,6 +22,6 @@
       %tr
         %td.count= i+1
         %td.site
-          %bold== <a rel="nofollow" href="http://#{site}">#{site}</a>
+          %bold== <a rel="nofollow" href="http://#{site}">#{site[0..100]}</a>
         %td.visits= commify(arr[1])
         %td.uniques= commify(arr[2])
