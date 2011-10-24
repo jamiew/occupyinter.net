@@ -79,12 +79,11 @@ function add_audio(){
 
   if (!audio) return;
 
-  audio.setAttribute
   audio.id = 'occupy-audio';
-  audio.src = '<%= default_sound_url %>';
-  if (typeof(occupy_internet_audio_src) != 'undefined') audio.src = occupy_internet_audio_src;
   audio.loop = 'true';
   audio.volume = .2;
+  audio.src = '<%= default_sound_url %>';
+  if (typeof(occupy_internet_audio_src) != 'undefined') audio.src = occupy_internet_audio_src;
 
   if (!!audio_setting().play) {
     audio.play();
@@ -118,7 +117,7 @@ function toggle_audio(){
 }
 function audio_setting() {
   // add cookie stuff here to detect play or pauses
-  return {play : true};
+  return {play : false};
 }
 
 
