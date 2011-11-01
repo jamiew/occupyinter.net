@@ -1,15 +1,16 @@
-#occupy-widget { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif; }
+#occupy-widget-wrapper { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif;  width: 100%; height: 740px; overflow-x: scroll; }
+#occupy-widget { }
 #occupy-customize { font-family: sans-serif; }
 
 .occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
 
 .occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img {
-  height: 230px;
+/*  height: 230px;*/ /* TODO re-add after exhibition */
 }
 .occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
 .occupy-widget .avatar a:hover, .occupy-widget .bigavatar a:hover { border-color: #f0f; }
 .occupy-widget .avatar a.selected, .occupy-widget .bigavatar a.selected { border-color: #ff0; }
-.occupy-widget .bigavatar img { max-height: 300px; }
+/* .occupy-widget .bigavatar img { max-height: 300px; } */ /* TODO re-add after exhibition */
 .occupy-widget .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
 
 #occupy-customize #introduction { float: left; width: 350px; margin-top: 30px; padding-right: 25px; }
@@ -79,4 +80,8 @@
 }
 #occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #ff0; color: #000; }
 
+
+a.avatar-link { text-decoration: none; }
+a.avatar-link span.avatar-caption { display: none; background-color: #f0f; color: #fff; border: 0; }
+a.avatar-link:hover span.avatar-caption { display: block; margin-left: 50px; margin-top: 80px; }
 

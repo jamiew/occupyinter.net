@@ -2,65 +2,12 @@
 
 function load_protest(data){
   var avatar_output = '';
-
-  // Hardcode the response data
-  if (data == undefined) data = {};
-  if (typeof(occupy_internet_protesters) == 'object' && occupy_internet_protesters.length) {
-    data.protesters = occupy_internet_protesters;
-  }
-  if (typeof(data.protesters) == 'undefined' || data.protesters.length <= 0) {
-    data.protesters = <%= avatars.to_json %>;
-  }
-
-  // Randomize dem avatars
-  data.protesters.sort(function(){ return 0.5 - Math.random() });
-
-  // Current user's id; not using this yet
-  data.uuid = undefined;
-
-
-  // Change 'start' to 'join' if people here already
-  // if(data.protesters.length > 0){
-  //   document.getElementById('occupy-joinprotest-button').innerHTML = 'Join The Protest!';
-  // }
-
-  // Add a selection of our avatars
-  // FIXME don't want to load too many imgs, but what's the right #?
-  var max_protesters = 10;
-  if (data.protesters.length < max_protesters) max_protesters = data.protesters.length;
-  for(var i = 0; i < max_protesters; i++){
-    var protestor = data.protesters[i];
-    protestor.uuid = i + 1; // ...
-
-    var bottom = 0,
-        left = (i*150)-50,
-        zindex = (100+Math.floor(Math.random()*20));
-    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
-    var owner = data.uuid != undefined && protestor.uuid == data.uuid;
-
-    if(owner){
-      document.getElementById('occupy-joinprotest').style.display = 'none';
-      document.getElementById('occupy-avatars').style.left = '0px';
-
-      avatar_output += '<div id="occupy-you">';
-      avatar_output += 'This is you!';
-      avatar_output += '<a id="customize_button" href="<%= server %>/customize" onclick="toggle_customize();">';
-      avatar_output += 'Customize Your Avatar';
-      avatar_output += '<img src="<%= server %>/images/arrow-down1.jpg" height="32" />';
-      avatar_output += '</div>';
-    }
-
-    avatar_output += '<img src="'+protestor.avatar+'" />';
-
-    if(owner){
-      avatar_output += '</a>';
-    }
-
-    // if(protestor.tagline != '' && protestor.tagline != undefined){
-    //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
-    // }
-
-    avatar_output += '</div>';
+  if (is_exhibition_running()) {
+    debug("EXHIBITION IS A GO!");
+    avatar_output = build_exhibition_avatars();
+  } else {
+    debug("Using old occupyinter.net protest");
+    avatar_output = build_avatars();
   }
 
   // Add and start animating
@@ -68,9 +15,121 @@ function load_protest(data){
   if (typeof(protester_avatars) != 'undefined') protester_avatars.innerHTML = avatar_output;
 
   add_audio();
-  move_avatars();
   show_protest();
+
+  if (!is_exhibition_running()) {
+    debug("animating avatars...");
+    move_avatars();
+  }
 };
+
+function is_exhibition_running(){
+  var start_date = Date.UTC(2011, 11, 1, 13, 0, 0), // Nov 1 8am EST
+      end_date = Date.UTC(2011, 11, 4, 13, 0, 0); // Nov 4 8am EST
+
+  if ((Date.now() >= start_date && Date.now() <= end_date) || document.location.host == 'localhost:9393') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function build_avatars(){
+  var avatar_output = '';
+
+  // Create some fakeish protestor data
+  data = {}
+  if (typeof(occupy_internet_protesters) == 'object' && occupy_internet_protesters.length) {
+    data.protesters = occupy_internet_protesters;
+  }
+  if (typeof(data.protesters) == 'undefined' || data.protesters.length <= 0) {
+    data.protesters = <%= avatars.to_json %>;
+  }
+
+  // Randomize avatar order
+  data.protesters.sort(function(){ return 0.5 - Math.random() });
+
+  // Add specified number of avatars
+  var max_protesters = 10;
+  if (data.protesters.length < max_protesters) max_protesters = data.protesters.length;
+  for(var i = 0; i < max_protesters; i++){
+    var protestor = data.protesters[i];
+
+    var bottom = 0,
+        left = (i*150)-50,
+        zindex = (100+Math.floor(Math.random()*20));
+    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
+    avatar_output += '<img src="'+protestor.avatar+'" />';
+    // if(protestor.tagline != '' && protestor.tagline != undefined){
+    //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
+    // }
+    avatar_output += '</div>';
+  }
+  return avatar_output;
+}
+
+function build_exhibition_avatars(){
+
+  // Hide occupy stuff, show exhibition stuff
+  document.getElementById('occupy-joinprotest').style.display = 'none';
+  document.getElementById('occupy-mute').style.display = 'none';
+  // document.getElementById('occupy-exhibition-info').style.display = 'display';
+  document.getElementById('occupy-avatars').style.bottom = '0px';
+  document.getElementById('occupy-avatars').style.left = '0px';
+
+  // Allow mouse pointer events now, and force horizontal scrollbars
+  document.getElementById('occupy-protestor_avatars').style.pointerEvents = 'auto';
+
+  var avatar_output = '';
+  var data =  [
+    // Curated by Evan Roth (@fi5e) http://evan-roth.com
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/constant-dullaart-occupy.gif', 'artist':'Constant Dullaart', 'artist_url':'http://constantdullaart.com/', 'title':'Constant Dullaart', 'left':'0', 'bottom':'0'},
+
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/olia-dragan-2-occupy.gif', 'artist':'Olia Lialina', 'artist_url':'http://art.teleportacia.org/olia.html', 'title':'Olia Lialina', 'left':'0', 'bottom':'0'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/charlie-todd-occupy.gif', 'artist':'Charlie Todd', 'artist_url':'http://improveverywhere.com/', 'title':'Charlie Todd', 'left':'1100', 'bottom':'0', 'width':'250', 'height':'187'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/UBERMORGEN-occupy.gif', 'artist':'UBERMORGEN', 'artist_url':'http://www.ubermorgen.com/', 'title':'UBERMORGEN', 'left':'300', 'bottom':'25', 'width':'800', 'height':'194'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/brad-downey-occupy.gif', 'artist':'Brad Downey', 'artist_url':'http://www.braddowney.com/', 'title':'Brad Downey', 'left':'890', 'bottom':'50', 'width':'250', 'height':'316'},
+
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/la-quadrature-occupy-internet.gif', 'artist':'La Quadrature Du Net', 'artist_url':'http://www.laquadrature.net/', 'title':'La Quadrature Du Net', 'left':'1250', 'bottom':'0', 'width':'225', 'height':'212'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/mark-jenkins-occupy.gif', 'artist':'Mark Jenkins', 'artist_url':'http://www.xmarkjenkinsx.com/', 'title':'Mark Jenkins', 'left':'410', 'bottom':'0', 'width':'175', 'height':'296'},
+
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/olia-dragan-occupy.gif', 'artist':'Dragan Espenschied', 'artist_url':'http://drx.a-blast.org/~drx/index.en.html', 'title':'Dragan Espenschied', 'left':'70', 'bottom':'0'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/peretti-occupy-1.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'980', 'bottom':'0', 'width':'200', 'height':'209'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/ryder-ripps-occupy.gif', 'artist':'Ryder Ripps', 'artist_url':'http://ryder-ripps.com/', 'title':'Ryder Ripps', 'left':'600', 'bottom':'0', 'width':'250', 'height':'250'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/peretti-occupy-2.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'1330', 'bottom':'0', 'width':'200', 'height':'306'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/aram-bartholl-occupy.gif', 'artist':'Aram Bartholl', 'artist_url':'http://datenform.de/', 'title':'Aram Bartholl', 'left':'1530', 'bottom':'0', 'width':'200', 'height':'223'},
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/telecomix-occupy.gif', 'artist':'Telecomix', 'artist_url':'http://telecomix.org/', 'title':'Telecomix', 'left':'1450', 'bottom':'0'},
+
+    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/rafael-rozendaal-occupy.gif', 'artist':'Rafael Rozendaal', 'artist_url':'http://www.newrafael.com/', 'title':'Rafael Rozendaal', 'left':'200', 'bottom':'0'},
+
+  ];
+
+  for(var i = 0; i < data.length; i++){
+    var protestor = data[i],
+        bottom = protestor.bottom,
+        left = protestor.left,
+        zindex = 100 + i,
+        caption = 'By '+protestor.artist;
+
+    avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
+    avatar_output += '<a class="avatar-link" href="'+protestor.artist_url+'" target="_blank">';
+    avatar_output += '<img src="'+protestor.avatar+'" alt="'+caption+'"';
+    if (protestor.height && protestor.height){
+      avatar_output += ' width="'+protestor.width+'" height="'+protestor.height+'"';
+    }
+    avatar_output += ' />';
+    avatar_output += '<span class="avatar-caption">'+caption+'</a>';
+    avatar_output += '</a>';
+    // if(protestor.tagline != '' && protestor.tagline != undefined){
+    //  avatar_output += '<span class="tagline">'+protestor.tagline+'</span>';
+    // }
+    avatar_output += '</div>';
+  }
+  return avatar_output;
+
+
+
+}
 
 var audio_is_playing = false;
 function add_audio(){
@@ -122,9 +181,9 @@ function audio_setting() {
 
 
 function show_protest(){
-  var widget = document.getElementById('occupy-widget');
-  if (!widget) return;
-  widget.style.display = "block";
+  var widget_wrapper = document.getElementById('occupy-widget-wrapper');
+  if (!widget_wrapper) return;
+  widget_wrapper.style.display = "block";
 
   // var avatars = document.getElementById('occupy-avatars');
   // avatars.style.bottom = "-200px";
@@ -199,7 +258,8 @@ if(window.attachEvent) {
 
 </script>
 
-<div id="occupy-widget" class="occupy-widget" style="display: none;">
+<div id="occupy-widget-wrapper" style="display: none;">
+<div id="occupy-widget" class="occupy-widget">
   <script type="text/javascript">
   var dev_mode = <%= dev? %>;
   function debug(msg) {
@@ -218,7 +278,6 @@ if(window.attachEvent) {
 
   <div id="occupy-joinprotest">
     <form id="occupy-joinprotest-form" method="POST" action="<%= server %>/join_protest">
-      <!-- <a href="http://fffff.at/enlist-today" id="occupy-joinprotest-header" target="_blank">Occupy Internet</span> -->
       <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button">We Are Occupying The Internet!</a>
     </form>
     <div id="occupy-length">
@@ -233,4 +292,5 @@ if(window.attachEvent) {
   </div>
 
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
+</div>
 </div>
