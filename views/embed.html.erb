@@ -27,11 +27,23 @@ function is_exhibition_running(){
   var start_date = Date.UTC(2011, 11, 1, 13, 0, 0), // Nov 1 8am EST
       end_date = Date.UTC(2011, 11, 4, 13, 0, 0); // Nov 4 8am EST
 
-  if ((Date.now() >= start_date && Date.now() <= end_date) || document.location.host == 'localhost:9393') {
+  // stupid but effective
+  var now = new Date();
+  var month = now.getUTCMonth() + 1; // FIXME why is this -1?!?! really weird...
+  var now_utc = Date.UTC(now.getUTCFullYear(), month, now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+
+  if (now_utc >= start_date && now_utc <= end_date) {
+    return true;
+  } else if (is_dev()) {
+    debug("Devmode, enabling exhibition");
     return true;
   } else {
     return false;
   }
+}
+
+function is_dev(){
+  return window.location.hostname == 'localhost' || window.location.hostname == 'localtunnel';
 }
 
 function build_avatars(){
@@ -109,10 +121,10 @@ function build_exhibition_avatars(){
         bottom = protestor.bottom,
         left = protestor.left,
         zindex = 100 + i,
-        caption = 'By '+protestor.artist;
+        caption = 'By <strong>'+protestor.artist+'</strong>';
 
     avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
-    avatar_output += '<a class="avatar-link" href="'+protestor.artist_url+'" target="_blank">';
+    avatar_output += '<a rel="nofollow" class="avatar-link" href="'+protestor.artist_url+'" target="_blank">';
     avatar_output += '<img src="'+protestor.avatar+'" alt="'+caption+'"';
     if (protestor.height && protestor.height){
       avatar_output += ' width="'+protestor.width+'" height="'+protestor.height+'"';
@@ -289,6 +301,11 @@ if(window.attachEvent) {
 
   <div id="occupy-mute">
     <a href="#" onclick="toggle_audio(); return false;"><img id="occupy-audio-image" src="<%= server %>/images/mute.png" alt="Mute" title="Mute Protest Audio" /></a>
+  </div>
+
+  <div id="occupy-exhibition-info">
+    <a id="occupy-exhibition-title" href="http://fffff.at/occupy-the-internet-the-exhibition/">Occupy The Internet Exhibition</a>
+    <a id="occupy-exhibition-fatlab-link" href="http://fffff.at">fffff.at</a>
   </div>
 
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>

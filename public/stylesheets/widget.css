@@ -81,6 +81,13 @@
 #occupy-joinprotest a#occupy-joinprotest-button:hover { background-color: #ff0; color: #000; }
 
 
+#occupy-exhibition-info { position: absolute; }
+#occupy-exhibition-info a { padding: 10px 5px; text-decoration: none; z-index: 100; }
+#occupy-exhibition-info a:hover { padding-left: 10px; }
+#occupy-exhibition-title { position: absolute; top: 150px; font-size:15px; width:250px; background-color:yellow; color: #000; padding-top: 15px; font-weight: bold; }
+#occupy-exhibition-fatlab-link { position: absolute; top: 180px; font-size:12px; width:50px; background-color: #FF00FF; color: #fff; height: 8px; padding: 0; margin: 0;  }
+
+
 a.avatar-link { text-decoration: none; }
 a.avatar-link span.avatar-caption { display: none; background-color: #f0f; color: #fff; border: 0; }
 a.avatar-link:hover { margin-top: 100px; }
