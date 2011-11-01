@@ -125,7 +125,7 @@ function build_exhibition_avatars(){
 
     avatar_output += '<div id="avatar'+i+'" class="bigavatar" style="position: absolute; bottom: '+bottom+'px; left: '+left+'px; z-index: '+zindex+'">';
     avatar_output += '<a rel="nofollow" class="avatar-link" href="'+protestor.artist_url+'" target="_blank">';
-    avatar_output += '<img src="'+protestor.avatar+'" alt="'+caption+'"';
+    avatar_output += '<img src="'+protestor.avatar+'" alt="'+caption+'" title="'+caption+'"';
     if (protestor.height && protestor.height){
       avatar_output += ' width="'+protestor.width+'" height="'+protestor.height+'"';
     }
@@ -305,7 +305,7 @@ if(window.attachEvent) {
 
   <div id="occupy-exhibition-info">
     <a id="occupy-exhibition-title" href="http://fffff.at/occupy-the-internet-the-exhibition/">Occupy The Internet Exhibition</a>
-    <a id="occupy-exhibition-fatlab-link" href="http://fffff.at">fffff.at</a>
+    <a id="occupy-exhibition-fatlab-link" href="http://fffff.at">11/1&ndash;11/4&nbsp;&nbsp;more info on fffff.at</a>
   </div>
 
   <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
