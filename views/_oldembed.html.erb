@@ -1,4 +1,3 @@
-<% rand_str = Time.now.to_i %>
 <script type="text/javascript">
 
 function load_protest(data){
@@ -12,7 +11,7 @@ function load_protest(data){
   }
 
   // Add and start animating
-  var protester_avatars = document.getElementById('occupy-protestor_avatars_<%= rand_str %>');
+  var protester_avatars = document.getElementById('occupy-protestor_avatars');
   if (typeof(protester_avatars) != 'undefined') protester_avatars.innerHTML = avatar_output;
 
   add_audio();
@@ -84,11 +83,11 @@ function build_avatars(){
 function build_exhibition_avatars(){
 
   // Hide occupy stuff, show exhibition stuff
-  document.getElementById('occupy-joinprotest_<%= rand_str %>').style.display = 'none';
-  document.getElementById('occupy-mute_<%= rand_str %>').style.display = 'none';
-  document.getElementById('occupy-exhibition-info_<%= rand_str %>').style.display = 'block';
-  document.getElementById('occupy-avatars_<%= rand_str %>').style.bottom = '0px';
-  document.getElementById('occupy-avatars_<%= rand_str %>').style.left = '0px';
+  document.getElementById('occupy-joinprotest').style.display = 'none';
+  document.getElementById('occupy-mute').style.display = 'none';
+  document.getElementById('occupy-exhibition-info').style.display = 'block';
+  document.getElementById('occupy-avatars').style.bottom = '0px';
+  document.getElementById('occupy-avatars').style.left = '0px';
 
   // Allow mouse pointer events now
   //document.getElementById('occupy-protestor_avatars').style.pointerEvents = 'auto';
@@ -147,11 +146,11 @@ function build_exhibition_avatars(){
 var audio_is_playing = false;
 function add_audio(){
   var audio = document.createElement('audio'),
-      img = document.getElementById('occupy-audio-image_<%= rand_str %>');
+      img = document.getElementById('occupy-audio-image');
 
   if (!audio) return;
 
-  audio.id = 'occupy-audio_<%= rand_str %>';
+  audio.id = 'occupy-audio';
   audio.loop = 'true';
   audio.volume = .2;
   audio.src = '<%= default_sound_url %>';
@@ -165,13 +164,13 @@ function add_audio(){
     if (img) img.src = "<%= server %>/images/unmute.png";
   }
 
-  var widget = document.getElementById('occupy-widget_<%= rand_str %>')
+  var widget = document.getElementById('occupy-widget')
   if (widget) widget.appendChild(audio);
 }
 
 function toggle_audio(){
-  var audio = document.getElementById('occupy-audio_<%= rand_str %>'),
-      img = document.getElementById('occupy-audio-image_<%= rand_str %>');
+  var audio = document.getElementById('occupy-audio'),
+      img = document.getElementById('occupy-audio-image');
 
   if (!audio) return;
 
@@ -194,7 +193,7 @@ function audio_setting() {
 
 
 function show_protest(){
-  var widget_wrapper = document.getElementById('occupy-widget-wrapper_<%= rand_str %>');
+  var widget_wrapper = document.getElementById('occupy-widget-wrapper');
   if (!widget_wrapper) return;
   widget_wrapper.style.display = "block";
 
@@ -240,7 +239,7 @@ function move_avatars(counter){
 function toggle_customize(){
   return true; // disabled
 
-  var el = document.getElementById('occupy-customize_<%= rand_str %>');
+  var el = document.getElementById('occupy-customize');
   if (!el) return false;
   if(el.style.display == 'none'){
     el.style.display = 'block';
@@ -250,7 +249,7 @@ function toggle_customize(){
 }
 
 function join_protest(){
-  document.getElementById('occupy-joinprotest-form_<%= rand_str %>').submit();
+  document.getElementById('occupy-joinprotest-form').submit();
 }
 
 // Initialize protest onload
@@ -271,8 +270,8 @@ if(window.attachEvent) {
 
 </script>
 
-<div id="occupy-widget-wrapper_<%= rand_str %>" style="display: none;">
-<div id="occupy-widget_<%= rand_str %>" class="occupy-widget">
+<div id="occupy-widget-wrapper" style="display: none;">
+<div id="occupy-widget" class="occupy-widget">
   <script type="text/javascript">
   var dev_mode = <%= dev? %>;
   function debug(msg) {
@@ -287,129 +286,28 @@ if(window.attachEvent) {
   var avatar_size = '<%= avatar_size %>px';
   </script>
 
+  <link rel="stylesheet" type="text/css" href="<%= server %>/stylesheets/widget.css" />
 
- <style type="text/css">
- #occupy-widget-wrapper_<%= rand_str %> { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif;  width: 100%; height: 740px; overflow-x: scroll; }
- #occupy-widget-wrapper_<%= rand_str %> { pointer-events: none; }
- #occupy-widget_<%= rand_str %> { }
- #occupy-customize_<%= rand_str %> { font-family: sans-serif; }
-
- .occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
-
- .occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img {
- /*  height: 230px;*/ /* TODO re-add after exhibition */
- }
- .occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
- .occupy-widget .avatar a:hover, .occupy-widget .bigavatar a:hover { border-color: #f0f; }
- .occupy-widget .avatar a.selected, .occupy-widget .bigavatar a.selected { border-color: #ff0; }
- .occupy-widget .bigavatar span { position: relative; top: -160px; right: 50px; background-color: #fff; color: #333; padding: 6px 10px; border: 1px solid #666; }
-
- #occupy-customize_<%= rand_str %> #introduction { float: left; width: 350px; margin-top: 30px; padding-right: 25px; }
- #occupy-customize_<%= rand_str %> #introduction strong { font-size: 15pt; color: #f0f; padding: 0 20px; }
- #occupy-customize_<%= rand_str %> #signage { }
- #occupy-customize_<%= rand_str %> #signage { float: left; width: 300px; height: 120px; margin-top: 50px; }
- #occupy-customize_<%= rand_str %> #signage input { font-size: 15pt; padding: 10px; }
-
- #occupy-customize_<%= rand_str %> #avatars { background: #fef; clear: both; }
-
- #occupy-customize_<%= rand_str %> #embed_code { margin-bottom: 20px; font-size: 8pt; width: 300px; background-color: #dedede; padding: 5px 1px 0; }
-
- .occupy-widget #occupy-uuid_<%= rand_str %> { display: none; }
- .occupy-widget #occupy-customize_<%= rand_str %> {  }
- .occupy-widget #occupy-you_<%= rand_str %> { position: absolute; z-index: 5; color: #ccc; background: #f0f; opacity: 0.7; font-family: sans-serif; padding-top: 5px; margin-top: -80px; width: 180px; text-align: center; }
- .occupy-widget #occupy-you_<%= rand_str %> a { color: #fff; font-weight: bold; font-size: 10pt; display: block; padding: 5px 8px; border: 0; height: 20px; }
- .occupy-widget #occupy-site_<%= rand_str %> { float: left; display: inline; }
-
- #occupy-avatars_<%= rand_str %> { position: absolute; bottom: -10px; left: 25px; }
- #occupy-protestor_avatars_<%= rand_str %> { margin-top: 50px; pointer-events: none; }
- #occupy-protestor_count_<%= rand_str %> { float: left; color: #ccc; margin-left: 10px; }
-
- /* Fix any stray a bg styles, like on fffff.at */
- .occupy-widget a, .occupy-widget a:link, .occupy-widget a:visited { background-color: transparent; border-color: transparent; }
-
- #occupy-mute_<%= rand_str %> {
-   position: absolute;
-   z-index: 301;
-   left: 158px;
-   bottom: 21px;
- }
-
- #occupy-length_<%= rand_str %> { background: #f0f0c0; color: #000;padding: 6px 0; font-size: 9pt; font-weight: bold; }
- #occupy-length_<%= rand_str %> a, #occupy-length_<%= rand_str %> a:link, #occupy-length_<%= rand_str %> a:visited { color: #000; text-decoration: none; }
- #occupy-length_<%= rand_str %> a:hover { color: #ff0; }
- #occupy-length_<%= rand_str %> span { font-weight: normal; }
-
- #occupy-joinprotest_<%= rand_str %> {
-   position: absolute;
-   z-index: 300;
-   bottom: 20px;
-   left: 15px;
-   text-align: center;
-   padding-right: 10px;
-   width: 143px;
- }
- #occupy-joinprotest_<%= rand_str %> form { margin: 0; }
- #occupy-joinprotest_<%= rand_str %> a { font-size: 8pt; }
- #occupy-joinprotest_<%= rand_str %> a#occupy-joinprotest-header_<%= rand_str %> {
-   background-color: #f0f;
-   color: #fff;
-   padding: 5px 10px;
-   font-weight: bold;
-   text-decoration: none;
- }
- #occupy-joinprotest_<%= rand_str %> a#occupy-joinprotest-header_<%= rand_str %>:hover { color: #ff0; }
-
- #occupy-joinprotest_<%= rand_str %> a#occupy-joinprotest-button_<%= rand_str %> {
-   font-style: italic;
-   font-weight: bold;
-   font-size: 15pt;
-   background-color: #000;
-   color: #fff;
-   display: block;
-   margin-top: 5px;
-   padding: 21px 20px;
-   text-decoration: none;
- }
- #occupy-joinprotest_<%= rand_str %> a#occupy-joinprotest-button_<%= rand_str %>:hover { background-color: #ff0; color: #000; }
-
-
- #occupy-exhibition-info_<%= rand_str %> { position: absolute; display: none; }
- #occupy-exhibition-info_<%= rand_str %> a { padding: 10px 5px; text-decoration: none; z-index: 100; }
- #occupy-exhibition-info_<%= rand_str %> a:hover { padding-left: 10px; }
- #occupy-exhibition-title_<%= rand_str %> { position: absolute; top: 200px; font-size:15px; width:250px; background-color:yellow; color: #000; padding-top: 15px; font-weight: bold; }
- #occupy-exhibition-fatlab-link_<%= rand_str %> { position: absolute; top: 230px; font-size: 11px; width: 150px; background-color: #FF00FF; color: #fff; height: 8px; padding: 0; margin: 0;  }
-
-
- a.avatar-link { text-decoration: none; }
- a.avatar-link span.avatar-caption { display: none; background-color: #f0f; color: #fff; border: 0; }
- a.avatar-link:hover { margin-top: 100px; }
- a.avatar-link:hover span.avatar-caption { display: block; margin-left: 50px; position: relative; top: -50px; padding-top: 10px; }
- span.avatar-caption strong { font-weight: bold; }
-
-
- </style>
-
-
-  <div id="occupy-joinprotest_<%= rand_str %>">
-    <form id="occupy-joinprotest-form_<%= rand_str %>" method="POST" action="<%= server %>/join_protest">
-      <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button_<%= rand_str %>">We Are Occupying The Internet!</a>
+  <div id="occupy-joinprotest">
+    <form id="occupy-joinprotest-form" method="POST" action="<%= server %>/join_protest">
+      <a href="http://fffff.at/occupy-the-internet" target="_blank" class="bigavatar" id="occupy-joinprotest-button">We Are Occupying The Internet!</a>
     </form>
-    <div id="occupy-length_<%= rand_str %>">
+    <div id="occupy-length">
       <a href="<%= server %>/stats">
-        <%= @host %>: <span id="occupy-length-days_<%= rand_str %>"><%= @been_protesting_for %> <%= @been_protesting_for != 1 ? 'days' : 'day' %></span>
+        <%= @host %>: <span id="occupy-length-days"><%= @been_protesting_for %> <%= @been_protesting_for != 1 ? 'days' : 'day' %></span>
       </a>
     </div>
   </div>
 
-  <div id="occupy-mute_<%= rand_str %>">
-    <a href="#" onclick="toggle_audio(); return false;"><img id="occupy-audio-image_<%= rand_str %>" src="<%= server %>/images/mute.png" alt="Mute" title="Mute Protest Audio" /></a>
+  <div id="occupy-mute">
+    <a href="#" onclick="toggle_audio(); return false;"><img id="occupy-audio-image" src="<%= server %>/images/mute.png" alt="Mute" title="Mute Protest Audio" /></a>
   </div>
 
-  <div id="occupy-exhibition-info_<%= rand_str %>">
-    <a id="occupy-exhibition-title_<%= rand_str %>" href="http://fffff.at/occupy-the-internet-the-exhibition/">Occupy The Internet Exhibition</a>
-    <a id="occupy-exhibition-fatlab-link_<%= rand_str %>" href="http://fffff.at">11/1&ndash;11/4&nbsp;&nbsp;more info on fffff.at</a>
+  <div id="occupy-exhibition-info">
+    <a id="occupy-exhibition-title" href="http://fffff.at/occupy-the-internet-the-exhibition/">Occupy The Internet Exhibition</a>
+    <a id="occupy-exhibition-fatlab-link" href="http://fffff.at">11/1&ndash;11/4&nbsp;&nbsp;more info on fffff.at</a>
   </div>
 
-  <div id="occupy-avatars_<%= rand_str %>"><span id="occupy-protestor_avatars_<%= rand_str %>"></span></div>
+  <div id="occupy-avatars"><span id="occupy-protestor_avatars"></span></div>
 </div>
 </div>
