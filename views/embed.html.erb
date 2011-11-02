@@ -95,24 +95,20 @@ function build_exhibition_avatars(){
   var avatar_output = '';
   var data =  [
     // Curated by Evan Roth (@fi5e) http://evan-roth.com
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/constant-dullaart-occupy.gif', 'artist':'Constant Dullaart', 'artist_url':'http://constantdullaart.com/', 'title':'Constant Dullaart', 'left':'0', 'bottom':'-150'},
-
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/olia-dragan-2-occupy.gif', 'artist':'Olia Lialina', 'artist_url':'http://art.teleportacia.org/olia.html', 'title':'Olia Lialina', 'left':'0', 'bottom':'0'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/charlie-todd-occupy.gif', 'artist':'Charlie Todd', 'artist_url':'http://improveverywhere.com/', 'title':'Charlie Todd', 'left':'1100', 'bottom':'0', 'width':'250', 'height':'187'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/UBERMORGEN-occupy.gif', 'artist':'UBERMORGEN', 'artist_url':'http://www.ubermorgen.com/', 'title':'UBERMORGEN', 'left':'300', 'bottom':'25', 'width':'800', 'height':'194'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/brad-downey-occupy.gif', 'artist':'Brad Downey', 'artist_url':'http://www.braddowney.com/', 'title':'Brad Downey', 'left':'890', 'bottom':'50', 'width':'250', 'height':'316'},
-
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/la-quadrature-occupy-internet.gif', 'artist':'La Quadrature Du Net', 'artist_url':'http://www.laquadrature.net/', 'title':'La Quadrature Du Net', 'left':'1250', 'bottom':'0', 'width':'225', 'height':'212'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/mark-jenkins-occupy.gif', 'artist':'Mark Jenkins', 'artist_url':'http://www.xmarkjenkinsx.com/', 'title':'Mark Jenkins', 'left':'410', 'bottom':'0', 'width':'175', 'height':'296'},
-
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/olia-dragan-occupy.gif', 'artist':'Dragan Espenschied', 'artist_url':'http://drx.a-blast.org/~drx/index.en.html', 'title':'Dragan Espenschied', 'left':'70', 'bottom':'0'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/peretti-occupy-1.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'980', 'bottom':'0', 'width':'200', 'height':'209'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/ryder-ripps-occupy.gif', 'artist':'Ryder Ripps', 'artist_url':'http://ryder-ripps.com/', 'title':'Ryder Ripps', 'left':'600', 'bottom':'0', 'width':'250', 'height':'250'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/peretti-occupy-2.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'1330', 'bottom':'0', 'width':'200', 'height':'306'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/aram-bartholl-occupy.gif', 'artist':'Aram Bartholl', 'artist_url':'http://datenform.de/', 'title':'Aram Bartholl', 'left':'1530', 'bottom':'0', 'width':'200', 'height':'223'},
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/telecomix-occupy.gif', 'artist':'Telecomix', 'artist_url':'http://telecomix.org/', 'title':'Telecomix', 'left':'1450', 'bottom':'0'},
-
-    {'avatar':'http://media.fffff.at/occupy-internet-exhibition/rafael-rozendaal-occupy.gif', 'artist':'Rafael Rozendaal', 'artist_url':'http://www.newrafael.com/', 'title':'Rafael Rozendaal', 'left':'200', 'bottom':'0'},
+    {'avatar':'<%= server %>/exhibition/constant-dullaart-occupy.gif', 'artist':'Constant Dullaart', 'artist_url':'http://constantdullaart.com/', 'title':'Constant Dullaart', 'left':'0', 'bottom':'-150'},
+    {'avatar':'<%= server %>/exhibition/olia-dragan-2-occupy.gif', 'artist':'Olia Lialina', 'artist_url':'http://art.teleportacia.org/olia.html', 'title':'Olia Lialina', 'left':'0', 'bottom':'0'},
+    {'avatar':'<%= server %>/exhibition/charlie-todd-occupy.gif', 'artist':'Charlie Todd', 'artist_url':'http://improveverywhere.com/', 'title':'Charlie Todd', 'left':'1100', 'bottom':'0', 'width':'250', 'height':'187'},
+    {'avatar':'<%= server %>/exhibition/UBERMORGEN-occupy.gif', 'artist':'UBERMORGEN', 'artist_url':'http://www.ubermorgen.com/', 'title':'UBERMORGEN', 'left':'300', 'bottom':'25', 'width':'800', 'height':'194'},
+    {'avatar':'<%= server %>/exhibition/brad-downey-occupy.gif', 'artist':'Brad Downey', 'artist_url':'http://www.braddowney.com/', 'title':'Brad Downey', 'left':'890', 'bottom':'50', 'width':'250', 'height':'316'},
+    {'avatar':'<%= server %>/exhibition/la-quadrature-occupy-internet.gif', 'artist':'La Quadrature Du Net', 'artist_url':'http://www.laquadrature.net/', 'title':'La Quadrature Du Net', 'left':'1250', 'bottom':'0', 'width':'225', 'height':'212'},
+    {'avatar':'<%= server %>/exhibition/mark-jenkins-occupy.gif', 'artist':'Mark Jenkins', 'artist_url':'http://www.xmarkjenkinsx.com/', 'title':'Mark Jenkins', 'left':'410', 'bottom':'0', 'width':'175', 'height':'296'},
+    {'avatar':'<%= server %>/exhibition/olia-dragan-occupy.gif', 'artist':'Dragan Espenschied', 'artist_url':'http://drx.a-blast.org/~drx/index.en.html', 'title':'Dragan Espenschied', 'left':'70', 'bottom':'0'},
+    {'avatar':'<%= server %>/exhibition/peretti-occupy-1.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'980', 'bottom':'0', 'width':'200', 'height':'209'},
+    {'avatar':'<%= server %>/exhibition/ryder-ripps-occupy.gif', 'artist':'Ryder Ripps', 'artist_url':'http://ryder-ripps.com/', 'title':'Ryder Ripps', 'left':'600', 'bottom':'0', 'width':'250', 'height':'250'},
+    {'avatar':'<%= server %>/exhibition/peretti-occupy-2.gif', 'artist':'Jonah Peretti & Chelsea Peretti', 'artist_url':'http://www.blackpeopleloveus.com/', 'title':'Jonah Peretti & Chelsea Peretti', 'left':'1330', 'bottom':'0', 'width':'200', 'height':'306'},
+    {'avatar':'<%= server %>/exhibition/aram-bartholl-occupy.gif', 'artist':'Aram Bartholl', 'artist_url':'http://datenform.de/', 'title':'Aram Bartholl', 'left':'1530', 'bottom':'0', 'width':'200', 'height':'223'},
+    {'avatar':'<%= server %>/exhibition/telecomix-occupy.gif', 'artist':'Telecomix', 'artist_url':'http://telecomix.org/', 'title':'Telecomix', 'left':'1450', 'bottom':'0'},
+    {'avatar':'<%= server %>/exhibition/rafael-rozendaal-occupy.gif', 'artist':'Rafael Rozendaal', 'artist_url':'http://www.newrafael.com/', 'title':'Rafael Rozendaal', 'left':'200', 'bottom':'0'},
 
   ];
 
