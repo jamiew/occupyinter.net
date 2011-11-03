@@ -1,4 +1,4 @@
-#occupy-widget-wrapper { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif;  width: 100%; height: 370px; overflow-x: scroll; border-top: 5px solid #f0f; }
+#occupy-widget-wrapper { position: fixed; bottom: 0px; left: 0px; z-index: 200; font-family: sans-serif;  width: 100%; height: 370px; overflow-x: scroll; }
 /* #occupy-widget-wrapper { pointer-events: none; } */ /* weird scrolling issues otherwise */
 #occupy-widget { }
 #occupy-customize { font-family: sans-serif; }
