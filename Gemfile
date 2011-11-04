@@ -10,6 +10,7 @@ gem 'redis', '~> 2.2', :require => ['redis', 'redis/connection/hiredis']
 gem 'sinatra-redis', :require => 'sinatra/redis'
 gem 'addressable', :require => 'addressable/uri'
 gem 'newrelic_rpm'
+gem 'dalli'
 
 group :development, :test do
   gem 'shotgun'
