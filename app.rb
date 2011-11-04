@@ -236,7 +236,8 @@ get "/embed" do
       content_type :js
 
       # No caching please, we record stats
-      response['Cache-Control'] = "private, max-age=0, must-revalidate"
+      # response['Cache-Control'] = "private, max-age=0, must-revalidate"
+      response['Cache-Control'] = "public, max-age=60"
       etag(Digest::SHA1.hexdigest(output))
       output
     }
