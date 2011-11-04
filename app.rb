@@ -150,7 +150,7 @@ def record_hit(host)
   # Fetch/set a memcache key representing this unique user,
   # for non-cookie but stillcheap uniqueness checking
   uniquecheck_key = "#{host}_#{request_uuid}"
-  puts "checking unique key: #{uniquecheck_key}"
+  debug "checking unique key: #{uniquecheck_key}"
   uniquecheck = settings.cache.get(uniquecheck_key)
   if uniquecheck.nil?
     debug "Setting uniquecheck field, key=#{uniquecheck_key}"
@@ -165,7 +165,6 @@ def record_hit(host)
   uniques_key = "site/#{host}/uniques"
   old_uniques = redis.scard("site/#{host}/uuids")
   cookie_key = "occupyinternet_#{host}"
-  puts request.cookies.inspect
   uniques = if request.cookies[cookie_key].to_s == 'true' || uniquecheck == '1'
     redis.get(uniques_key)
   else
@@ -173,7 +172,6 @@ def record_hit(host)
     redis.incr(uniques_key)
   end
 
-  puts "uniques=#{uniques.inspect} old_uniques=#{old_uniques.inspect}"
   if old_uniques && uniques && (old_uniques.to_i > uniques.to_i)
     debug "uniques=#{uniques} and old_uniques=#{old_uniques}! updating value..."
     redis.set(uniques_key, old_uniques)
