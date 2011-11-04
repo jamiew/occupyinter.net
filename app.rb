@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler'
 Bundler.require
+
 require 'digest/sha1'
 require 'logger'
 
@@ -143,21 +144,37 @@ def record_hit(host)
     redis.sadd("sites", @host)
   end
 
+  # Incremenet raw hits counter
   hits = redis.incr("site/#{@host}/hits")
 
-  # redis.sadd("site/#{host}/uuids", request_uuid)
-  cookie_key = "occupyinternet_#{host}"
-  response.set_cookie(cookie_key, true)
+  # Fetch/set a memcache key representing this unique user,
+  # for non-cookie but stillcheap uniqueness checking
+  uniquecheck_key = "#{host}_#{request_uuid}"
+  puts "checking unique key: #{uniquecheck_key}"
+  uniquecheck = settings.cache.get(uniquecheck_key)
+  if uniquecheck.nil?
+    debug "Setting uniquecheck field, key=#{uniquecheck_key}"
+    uniquecheck_expiry = 60 * 60 # sixty minutes till you count as a unique again
+    settings.cache.set(uniquecheck_key, '1', uniquecheck_expiry)
+  else
+    debug "this is not a unique"
+  end
 
-  old_uniques = redis.scard("site/#{host}/uuids")
+  # Update our uniques count
+  # Fetch the old set value and set from there if necessary
   uniques_key = "site/#{host}/uniques"
-  uniques = if request.cookies[cookie_key].to_s == 'true'
+  old_uniques = redis.scard("site/#{host}/uuids")
+  cookie_key = "occupyinternet_#{host}"
+  puts request.cookies.inspect
+  uniques = if request.cookies[cookie_key].to_s == 'true' || uniquecheck == '1'
     redis.get(uniques_key)
   else
+    response.set_cookie(cookie_key, true)
     redis.incr(uniques_key)
   end
 
-  if (uniques == 0 || uniques.nil?) && (!old_uniques.nil? && old_uniques > 0)
+  puts "uniques=#{uniques.inspect} old_uniques=#{old_uniques.inspect}"
+  if old_uniques && uniques && (old_uniques.to_i > uniques.to_i)
     debug "uniques=#{uniques} and old_uniques=#{old_uniques}! updating value..."
     redis.set(uniques_key, old_uniques)
   end
@@ -256,7 +273,7 @@ get "/stats" do
   @hosts = redis.smembers('sites')
 
   hits = redis.pipelined { @hosts.map{|host| redis.get("site/#{host}/hits") } }
-  uniques = redis.pipelined { @hosts.map{|host| redis.scard("site/#{host}/uuids") } }
+  uniques = redis.pipelined { @hosts.map{|host| redis.get("site/#{host}/uniques") } }
 
   @sites = @hosts.zip(hits, uniques).sort_by{|k,v,u| u.to_i }.reverse
   @sites = @sites[0..params[:limit].to_i] if params[:limit]
