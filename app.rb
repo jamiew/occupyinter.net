@@ -217,7 +217,7 @@ get "/embed" do
         # Hack to allow FAT's /occupy/ service as their own domains
         @host = [uri.host, uri.path].join if uri.host == 'fffff.at' && uri.path =~ /^\/occupy\//
 
-        # record_hit(@host)
+        record_hit(@host)
       end
 
       # Calculate num of days this site has been protesting
@@ -236,8 +236,7 @@ get "/embed" do
       content_type :js
 
       # No caching please, we record stats
-      # response['Cache-Control'] = "private, max-age=0, must-revalidate"
-      response['Cache-Control'] = "public, max-age=60"
+      response['Cache-Control'] = "private, max-age=0, must-revalidate"
       etag(Digest::SHA1.hexdigest(output))
       output
     }
