@@ -85,8 +85,8 @@
 #occupy-exhibition-info { position: absolute; display: none; }
 #occupy-exhibition-info a { padding: 10px 5px; text-decoration: none; z-index: 100; }
 #occupy-exhibition-info a:hover { padding-left: 10px; }
-#occupy-exhibition-title { position: absolute; top: 220px; font-size:15px; width:250px; background-color:yellow; color: #000; padding-top: 15px; font-weight: bold; }
-#occupy-exhibition-fatlab-link { position: absolute; top: 250px; font-size: 11px; width: 170px; background-color: #FF00FF; color: #fff; height: 8px; padding: 0; margin: 0;  }
+#occupy-exhibition-title { position: absolute; top: 0px; font-size:15px; width:250px; background-color:yellow; color: #000; padding-top: 15px; font-weight: bold; }
+#occupy-exhibition-fatlab-link { position: absolute; top: 30px; font-size: 11px; width: 170px; background-color: #FF00FF; color: #fff; height: 8px; padding: 0; margin: 0;  }
 
 
 a.avatar-link { text-decoration: none; }
