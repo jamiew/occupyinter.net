@@ -217,7 +217,7 @@ get "/embed" do
         # Hack to allow FAT's /occupy/ service as their own domains
         @host = [uri.host, uri.path].join if uri.host == 'fffff.at' && uri.path =~ /^\/occupy\//
 
-        record_hit(@host)
+        # record_hit(@host)
       end
 
       # Calculate num of days this site has been protesting
