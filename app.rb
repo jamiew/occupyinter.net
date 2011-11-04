@@ -144,8 +144,22 @@ def record_hit(host)
 
   hits = redis.incr("site/#{@host}/hits")
 
-  redis.sadd("site/#{@host}/uuids", request_uuid)
-  uniques = redis.scard("site/#{@host}/uuids")
+  # redis.sadd("site/#{host}/uuids", request_uuid)
+  cookie_key = "occupyinternet_#{host}"
+  response.set_cookie(cookie_key, true)
+
+  old_uniques = redis.scard("site/#{host}/uuids")
+  uniques_key = "site/#{host}/uniques"
+  uniques = if request.cookies[cookie_key].to_s == 'true'
+    redis.get(uniques_key)
+  else
+    redis.incr(uniques_key)
+  end
+
+  if (uniques == 0 || uniques.nil?) && (!old_uniques.nil? && old_uniques > 0)
+    debug "uniques=#{uniques} and old_uniques=#{old_uniques}! updating value..."
+    redis.set(uniques_key, old_uniques)
+  end
 
   debug "[#{Time.now.strftime('%m-%d-%Y %h:%m:%ms')}] embed.js: host=#{@host} hits=#{hits} uniques=#{uniques}"
 rescue
