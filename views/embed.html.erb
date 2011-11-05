@@ -6,9 +6,9 @@
 
 .occupy-widget .avatar { float: left; padding: 2px; margin: 0 10px 10px 0; text-align: center; font-family: Impact, sans-serif; font-size: 16pt; font-weight: normal; }
 
-.occupy-widget .avatar, .occupy-widget .avatar a, .occupy-widget .avatar img {
-/*  height: 230px;*/ /* TODO re-add after exhibition */
-}
+/* Limit heights of normal show */
+.occupy-widget .bigavatar img { max-height: 300px; }
+
 .occupy-widget .avatar a, .occupy-widget .bigavatar a { display: block; border: 5px solid transparent; }
 .occupy-widget .avatar a:hover, .occupy-widget .bigavatar a:hover { border-color: #f0f; }
 .occupy-widget .avatar a.selected, .occupy-widget .bigavatar a.selected { border-color: #ff0; }
@@ -132,9 +132,6 @@ function is_exhibition_running(){
   var now_utc = Date.UTC(now.getUTCFullYear(), month, now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
   if (now_utc >= start_date && now_utc <= end_date) {
-    return true;
-  } else if (is_dev()) {
-    debug("Devmode, enabling exhibition");
     return true;
   } else {
     return false;

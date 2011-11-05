@@ -60,61 +60,83 @@ helpers do
     !prod?
   end
 
-  # TODO fill with all our avatars
   def raw_avatars
     [
-    "banana-evanroth-occupy.gif",
-    "jig-evanroth-occupy.gif",
-    "gdance-evanroth-occupy.gif",
-    "david_goliath-evanroth-stevelambert-occupy.gif",
-    "bugs_troll_mrqmarx.gif",
-    "hallo-surfer_dragan.gif",
-    "jesus-evanroth-occupy.gif",
-    # "Hombre-65_gyna.gif",
-    "moonwalk-evanroth-occupy.gif",
-    "jeanluc-evanroth-occupy.gif",
-    "occupy-net-evanroth-02.gif",
-    "headless-evanroth-occupy.gif",
-    # "weare99percent_DAG.gif",
-    "occupy-net-evanroth-03.gif",
-    "unicorn-evanroth-occupy.gif",
-    "retake-public-domain_telegramsam.jpg",
-    "chunli-evanroth-occupy.gif",
-    "classwar-ahead_goulassoflosy.gif",
-    "pow-evanroth-occupy.gif",
-    "droid-evanroth-occupy.gif",
-    # "LCKY-capitalism_adamharms.gif",
-    "hulkster-evanroth-occupy.gif",
-    "dino-evanroth-occupy.gif",
-    # "unfucktheworld_seb.gif",
-    "cxzy-dear-maslow-2.gif",
-    "snoop-evanroth-occupy.gif",
-    "bellydance-evanroth-occupy.gif",
-    "txt-minimi_makemoney.gif",
-    "frodo-evanroth-occupy.gif",
-    "bowlers-evanroth-occupy.gif",
-    "1319050295853-dumpfm-LCKY-capitalismidgi_trans.gif",
-    "1319050301805-dumpfm-LCKY-gifpikaball02_trans.gif",
-    "1319051214937-dumpfm-melipone-LCKYPIKAtrans.gif",
-    "1319053612901-dumpfm-LCKY-VIP9.gif",
-    "tired.gif",
-    "hula.gif",
-    "occupyinternet.gif",
-    "occupyinternet2.gif",
-    "OCC.gif",
-    "denkmaltanzoccupy.gif",
-    "greencybergothoccupy.gif",
-    "lefttoeat3.gif",
-    "PGkYC.gif",
-    "Pp53n.gif",
-    "lonelyidgi_protest.gif",
-    "occupy-hula-1.gif",
+      # Disabled cuz they don't have transparent bg's:
+      # "Hombre-65_gyna.gif",
+      # "LCKY-capitalism_adamharms.gif",
+      # "unfucktheworld_seb.gif",
+
+      "banana-evanroth-occupy.gif",
+      "jig-evanroth-occupy.gif",
+      "gdance-evanroth-occupy.gif",
+      "david_goliath-evanroth-stevelambert-occupy.gif",
+      "bugs_troll_mrqmarx.gif",
+      "hallo-surfer_dragan.gif",
+      "jesus-evanroth-occupy.gif",
+      "moonwalk-evanroth-occupy.gif",
+      "jeanluc-evanroth-occupy.gif",
+      "occupy-net-evanroth-02.gif",
+      "headless-evanroth-occupy.gif",
+      "occupy-net-evanroth-03.gif",
+      "unicorn-evanroth-occupy.gif",
+      "retake-public-domain_telegramsam.jpg",
+      "chunli-evanroth-occupy.gif",
+      "classwar-ahead_goulassoflosy.gif",
+      "pow-evanroth-occupy.gif",
+      "droid-evanroth-occupy.gif",
+      "hulkster-evanroth-occupy.gif",
+      "dino-evanroth-occupy.gif",
+      "cxzy-dear-maslow-2.gif",
+      "snoop-evanroth-occupy.gif",
+      "bellydance-evanroth-occupy.gif",
+      "txt-minimi_makemoney.gif",
+      "frodo-evanroth-occupy.gif",
+      "bowlers-evanroth-occupy.gif",
+      "1319050295853-dumpfm-LCKY-capitalismidgi_trans.gif",
+      "1319050301805-dumpfm-LCKY-gifpikaball02_trans.gif",
+      "1319051214937-dumpfm-melipone-LCKYPIKAtrans.gif",
+      "1319053612901-dumpfm-LCKY-VIP9.gif",
+      "tired.gif",
+      "hula.gif",
+      "occupyinternet.gif",
+      "occupyinternet2.gif",
+      "OCC.gif",
+      "denkmaltanzoccupy.gif",
+      "greencybergothoccupy.gif",
+      "lefttoeat3.gif",
+      "PGkYC.gif",
+      "Pp53n.gif",
+      "lonelyidgi_protest.gif",
+      "occupy-hula-1.gif",
+      "weare99percent_DAG.gif",
+    ]
+  end
+
+  def exhibition_avatars
+    [
+      'constant-dullaart-occupy.gif',
+      'olia-dragan-2-occupy.gif',
+      'charlie-todd-occupy.gif',
+      'UBERMORGEN-occupy.gif',
+      'brad-downey-occupy.gif',
+      'la-quadrature-occupy-internet.gif',
+      'mark-jenkins-occupy.gif',
+      'olia-dragan-occupy.gif',
+      'peretti-occupy-1.gif',
+      'ryder-ripps-occupy.gif',
+      'peretti-occupy-2.gif',
+      'aram-bartholl-occupy.gif',
+      'telecomix-occupy.gif',
+      'rafael-rozendaal-occupy.gif',
+      'moot-occupy.gif',
     ]
   end
 
   def avatars
-    # TODO deprecate this old [{avatar: "url"}] syntax, just use a vanilla array
-    raw_avatars.map{|u| {:avatar => "#{server}/avatars/#{u}"} }
+    output = raw_avatars.map{|u| {:avatar => "#{server}/avatars/#{u}"} }
+    output += exhibition_avatars.map{|u| {:avatar => "#{server}/exhibition/#{u}"} }
+    output
   end
 
   def default_sound_url
