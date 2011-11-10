@@ -225,32 +225,32 @@ get "/" do
 end
 
 get "/embed" do
+  domain = request.referrer || params['url'] # TODO normalize these urls
+  if domain.nil? || domain.empty?
+    debug "No HTTP_REFERER or ?url param, not recording hit"
+  else
+    domain = "http://#{domain}" unless domain =~ /^http/
+    uri = Addressable::URI.parse(domain)
+    @host = uri.host
+    @host = @host.gsub(/^www\./, '')
+
+    # Hack to allow FAT's /occupy/ service as their own domains
+    @host = [uri.host, uri.path].join if uri.host == 'fffff.at' && uri.path =~ /^\/occupy\//
+
+    record_hit(@host)
+  end
+
+  # Calculate num of days this site has been protesting
+  # TODO offset all dates by diff b/w beginning of protests and when we started storing dates
+  @beginning_of_protests = Time.parse('2011-10-19 08:00 -0700')
+
+  created_at = redis.get("site/#{@host}/created_at") rescue nil # prod no-redis failsafe
+  @started_protesting_at = created_at && Time.parse(created_at)
+  @been_protesting_for = (@started_protesting_at && ((Time.now.to_i - @started_protesting_at.to_i) / 60.0 / 60.0 / 24.0).ceil || nil)
+  debug "#{@host} @beginning_of_protests=#{@beginning_of_protests} @started_protesting_at=#{@started_protesting_at.inspect} @been_protesting_for=#{@been_protesting_for.inspect}"
+
   respond_to do |format|
     format.js {
-      domain = request.referrer || params['url'] # TODO normalize these urls
-      if domain.nil? || domain.empty?
-        debug "No HTTP_REFERER or ?url param, not recording hit"
-      else
-        domain = "http://#{domain}" unless domain =~ /^http/
-        uri = Addressable::URI.parse(domain)
-        @host = uri.host
-        @host = @host.gsub(/^www\./, '')
-
-        # Hack to allow FAT's /occupy/ service as their own domains
-        @host = [uri.host, uri.path].join if uri.host == 'fffff.at' && uri.path =~ /^\/occupy\//
-
-        record_hit(@host)
-      end
-
-      # Calculate num of days this site has been protesting
-      # TODO offset all dates by diff b/w beginning of protests and when we started storing dates
-      @beginning_of_protests = Time.parse('2011-10-19 08:00 -0700')
-
-      created_at = redis.get("site/#{@host}/created_at") rescue nil # prod no-redis failsafe
-      @started_protesting_at = created_at && Time.parse(created_at)
-      @been_protesting_for = (@started_protesting_at && ((Time.now.to_i - @started_protesting_at.to_i) / 60.0 / 60.0 / 24.0).ceil || nil)
-      debug "#{@host} @beginning_of_protests=#{@beginning_of_protests} @started_protesting_at=#{@started_protesting_at.inspect} @been_protesting_for=#{@been_protesting_for.inspect}"
-
       # horrible hack so we render "embed.html" view; :format => :html does not work
       content_type :html
       widget = erb :embed
@@ -260,6 +260,16 @@ get "/embed" do
       # No caching please, we record stats
       response['Cache-Control'] = "private, max-age=0, must-revalidate"
       etag(Digest::SHA1.hexdigest(output))
+      output
+    }
+    format.html {
+      erb :embed
+    }
+    format.json {
+      content_type :html
+      widget = erb :embed
+      output = {:html => widget, :avatars => avatars}.to_json
+      output = "#{params[:callback]}(#{output})" unless params[:callback].nil? || params[:callback].empty?
       output
     }
   end
