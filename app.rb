@@ -110,6 +110,14 @@ helpers do
       "lonelyidgi_protest.gif",
       "occupy-hula-1.gif",
       "weare99percent_DAG.gif",
+      "oohla-occupy.gif",
+      "jomon_occupy.gif",
+      "ponathan-partylike99percent.gif",
+      "guerito.gif",
+      "enough-is-enough.gif",
+      "telegram-sam.gif",
+      "nyan_cat.gif",
+      "systaime.gif",
     ]
   end
 
