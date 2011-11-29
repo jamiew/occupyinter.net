@@ -113,7 +113,6 @@ helpers do
       "oohla-occupy.gif",
       "jomon_occupy.gif",
       "ponathan-partylike99percent.gif",
-      "guerito.gif",
       "enough-is-enough.gif",
       "telegram-sam.gif",
       "nyan_cat.gif",
