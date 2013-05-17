@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'sinatra', '1.2.6'
 gem 'rack', '1.3.3' # silence _WKV warning
