@@ -4,6 +4,7 @@ Bundler.require
 
 require 'digest/sha1'
 require 'logger'
+require 'json'
 
 configure do |config|
   Sinatra::Application.register Sinatra::RespondTo
