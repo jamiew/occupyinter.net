@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.3'
+ruby '2.3.0'
 
 gem 'sinatra', '1.2.6'
 gem 'rack', '1.3.3' # silence _WKV warning
