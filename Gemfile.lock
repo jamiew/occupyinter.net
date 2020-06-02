@@ -22,7 +22,6 @@ GEM
     sinatra (1.2.6)
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
-      tilt (>= 1.2.2, < 2.0)
     sinatra-redis (0.3.0)
       redis
       sinatra (>= 0.9.4)
@@ -47,3 +46,9 @@ DEPENDENCIES
   sinatra-redis
   sinatra-respond_to (= 0.7.0)
   wirble
+
+RUBY VERSION
+   ruby 2.1.3p242
+
+BUNDLED WITH
+   1.17.3
