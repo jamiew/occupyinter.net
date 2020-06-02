@@ -1,0 +1,3 @@
+#!/bin/sh
+# Note: this doesn't seem to work without RACK_ENV set
+bundle exec shotgun -p 3000
