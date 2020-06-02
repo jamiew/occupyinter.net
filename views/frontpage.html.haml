@@ -1,4 +1,4 @@
-- protocol = 'https'
+- protocol = request.env['rack.url_scheme']
 - script_src = "#{protocol}://#{request.host_with_port}/embed.js"
 
 :javascript
