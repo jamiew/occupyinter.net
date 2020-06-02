@@ -1,4 +1,5 @@
-- script_src = "http://#{request.host_with_port}/embed.js"
+- protocol = 'https'
+- script_src = "#{protocol}://#{request.host_with_port}/embed.js"
 
 :javascript
   var prev_size;
@@ -11,11 +12,11 @@
 
     var url = '';
     if(orderly == false) {
-      url = 'http://#{request.host_with_port}/embed.js?orderly='+orderly;
+      url = '#{protocol}://#{request.host_with_port}/embed.js?orderly='+orderly;
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
     else {
-      url = 'http://#{request.host_with_port}/embed.js?size='+size;
+      url = '#{protocol}://#{request.host_with_port}/embed.js?size='+size;
       el.innerHTML = '<sc'+'ript src="'+url+'"></sc'+'ript>';
     }
 
@@ -51,7 +52,7 @@
     For the full list of occupied websites visit <a href="http://fffff.at/occupy-the-internet">fffff.at/occupy-the-internet</a>
   %p
     To add your occupied website to this list send an email to <script>document.write('<a href="mailto:info@fffff.at">info[at]fffff.at</a>')</script>
-    or tweet us <a href="http://twitter.com/fffffat">@FFFFFAT</a>
+    or tweet us <a href="https://twitter.com/fffffat">@FFFFFAT</a>
 
   %hr
   %a{:name => "browser-addons"}
@@ -112,5 +113,5 @@
         %input{:type => 'checkbox', :name => 'orderly', :id => 'orderly', :checked => 'checked', :onclick => 'update_embed_code()'}
 
   -# TODO put this in an frame so we can update it from the customizer
-  %script{:id => 'embed_demo', :src => "http://#{request.host_with_port}/embed.js"}
+  %script{:id => 'embed_demo', :src => "#{protocol}://#{request.host_with_port}/embed.js"}
 
