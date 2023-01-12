@@ -152,7 +152,7 @@ helpers do
   end
 
   def server
-    "http://#{request.host_with_port}"
+    "https://#{request.host_with_port}"
   end
 end
 
@@ -237,7 +237,7 @@ get "/embed" do
   if domain.nil? || domain.empty?
     debug "No HTTP_REFERER or ?url param, not recording hit"
   else
-    domain = "http://#{domain}" unless domain =~ /^http/
+    domain = "https://#{domain}" unless domain =~ /^http/
     uri = Addressable::URI.parse(domain)
     @host = uri.host
     @host = @host.gsub(/^www\./, '')
