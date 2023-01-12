@@ -1,6 +1,6 @@
 h1. Occupy Inter.net widget
 
-Install this on your website and join "#OCCUPYINTERNET":http://occupyinter.net
+Install this on your website and join "#OCCUPYINTERNET":https://occupyinter.net
 
 
 h2. License
@@ -10,6 +10,6 @@ Source code released under an MIT license.
 
 h2. Contributors
 
-* "@jamiew":http://github.com/jamiew
-* "@gleuch":http://github.com/gleuch
-* "@tbx":http://github.com/tbx
+* "@jamiew":https://github.com/jamiew
+* "@gleuch":https://github.com/gleuch
+* "@tbx":https://github.com/tbx

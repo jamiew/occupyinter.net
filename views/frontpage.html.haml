@@ -1,4 +1,5 @@
-- protocol = request.env['rack.url_scheme']
+- #protocol = request.env['rack.url_scheme']
+- protocol = "https"
 - script_src = "#{protocol}://#{request.host_with_port}/embed.js"
 
 :javascript
@@ -49,7 +50,7 @@
     == <script src="#{script_src}"></script>
 
   %p
-    For the full list of occupied websites visit <a href="http://fffff.at/occupy-the-internet">fffff.at/occupy-the-internet</a>
+    For the full list of occupied websites visit <a href="https://fffff.at/occupy-the-internet">fffff.at/occupy-the-internet</a>
   %p
     To add your occupied website to this list send an email to <script>document.write('<a href="mailto:info@fffff.at">info[at]fffff.at</a>')</script>
     or tweet us <a href="https://twitter.com/fffffat">@FFFFFAT</a>
@@ -58,42 +59,42 @@
   %a{:name => "browser-addons"}
   %h2 Browser Addons
   %p
-    Take over the computers of the 1% by installing <a href="http://fffff.at/occupy-internet-extensions/">Occupy Internet browser addons</a> on their computers:
+    Take over the computers of the 1% by installing <a href="https://fffff.at/occupy-internet-extensions/">Occupy Internet browser addons</a> on their computers:
   %p.install-addons
-    <a class="addon-button" href="http://addons.gleuch.com/occupy-internet/downloads/chrome">Chrome</a>
-    <a class="addon-button" href="http://addons.gleuch.com/occupy-internet/downloads/firefox">Firefox</a>
-    <a class="addon-button" href="http://fffff.at/occupy/occupy.safariextz.zip">Safari</a>
+    <a class="addon-button" href="https://addons.gleuch.com/occupy-internet/downloads/chrome">Chrome</a>
+    <a class="addon-button" href="https://addons.gleuch.com/occupy-internet/downloads/firefox">Firefox</a>
+    <a class="addon-button" href="https://fffff.at/occupy/occupy.safariextz.zip">Safari</a>
 
   %hr
   %a{:name => "site-hijack"}
   %h2 Webpage Hijack
   %p
-    Use the <a href="http://fffff.at/occupy-the-internet-phase-2/">Occupy the Internet - The Service</a> tool, which
+    Use the <a href="https://fffff.at/occupy-the-internet-phase-2/">Occupy the Internet - The Service</a> tool, which
     lets you enter a URL and protest any website, e.g.:
     %ul
-      %li <a href="http://fffff.at/occupy/jpmorganchase.com">jpmorganchase.com</a>
-      %li <a href="http://fffff.at/occupy/barclays.co.uk">barclays.co.uk</a>
+      %li <a href="https://fffff.at/occupy/jpmorganchase.com">jpmorganchase.com</a>
+      %li <a href="https://fffff.at/occupy/barclays.co.uk">barclays.co.uk</a>
 
   %hr
   %h2 GIFs
   %p
-    If you would like to contribute animated GIF occupation soldiers please leave URLs in the comment thread of <a href="http://fffff.at/enlist-today/">this post</a> where they will be called up for duty. Note: images should have transparent backgrounds.
+    If you would like to contribute animated GIF occupation soldiers please leave URLs in the comment thread of <a href="https://fffff.at/enlist-today/">this post</a> where they will be called up for duty. Note: images should have transparent backgrounds.
 
   %hr
   %h2 Source Code
   %p
-    <a href="https://github.com/jamiew/occupy-internet-widget">http://github.com/jamiew/occupy-internet-widget</a> <br />
+    <a href="https://github.com/jamiew/occupy-internet-widget">https://github.com/jamiew/occupy-internet-widget</a> <br />
     MIT Licensed
 
   %hr
   %a{:name => "about"}
   %h2 About
   %p
-    A <strong><a href="http://fffff.at">F.A.T. Lab</a></strong> Production
+    A <strong><a href="https://fffff.at">F.A.T. Lab</a></strong> Production
     <br />
-    Concept development by <a href="http://www.theowatson.com/">Theo</a>, <a href="http://www.simple-mechanisms.com/">Jerry</a>, <a href="http://jamiedubs.com/">Jamie</a>, <a href="http://gleuch.com/">Greg</a>, <a href="http://evan-roth.com">Evan</a>, <a href="http://datenform.de/">Aram</a>, and <a href="http://tobi-x.com">Tobi</a>
+    Concept development by <a href="https://www.theowatson.com/">Theo</a>, <a href="https://www.simple-mechanisms.com/">Jerry</a>, <a href="https://jamiedubs.com/">Jamie</a>, <a href="https://gleuch.com/">Greg</a>, <a href="https://evan-roth.com">Evan</a>, <a href="https://datenform.de/">Aram</a>, and <a href="https://tobi-x.com">Tobi</a>
     <br />
-    Code development by <a href="http://jamiedubs.com/">Jamie</a>, <a href="http://gleuch.com">Greg</a>, <a href="http://theowatson.com">Theo</a>, and <a href="http://tobi-x.com">Tobi</a>.
+    Code development by <a href="https://jamiedubs.com/">Jamie</a>, <a href="https://gleuch.com">Greg</a>, <a href="https://theowatson.com">Theo</a>, and <a href="https://tobi-x.com">Tobi</a>.
 
 
   - if false
@@ -114,4 +115,3 @@
 
   -# TODO put this in an frame so we can update it from the customizer
   %script{:id => 'embed_demo', :src => "#{protocol}://#{request.host_with_port}/embed.js"}
-
