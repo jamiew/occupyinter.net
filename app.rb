@@ -2,18 +2,20 @@ require 'rubygems'
 require 'bundler'
 Bundler.require
 
+require 'sinatra'
+require 'sinatra/respond_with'
 require 'digest/sha1'
 require 'logger'
 require 'json'
 
-configure do |config|
-  Sinatra::Application.register Sinatra::RespondTo
+# configure do |config|
+#   Sinatra::Application.register Sinatra::RespondTo
 
-  set :sessions, true
-  set :cache, Dalli::Client.new
-  set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/1' # TODO smarter db number, or namespace
-  set :redis_settings, {:logger => Logger.new(STDOUT)} # FIXME doesn't see to work?
-end
+#   set :sessions, true
+#   set :cache, Dalli::Client.new
+#   set :redis, ENV['REDISTOGO_URL'] || 'redis://localhost:6379/1' # TODO smarter db number, or namespace
+#   set :redis_settings, {:logger => Logger.new(STDOUT)} # FIXME doesn't see to work?
+# end
 
 def debug(msg)
   return if prod?
